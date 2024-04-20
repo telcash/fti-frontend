@@ -1,0 +1,17 @@
+.menu img {
+    height: 39.31px;
+    width: 38.73px;
+
+}
+.logo img {
+    height: 36px;
+    width: 96px;
+}
+
+.MuiDrawer-paper {
+    background-color: #273237!important;
+}
+
+.MuiTypography-root {
+    font-size: 0.68em!important;
+}
