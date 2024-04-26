@@ -16,6 +16,7 @@ import './maindrawer.css';
 import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, PlaylistAdd, ExpandLess, StarBorder } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import JugadoresList from '../../features/jugadores/JugadoresList';
+import EquiposList from '../../features/equipos/EquiposList';
 
 
 
@@ -251,6 +252,7 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
         <JugadoresList />
+        <EquiposList />
       </Box>
     </Box>
   );
