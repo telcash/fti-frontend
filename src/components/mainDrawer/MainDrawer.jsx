@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -17,8 +18,24 @@ import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, Playlist
 import { Collapse } from '@mui/material';
 import JugadoresList from '../../features/jugadores/JugadoresList';
 import EquiposList from '../../features/equipos/EquiposList';
+import { createBrowserRouter, Link, NavLink, RouterProvider } from 'react-router-dom';
 
-
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <div>Home</div>
+    )
+  },
+  {
+    path: "jugadores",
+    element: <JugadoresList />
+  },
+  {
+    path: "equipos",
+    element: <EquiposList />
+  }
+]);
 
 export function MaterialSymbolsLightFinanceMode(props) {
 	return (<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M8.692 12.265V6.692h1.616v5.573l-.808-.823zm4.346 2.231V2.692h1.616v10.189zm-8.73 2.142v-5.946h1.615v4.331zm-.116 3.912l5.296-5.296l3.55 3.05l6.754-6.754H17.5v-1h4v4h-1v-2.292l-7.438 7.438l-3.55-3.05l-3.904 3.904z"></path></svg>);
@@ -99,7 +116,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const menuList = [
     {
         icon: <PermIdentity />,
-        text: 'Jugadores'
+        text: 'Jugadores',
     },
     {
         icon: <MaterialSymbolsFinance />,
@@ -131,7 +148,7 @@ const menuList = [
     }
 ]
 
-const gestionList = ['Jugadores', 'Equipos', 'Fundamentos', 'Partidos', 'Jornadas', 'Sesiones Individuales'];
+const gestionList = ['jugadores', 'equipos', 'Fundamentos', 'Partidos', 'Jornadas', 'Sesiones Individuales'];
 
 export default function MiniDrawer() {
   const [open, setOpen] = useState(true);
@@ -225,7 +242,8 @@ export default function MiniDrawer() {
           <Collapse in={gestionOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 {gestionList.map(item => (
-                    <ListItemButton 
+                    <ListItemButton
+                        onClick={() => router.navigate(`../${item}`)} 
                         sx={{ 
                             pl: 6.5,
                             position: 'relative',
@@ -251,8 +269,7 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
-        <JugadoresList />
-        <EquiposList />
+        <RouterProvider router={router} />
       </Box>
     </Box>
   );
