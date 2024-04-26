@@ -28,6 +28,7 @@ export const fetchJugadorById = createAsyncThunk('jugadores/fetchJugadorById', a
 
 export const addJugador = createAsyncThunk('jugadores/addJugador', async (jugador) => {
     try {
+        console.log('enviado');
         const response = await axios.post(JUGADOR_URL, jugador);
         return response.data;
     } catch (err) {

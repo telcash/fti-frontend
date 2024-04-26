@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,7 +18,8 @@ import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, Playlist
 import { Collapse } from '@mui/material';
 import JugadoresList from '../../features/jugadores/JugadoresList';
 import EquiposList from '../../features/equipos/EquiposList';
-import { createBrowserRouter, Link, NavLink, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import AddJugadorForm from '../../features/jugadores/AddJugadorForm';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "jugadores",
-    element: <JugadoresList />
+    element: <AddJugadorForm />
   },
   {
     path: "equipos",
