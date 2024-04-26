@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -15,6 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import './maindrawer.css';
 import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, PlaylistAdd, ExpandLess, StarBorder } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
+import JugadoresList from '../../features/jugadores/JugadoresList';
 
 
 
@@ -249,7 +250,7 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
-        Contenido
+        <JugadoresList />
       </Box>
     </Box>
   );
