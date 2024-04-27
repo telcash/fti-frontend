@@ -14,8 +14,8 @@ const AddJugadorForm = () => {
     const [apellido, setApellido] = useState('');
     const [apodo, setApodo] = useState('');
     const [fNac, setFNac] = useState(dayjs());
-    const [iniContrato, setIniContrato] = useState(null);
-    const [finContrato, setFinContrato] = useState(null);
+    const [iniContrato, setIniContrato] = useState(dayjs());
+    const [finContrato, setFinContrato] = useState(dayjs());
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -25,15 +25,18 @@ const AddJugadorForm = () => {
     const onApellidoChanged = e => setApellido(e.target.value);
     const onApodoChanged = e => setApodo(e.target.value);
     const onFNacChanged = e => setFNac(e);
-    const onIniContratoChanged = e => setIniContrato(e.target.value);
-    const onFinContratoChanged = e => setFinContrato(e.target.value);
+    const onIniContratoChanged = e => setIniContrato(e);
+    const onFinContratoChanged = e => setFinContrato(e);
 
     const onSaveJugadorClicked = () => {
         try {
             const formData = new FormData();
             formData.append('nombre', nombre);
             formData.append('apellido', apellido);
+            formData.append('apodo', apodo);
             formData.append('fNac', fNac);
+            formData.append('iniContrato', iniContrato);
+            formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
             dispatch(addJugador(formData));
         } catch (error) {
@@ -66,11 +69,29 @@ const AddJugadorForm = () => {
                     value={apellido}
                     onChange={onApellidoChanged}
                 />
+                <label htmlFor="apodo">Apodo:</label>
+                <input
+                    type="text"
+                    id="apodo"
+                    name="apodo"
+                    value={apodo}
+                    onChange={onApodoChanged}
+                />
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                     <DatePicker 
                         label="Fecha de nacimiento"
                         value={fNac}
                         onChange={onFNacChanged}
+                    />
+                    <DatePicker 
+                        label="Inicio de contrato"
+                        value={iniContrato}
+                        onChange={onIniContratoChanged}
+                    />
+                    <DatePicker 
+                        label="Fin de contrato"
+                        value={finContrato}
+                        onChange={onFinContratoChanged}
                     />
                 </LocalizationProvider>
                 <button

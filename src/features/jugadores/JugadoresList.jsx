@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { getJugadoresStatus, selectAllJugadores, getJugadoresError, fetchJugadores, deleteJugador, jugadorSelected, getJugadorSelected } from "./jugadoresSlice";
 import { useEffect, useState } from "react";
 import Table from '@mui/material/Table';
-import { IconButton, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, IconButton, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import calculateAge from '../../utils/calculateAge';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import './jugadores.css';
 import SimpleDialog from "../../components/SimpleDialog";
+import { router } from '../../components/mainDrawer/MainDrawer';
 
 const JugadoresList = () => {
     const dispatch = useDispatch();
@@ -104,7 +105,9 @@ const JugadoresList = () => {
 
     return (
         <section>
-            <h2>Jugadores</h2>
+            <div>
+                <Button variant="contained" onClick={() => router.navigate('../agregar-jugador')} >Añadir jugador</Button>
+            </div>
             {content}
         </section>
     )

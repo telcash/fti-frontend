@@ -21,7 +21,7 @@ import EquiposList from '../../features/equipos/EquiposList';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AddJugadorForm from '../../features/jugadores/AddJugadorForm';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: (
@@ -29,11 +29,15 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "jugadores",
+    path: "gestion-jugadores",
     element: <JugadoresList />
   },
   {
-    path: "equipos",
+    path: "agregar-jugador",
+    element: <AddJugadorForm />
+  },
+  {
+    path: "gestion-equipos",
     element: <EquiposList />
   }
 ]);
@@ -149,7 +153,32 @@ const menuList = [
     }
 ]
 
-const gestionList = ['jugadores', 'equipos', 'Fundamentos', 'Partidos', 'Jornadas', 'Sesiones Individuales'];
+const gestionList = [
+  {
+    text: 'Jugadores',
+    path: 'gestion-jugadores'
+  },
+  {
+    text: 'Equipos',
+    path: 'gestion-equipos'
+  },
+  {
+    text: 'Fundamentos',
+    path: 'gestion-fundamentos'
+  },
+  {
+    text: 'Partidos',
+    path: 'gestion-partidos'
+  },
+  {
+    text: 'Jornadas',
+    path: 'gestion-jornadas'
+  },
+  {
+    text: 'Sesiones Individuales',
+    path: 'gestion-sesionesindividuales'
+  },
+]
 
 export default function MiniDrawer() {
   const [open, setOpen] = useState(true);
@@ -244,7 +273,7 @@ export default function MiniDrawer() {
             <List component="div" disablePadding>
                 {gestionList.map(item => (
                     <ListItemButton
-                        onClick={() => router.navigate(`../${item}`)} 
+                        onClick={() => router.navigate(`../${item.path}`)} 
                         sx={{ 
                             pl: 6.5,
                             position: 'relative',
@@ -260,7 +289,7 @@ export default function MiniDrawer() {
                             }
                         }}
                     >
-                        <ListItemText primary={item} sx={{color: 'white', textTransform: 'uppercase',}} />
+                        <ListItemText primary={item.text} sx={{color: 'white', textTransform: 'uppercase',}} />
                     </ListItemButton>
                 ))
                 }
