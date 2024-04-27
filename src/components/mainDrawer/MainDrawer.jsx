@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "jugadores",
-    element: <AddJugadorForm />
+    element: <JugadoresList />
   },
   {
     path: "equipos",

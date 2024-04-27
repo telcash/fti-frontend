@@ -1,0 +1,4 @@
+.action-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+}
