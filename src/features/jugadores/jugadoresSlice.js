@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const JUGADOR_URL = "http://localhost:3000/api/jugador";
 
 const initialState = {

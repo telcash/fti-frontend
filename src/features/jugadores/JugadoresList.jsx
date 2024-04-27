@@ -14,7 +14,6 @@ import { router } from '../../components/mainDrawer/MainDrawer';
 const JugadoresList = () => {
     const dispatch = useDispatch();
 
-    //const [jugadorId, setJugadorId] = useState(0);
     const jugadores = useSelector(selectAllJugadores);
     const jugadorSelectedId = useSelector(getJugadorSelected);
     const jugadoresStatus = useSelector(getJugadoresStatus);
@@ -25,14 +24,14 @@ const JugadoresList = () => {
     const handleClickOpen = (id) => {
         dispatch(jugadorSelected(id));
         setOpen(true);
-      };
+    };
     const handleClose = (value) => {
         setOpen(false);
         setSelectedValue(value);
         if (value === 'Eliminar') {
             dispatch(deleteJugador(jugadorSelectedId));
         }
-    }
+    };
 
 
     useEffect(() => {
