@@ -21,13 +21,12 @@ import EquiposList from '../../features/equipos/EquiposList';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AddJugadorForm from '../../features/jugadores/AddJugadorForm';
 import AddEquipoForm from '../../features/equipos/AddEquipoForm';
+import Jugadores from '../../features/jugadores/Jugadores';
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>Home</div>
-    )
+    element: <Jugadores />
   },
   {
     path: "gestion-jugadores",

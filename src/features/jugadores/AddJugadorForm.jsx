@@ -106,6 +106,7 @@ const AddJugadorForm = () => {
                     value={posicion}
                     label="Posición"
                     onChange={onPosicionChanged}
+                    sx={{width: 300}}
                 >
                 {
                     posiciones.map((posicion) => (
@@ -120,6 +121,7 @@ const AddJugadorForm = () => {
                     value={equipo}
                     label="Equipo Actual"
                     onChange={onEquipoChanged}
+                    sx={{width: 300}}
                 >
                 {
                     equipos.map((equipo) => (
