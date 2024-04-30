@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { getEquiposStatus, selectAllEquipos, getEquiposError, fetchEquipos, getEquipoSelected, equipoSelected, deleteEquipo } from "./equiposSlice";
 import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { router } from '../../components/mainDrawer/MainDrawer';
+import { router } from '../../components/main-drawer/MainDrawer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import SimpleDialog from "../../components/SimpleDialog";
+import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const EquiposList = () => {
     const dispatch = useDispatch();

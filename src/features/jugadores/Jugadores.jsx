@@ -37,9 +37,12 @@ const Jugadores = () => {
                     ))
                 }
             </Select>
-            <div className="cancha">
-                <img src="assets/cancha.png" alt="" />
+            <div>
+                <img src="http://www.localhost:3000/3f4b3a6e-b755-4e03-b3c4-a70e0b4d1cae.jpg" alt="" />
             </div>
+           {/*  <div className="cancha">
+                <img src="assets/cancha.png" alt="" />
+            </div> */}
         </div>
     )
 }

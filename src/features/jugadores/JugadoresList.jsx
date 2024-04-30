@@ -8,8 +8,8 @@ import calculateAge from '../../utils/calculateAge';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import './jugadores.css';
-import SimpleDialog from "../../components/SimpleDialog";
-import { router } from '../../components/mainDrawer/MainDrawer';
+import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
+import { router } from '../../components/main-drawer/MainDrawer';
 
 const JugadoresList = () => {
     const dispatch = useDispatch();

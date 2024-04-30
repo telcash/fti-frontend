@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const EQUIPO_URL = "http://localhost:3000/api/equipo";
+
+const EQUIPO_URL = process.env.REACT_APP_API_URL + "equipo";
 
 const initialState = {
     equipos: [],

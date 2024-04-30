@@ -1,5 +1,5 @@
 import './App.css';
-import MainDrawer from './components/mainDrawer/MainDrawer';
+import MainDrawer from './components/main-drawer/MainDrawer';
 
 function App() {
   return (
