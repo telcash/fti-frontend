@@ -54,6 +54,16 @@ const AddJugadorForm = () => {
             dispatch(addJugador(formData));
         } catch (error) {
             console.error('Failed to save player', error);            
+        } finally {
+            setSelectedFile(null);
+            setNombre('');
+            setApellido('');
+            setApodo('');
+            setPosicion('');
+            setEquipo('');
+            setFNac(dayjs());
+            setIniContrato(dayjs());
+            setFinContrato(dayjs());
         }
     }
 

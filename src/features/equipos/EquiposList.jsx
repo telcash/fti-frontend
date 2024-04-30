@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux"
 import { getEquiposStatus, selectAllEquipos, getEquiposError, fetchEquipos, getEquipoSelected, equipoSelected, deleteEquipo } from "./equiposSlice";
 import { useEffect, useState } from "react";
-import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Avatar, Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { router } from '../../components/main-drawer/MainDrawer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const EquiposList = () => {
+
+    const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "equipos/"
+
     const dispatch = useDispatch();
 
     const equipos = useSelector(selectAllEquipos);
@@ -43,11 +46,12 @@ const EquiposList = () => {
         content = (
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="lista equipoes">
-                    <TableHead>
+                    <TableHead sx={{backgroundColor:'#273237'}}>
                         <TableRow>
-                            <TableCell align="right">Imagen</TableCell>
-                            <TableCell align="right">Nombre</TableCell>
-                            <TableCell align="center">Acción</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Imagen</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Id</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Acción</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -56,10 +60,12 @@ const EquiposList = () => {
                                 key={equipo.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="right">IMG</TableCell>
-                                <TableCell align="right">{equipo.nombre}</TableCell>
-                                <TableCell align="right">{equipo.id}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
+                                    <Avatar src={imgUrl + equipo.foto}/>
+                                </TableCell>
+                                <TableCell align="center">{equipo.nombre}</TableCell>
+                                <TableCell align="center">{equipo.id}</TableCell>
+                                <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton>
                                             <EditIcon/>

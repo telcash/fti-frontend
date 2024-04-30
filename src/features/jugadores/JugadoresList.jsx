@@ -10,8 +10,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import './jugadores.css';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 import { router } from '../../components/main-drawer/MainDrawer';
+import JugadorAvatar from "./JugadorAvatar";
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 
 const JugadoresList = () => {
+
+    const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/"
+
     const dispatch = useDispatch();
 
     const jugadores = useSelector(selectAllJugadores);
@@ -47,18 +53,18 @@ const JugadoresList = () => {
         content = (
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="lista jugadores">
-                    <TableHead>
+                    <TableHead sx={{backgroundColor:'#273237'}}>
                         <TableRow>
-                            <TableCell align="right">Imagen</TableCell>
-                            <TableCell align="right">Nombre</TableCell>
-                            <TableCell align="right">Apellido</TableCell>
-                            <TableCell align="right">Apodo</TableCell>
-                            <TableCell align="right">Edad</TableCell>
-                            <TableCell align="right">Posicion</TableCell>
-                            <TableCell align="right">Inicio de Contrato</TableCell>
-                            <TableCell align="right">Finalización de Contrato</TableCell>
-                            <TableCell align="right">Id</TableCell>
-                            <TableCell align="center">Acción</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Imagen</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Apellido</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Apodo</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Edad</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Posicion</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Inicio de Contrato</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Finalización de Contrato</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Id</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Acción</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -67,22 +73,24 @@ const JugadoresList = () => {
                                 key={jugador.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="right">IMG</TableCell>
-                                <TableCell align="right">{jugador.nombre}</TableCell>
-                                <TableCell align="right">{jugador.apellido}</TableCell>
-                                <TableCell align="right">{jugador.apodo}</TableCell>
-                                <TableCell align="right">{calculateAge(jugador.fNac)}</TableCell>
-                                <TableCell align="right">{jugador.posicion ? jugador.posicion.nombre : ''}</TableCell>
-                                <TableCell align="right">{jugador.iniContrato}</TableCell>
-                                <TableCell align="right">{jugador.finContrato}</TableCell>
-                                <TableCell align="right">{jugador.id}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
+                                    <JugadorAvatar fotoJugador={imgUrl + jugador.foto} />
+                                </TableCell>
+                                <TableCell align="center">{jugador.nombre}</TableCell>
+                                <TableCell align="center">{jugador.apellido}</TableCell>
+                                <TableCell align="center">{jugador.apodo}</TableCell>
+                                <TableCell align="center">{calculateAge(jugador.fNac)}</TableCell>
+                                <TableCell align="center">{jugador.posicion ? jugador.posicion.nombre : ''}</TableCell>
+                                <TableCell align="center">{dayjs(jugador.iniContrato).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{dayjs(jugador.finContrato).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{jugador.id}</TableCell>
+                                <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton>
-                                            <EditIcon/>
+                                            <EditIcon color="primary"/>
                                         </IconButton>
                                         <IconButton onClick={() => handleClickOpen(jugador.id)}>
-                                            <DeleteIcon/>
+                                            <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>
                                 </TableCell>
