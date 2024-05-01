@@ -22,6 +22,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AddJugadorForm from '../../features/jugadores/AddJugadorForm';
 import AddEquipoForm from '../../features/equipos/AddEquipoForm';
 import Jugadores from '../../features/jugadores/Jugadores';
+import UpdateJugadorForm from '../../features/jugadores/UpdateJugadorForm';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
   {
     path: "agregar-jugador",
     element: <AddJugadorForm />
+  },
+  {
+    path: "actualizar-jugador",
+    element: <UpdateJugadorForm />
   },
   {
     path: "gestion-equipos",

@@ -5,7 +5,7 @@ const JUGADOR_URL = process.env.REACT_APP_API_URL + "jugador";
 
 const initialState = {
     jugadores: [],
-    jugadorSelected: 0,
+    jugadorSelected: null,
     status: 'idle',
     error: null 
 }
@@ -37,6 +37,15 @@ export const addJugador = createAsyncThunk('jugadores/addJugador', async (jugado
     }
 })
 
+export const updateJugador = createAsyncThunk('jugadores/updateJugador', async (arg) => {
+    try {
+        const response = await axios.patch(`${JUGADOR_URL}/${arg.id}`, arg.jugador);
+        return response.data;
+    } catch (err) {
+        return err.message;
+    }
+})
+
 export const deleteJugador = createAsyncThunk('jugadores/deleteJugador', async (id) => {
     try {
         const response = await axios.delete(`${JUGADOR_URL}/${id}`);
@@ -50,23 +59,6 @@ const jugadoresSlice = createSlice({
     name: 'jugadores',
     initialState,
     reducers: {
-        jugadorAdded: {
-            reducer(state, action) {
-                state.jugadores.push(action.payload)
-            },
-            prepare(nombre, apellido, apodo, fNac, iniContrato, finContrato) {
-                return {
-                    payload: {
-                        nombre,
-                        apellido,
-                        apodo,
-                        fNac,
-                        iniContrato,
-                        finContrato
-                    }
-                }
-            }
-        },
         jugadorSelected: {
             reducer(state, action) {
                 state.jugadorSelected = action.payload;
@@ -89,9 +81,13 @@ const jugadoresSlice = createSlice({
             .addCase(addJugador.fulfilled, (state, action) => {
                 state.jugadores.push(action.payload);
             })
+            .addCase(updateJugador.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === state.jugadorSelected.id), 1, action.payload);
+            })
             .addCase(deleteJugador.fulfilled, (state, action) => {
                 if (action.payload.affected === 1) {
-                    state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === state.jugadorSelected), 1);
+                    state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === state.jugadorSelected.id), 1);
                 }
                 state.jugadorSelected = 0;
             })

@@ -2,10 +2,10 @@ import { Avatar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import './fileInputField.css';
 
-const FileInputField = ({onHandleFileChange, formSubmitted}) => {
+const FileInputField = ({onHandleFileChange, formSubmitted, prevImgUrl}) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(prevImgUrl ? prevImgUrl : null);
 
     const handleFileChange = e => {
         const file = e.target.files[0];

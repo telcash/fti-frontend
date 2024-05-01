@@ -21,21 +21,22 @@ const JugadoresList = () => {
     const dispatch = useDispatch();
 
     const jugadores = useSelector(selectAllJugadores);
-    const jugadorSelectedId = useSelector(getJugadorSelected);
+    const jugador = useSelector(getJugadorSelected);
     const jugadoresStatus = useSelector(getJugadoresStatus);
     const error = useSelector(getJugadoresError);
 
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState('Cancelar');
-    const handleClickOpen = (id) => {
-        dispatch(jugadorSelected(id));
+
+    const handleClickOpen = (jugador) => {
+        dispatch(jugadorSelected(jugador));
         setOpen(true);
     };
     const handleClose = (value) => {
         setOpen(false);
         setSelectedValue(value);
         if (value === 'Eliminar') {
-            dispatch(deleteJugador(jugadorSelectedId));
+            dispatch(deleteJugador(jugador.id));
         }
     };
 
@@ -86,10 +87,13 @@ const JugadoresList = () => {
                                 <TableCell align="center">{jugador.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
-                                        <IconButton>
+                                        <IconButton onClick={() => {
+                                            dispatch(jugadorSelected(jugador));
+                                            router.navigate('../actualizar-jugador');
+                                        }}>
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(jugador.id)}>
+                                        <IconButton onClick={() => handleClickOpen(jugador)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

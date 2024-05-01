@@ -1,39 +1,44 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { addJugador } from "./jugadoresSlice";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
+import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../posiciones/posicionesSlice";
+import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../posiciones/posicionesSlice";
-import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
-import './jugadores.css';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { getJugadorSelected, updateJugador } from "./jugadoresSlice";
 import FileInputField from "../../components/file-input-field/FileInputField";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 
-const AddJugadorForm = () => {
+
+const UpdateJugadorForm = () => {
+    const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
+
     const dispatch = useDispatch();
 
     const equipos = useSelector(selectAllEquipos);
     const equiposStatus = useSelector(getEquiposStatus);
+    
+    const jugador = useSelector(getJugadorSelected);
 
     const posiciones = useSelector(selectAllPosiciones);
-    const posicionesStatus = useSelector(getPosicionesStatus)
+    const posicionesStatus = useSelector(getPosicionesStatus);
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [apodo, setApodo] = useState('');
-    const [posicion, setPosicion] = useState('');
-    const [equipo, setEquipo] = useState('');
-    const [fNac, setFNac] = useState(dayjs());
-    const [iniContrato, setIniContrato] = useState(dayjs().subtract(1, 'day'));
-    const [finContrato, setFinContrato] = useState(dayjs());
+    const [nombre, setNombre] = useState(jugador.nombre);
+    const [apellido, setApellido] = useState(jugador.apellido);
+    const [apodo, setApodo] = useState(jugador.apodo);
+    const [posicion, setPosicion] = useState(jugador.posicion ? jugador.posicion.nombre : '');
+    const [equipo, setEquipo] = useState(jugador.equipo ? jugador.equipo.nombre : '');
+    const [fNac, setFNac] = useState(dayjs(jugador.fNac));
+    const [iniContrato, setIniContrato] = useState(dayjs(jugador.iniContrato));
+    const [finContrato, setFinContrato] = useState(dayjs(jugador.finContrato));
     const [errors, setErrors] = useState({});
 
     const onHandleFileChange = file => setSelectedFile(file);
+    
     const onNombreChanged = e => {
         setNombre(e.target.value);
         if(nombre.length >= 2 && errors.nombre) {
@@ -81,20 +86,14 @@ const AddJugadorForm = () => {
             formData.append('iniContrato', iniContrato);
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
-            dispatch(addJugador(formData));
+            console.log(jugador.id);
+            console.log(formData);
+            dispatch(updateJugador({id: jugador.id, jugador: formData}));
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {
             setFormSubmitted(true);
             setSelectedFile(null);
-            setNombre('');
-            setApellido('');
-            setApodo('');
-            setPosicion('');
-            setEquipo('');
-            setFNac(dayjs());
-            setIniContrato(dayjs().subtract(1, 'day'));
-            setFinContrato(dayjs());
         }
     }
 
@@ -112,9 +111,13 @@ const AddJugadorForm = () => {
 
     return (
         <section className="addjugador">
-            <h2>Salvar Jugador</h2>
+            <h2>Actualizar Jugador</h2>
             <form className="addjugador-form">
-                <FileInputField formSubmitted={formSubmitted} onHandleFileChange={onHandleFileChange} />
+                <FileInputField
+                    formSubmitted={formSubmitted}
+                    onHandleFileChange={onHandleFileChange}
+                    prevImgUrl={imgUrl + jugador.foto}
+                />
                 <div className="addjugador-form-fields">
                     <TextField
                         required
@@ -212,11 +215,11 @@ const AddJugadorForm = () => {
                     </LocalizationProvider>
                 </div>
                 <div>
-                    <Button variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
+                    <Button variant="contained" onClick={onSaveJugadorClicked}>Actualizar</Button>
                 </div>
             </form>
         </section>
-    )
+    );
 }
 
-export default AddJugadorForm;
+export default UpdateJugadorForm;
