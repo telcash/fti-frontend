@@ -85,34 +85,41 @@ const menuList = [
     {
         icon: <PermIdentity />,
         text: 'Jugadores',
+        path: 'jugadores'
     },
     {
         icon: <MaterialSymbolsFinance />,
-        text: 'Estadísticas jugador'
+        text: 'Estadísticas jugador',
+        path: 'estadisticas-jugador'
     },
     {
         icon: <MaterialSymbolsClockLoader90 />,
-        text: 'Gráficas'
+        text: 'Gráficas',
+        path: 'graficas'
     },
     {
         icon: <MaterialSymbolsBidLandscape />,
-        text: 'Desarrollo Táctico Individual'
+        text: 'Desarrollo Táctico Individual',
+        path: 'desarrollo-tactico-individual'
     },
     {
         icon: <MaterialSymbolsLightFinanceMode />,
-        text: 'Estadísticas de equipo'
+        text: 'Estadísticas de equipo',
+        path: 'estadisticas-equipo'
     },
     {
         icon: <CalendarMonth />,
-        text: 'Calendario'
+        text: 'Calendario',
+        path: 'calendario'
     },
     {
         icon: <NotificationsRounded />,
-        text: 'Notificaciones'
+        text: 'Notificaciones',
+        path: 'notificaciones'
     },
     {
         icon: <PlaylistAdd />,
-        text: 'Gestión y Creación'
+        text: 'Gestión y Creación',
     }
 ]
 
@@ -204,6 +211,8 @@ export default function MainDrawer() {
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
                                 setOpen(true);
+                            } else {
+                              router.navigate(`../${item.path}`)
                             } 
                         }}
                     >

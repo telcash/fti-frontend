@@ -9,8 +9,32 @@ import AddEquipoForm from "../features/equipos/AddEquipoForm";
 
 export const router = createBrowserRouter([
     {
-      path: "/",
+      path: "jugadores",
       element: <Jugadores />
+    },
+    {
+      path: "estadisticas-jugador",
+      element: <div>Estadisticas Jugador</div>
+    },
+    {
+      path: "graficas",
+      element: <div>Graficas</div>
+    },
+    {
+      path: "desarrollo-tactico-individual",
+      element: <div>Desarrollo Tactico Individual</div>
+    },
+    {
+      path: "estadisticas-equipo",
+      element: <div>Estadisticas de equipo</div>
+    },
+    {
+      path: "calendario",
+      element: <div>Calendario</div>
+    },
+    {
+      path: "notificaciones",
+      element: <div>Notificaciones</div>
     },
     {
       path: "gestion-jugadores",
@@ -31,5 +55,57 @@ export const router = createBrowserRouter([
     {
       path: "agregar-equipo",
       element: <AddEquipoForm />
+    },
+    {
+      path: "actualizar-equipo",
+      element: <div>Actualizar Equipo</div>
+    },
+    {
+      path: "gestion-fundamentos",
+      element: <div>Gestion fundamentos</div>
+    },
+    {
+      path: "agregar-fundamentos",
+      element: <div>Agregar fundamento</div>
+    },
+    {
+      path: "actualizar-fundamento",
+      element: <div>Actualizar fundamento</div>
+    },
+    {
+      path: "gestion-partidos",
+      element: <div>Gestion partidos</div>
+    },
+    {
+      path: "agregar-partido",
+      element: <div>Agregar partido</div>
+    },
+    {
+      path: "actualizar-partido",
+      element: <div>Actualizar partido</div>
+    },
+    {
+      path: "gestion-jornadas",
+      element: <div>Gestion jornadas</div>
+    },
+    {
+      path: "agregar-jornada",
+      element: <div>Agregar jornada</div>
+    },
+    {
+      path: "actualizar-jornada",
+      element: <div>Actualizar jornada</div>
+    },
+    {
+      path: "gestion-sesionesindividuales",
+      element: <div>Sesion Individual</div>
+    },
+    {
+      path: "agregar-sesionindividual",
+      element: <div>Agregar Sesion Individual</div>
+    },
+    {
+      path: "actualizar-sesionindividual",
+      element: <div>Actualizar Sesion Individual</div>
     }
   ]);
