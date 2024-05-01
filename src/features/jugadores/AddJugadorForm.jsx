@@ -5,7 +5,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../posiciones/posicionesSlice";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
 import './jugadores.css';
@@ -29,12 +29,23 @@ const AddJugadorForm = () => {
     const [posicion, setPosicion] = useState('');
     const [equipo, setEquipo] = useState('');
     const [fNac, setFNac] = useState(dayjs());
-    const [iniContrato, setIniContrato] = useState(dayjs());
+    const [iniContrato, setIniContrato] = useState(dayjs().subtract(1, 'day'));
     const [finContrato, setFinContrato] = useState(dayjs());
+    const [errors, setErrors] = useState({});
 
     const onHandleFileChange = file => setSelectedFile(file);
-    const onNombreChanged = e => setNombre(e.target.value);
-    const onApellidoChanged = e => setApellido(e.target.value);
+    const onNombreChanged = e => {
+        setNombre(e.target.value);
+        if(nombre.length >= 2 && errors.nombre) {
+            delete errors.nombre;
+        }
+    }
+    const onApellidoChanged = e => {
+        setApellido(e.target.value);
+        if(apellido.length >= 2 && errors.apellido) {
+            delete errors.apellido;
+        }
+    }
     const onApodoChanged = e => setApodo(e.target.value);
     const onPosicionChanged = e => setPosicion(e.target.value);
     const onEquipoChanged = e => setEquipo(e.target.value);
@@ -42,7 +53,23 @@ const AddJugadorForm = () => {
     const onIniContratoChanged = e => setIniContrato(e);
     const onFinContratoChanged = e => setFinContrato(e);
 
+    const validateForm = () => {
+        const newErrors = {};
+        if(!nombre || nombre.length < 2) {
+            newErrors.nombre = 'El nombre debe tener al menos dos caracteres';
+        }
+        if(!apellido || apellido.length < 2) {
+            newErrors.apellido = 'El nombre debe tener al menos dos caracteres';
+        }
+        return {...errors, ...newErrors};
+    }
+
     const onSaveJugadorClicked = () => {
+        const formErrors = validateForm();
+        if(Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return;
+        }
         try {
             const formData = new FormData();
             formData.append('nombre', nombre);
@@ -66,7 +93,7 @@ const AddJugadorForm = () => {
             setPosicion('');
             setEquipo('');
             setFNac(dayjs());
-            setIniContrato(dayjs());
+            setIniContrato(dayjs().subtract(1, 'day'));
             setFinContrato(dayjs());
         }
     }
@@ -95,6 +122,9 @@ const AddJugadorForm = () => {
                         label="Nombre"
                         value={nombre}
                         onChange={onNombreChanged}
+                        onErr
+                        error={!!errors.nombre}
+                        helperText={errors.nombre}
                         sx={{flex: '30%'}}
                     />
                     <TextField
@@ -103,6 +133,8 @@ const AddJugadorForm = () => {
                         label="Apellido"
                         value={apellido}
                         onChange={onApellidoChanged}
+                        error={!!errors.apellido}
+                        helperText={errors.apellido}
                         sx={{flex: '30%'}}
                     />
                     <TextField
@@ -163,6 +195,19 @@ const AddJugadorForm = () => {
                             label="Fin de contrato"
                             value={finContrato}
                             onChange={onFinContratoChanged}
+                            minDate={iniContrato}
+                            onError={(newError) => {
+                                if(newError) {
+                                    setErrors({...errors, finContrato: 'El fin del contrato debe ser después del inicio del contrato'})
+                                } else {
+                                    setErrors({...errors, finContrato: ''})
+                                }
+                            }}
+                            slotProps={{
+                                textField: {
+                                    helperText: errors.finContrato,
+                                }
+                            }}
                         />
                     </LocalizationProvider>
 
