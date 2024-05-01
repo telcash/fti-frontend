@@ -5,9 +5,11 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../posiciones/posicionesSlice";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
+import './jugadores.css';
+import FileInputField from "../../components/file-input-field/FileInputField";
 
 
 const AddJugadorForm = () => {
@@ -19,6 +21,7 @@ const AddJugadorForm = () => {
     const posiciones = useSelector(selectAllPosiciones);
     const posicionesStatus = useSelector(getPosicionesStatus)
 
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
@@ -29,7 +32,7 @@ const AddJugadorForm = () => {
     const [iniContrato, setIniContrato] = useState(dayjs());
     const [finContrato, setFinContrato] = useState(dayjs());
 
-    const handleFileChange = e => setSelectedFile(e.target.files[0]);
+    const onHandleFileChange = file => setSelectedFile(file);
     const onNombreChanged = e => setNombre(e.target.value);
     const onApellidoChanged = e => setApellido(e.target.value);
     const onApodoChanged = e => setApodo(e.target.value);
@@ -55,6 +58,7 @@ const AddJugadorForm = () => {
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {
+            setFormSubmitted(true);
             setSelectedFile(null);
             setNombre('');
             setApellido('');
@@ -80,86 +84,89 @@ const AddJugadorForm = () => {
     }, [equiposStatus, dispatch])
 
     return (
-        <section>
-            <h2>Agregar jugador</h2>
-            <form>
-                <label htmlFor="foto">
-                    <input
-                        type="file"
-                        onChange={handleFileChange}
+        <section className="addjugador">
+            <h2>Salvar Jugador</h2>
+            <form className="addjugador-form">
+                <FileInputField formSubmitted={formSubmitted} onHandleFileChange={onHandleFileChange} />
+                <div className="addjugador-form-fields">
+                    <TextField
+                        required
+                        id="nombre"
+                        label="Nombre"
+                        value={nombre}
+                        onChange={onNombreChanged}
+                        sx={{flex: '30%'}}
                     />
-                </label>
-                <TextField
-                    required
-                    id="nombre"
-                    label="Nombre"
-                    value={nombre}
-                    onChange={onNombreChanged}
-                />
-                <TextField
-                    required
-                    id="apellido"
-                    label="Apellido"
-                    value={apellido}
-                    onChange={onApellidoChanged} 
-                />
-                <TextField
-                    id="apodo"
-                    label="Apodo"
-                    value={apodo}
-                    onChange={onApodoChanged} 
-                />
-                <InputLabel id="posicion-label">Posición</InputLabel>
-                <Select
-                    labelId="posicion-label"
-                    id="posicion"
-                    value={posicion}
-                    label="Posición"
-                    onChange={onPosicionChanged}
-                    sx={{width: 300}}
-                >
-                {
-                    posiciones.map((posicion) => (
-                        <MenuItem value={posicion.nombre}>{posicion.nombre}</MenuItem>
-                    ))
-                }
-                </Select>
-                <InputLabel id="equipo-label">Equipo Actual</InputLabel>
-                <Select
-                    labelId="equipo-label"
-                    id="equipo"
-                    value={equipo}
-                    label="Equipo Actual"
-                    onChange={onEquipoChanged}
-                    sx={{width: 300}}
-                >
-                {
-                    equipos.map((equipo) => (
-                        <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
-                    ))
-                }
-                </Select>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                    <DatePicker 
-                        label="Fecha de nacimiento"
-                        value={fNac}
-                        onChange={onFNacChanged}
+                    <TextField
+                        required
+                        id="apellido"
+                        label="Apellido"
+                        value={apellido}
+                        onChange={onApellidoChanged}
+                        sx={{flex: '30%'}}
                     />
-                </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                    <DatePicker 
-                        label="Inicio de contrato"
-                        value={iniContrato}
-                        onChange={onIniContratoChanged}
+                    <TextField
+                        id="apodo"
+                        label="Apodo"
+                        value={apodo}
+                        onChange={onApodoChanged} 
+                        sx={{flex: '30%'}}
                     />
-                </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                    <DatePicker 
-                        label="Fin de contrato"
-                        value={finContrato}
-                        onChange={onFinContratoChanged}
-                    />
-                </LocalizationProvider>
+                    <FormControl sx={{flex: '30%'}}>
+                        <InputLabel id="posicion-label">Posición</InputLabel>
+                        <Select
+                            labelId="posicion-label"
+                            id="posicion"
+                            value={posicion}
+                            label="Posición"
+                            onChange={onPosicionChanged}
+                        >
+                        {
+                            posiciones.map((posicion) => (
+                                <MenuItem value={posicion.nombre}>{posicion.nombre}</MenuItem>
+                            ))
+                        }
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{flex: '30%'}}>
+                        <InputLabel id="equipo-label">Equipo Actual</InputLabel>
+                        <Select
+                            labelId="equipo-label"
+                            id="equipo"
+                            value={equipo}
+                            label="Equipo Actual"
+                            onChange={onEquipoChanged}
+                        >
+                        {
+                            equipos.map((equipo) => (
+                                <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                            ))
+                        }
+                        </Select>
+                    </FormControl>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+                        <DatePicker 
+                            label="Fecha de nacimiento"
+                            value={fNac}
+                            onChange={onFNacChanged}
+                        />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+                        <DatePicker 
+                            label="Inicio de contrato"
+                            value={iniContrato}
+                            onChange={onIniContratoChanged}
+                        />
+                    </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+                        <DatePicker 
+                            label="Fin de contrato"
+                            value={finContrato}
+                            onChange={onFinContratoChanged}
+                        />
+                    </LocalizationProvider>
+
+                </div>
                 <div>
                     <Button variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
                 </div>

@@ -2,3 +2,38 @@
     display: flex;
     flex-flow: row nowrap;
 }
+
+input[type="file"]{
+    display: none;
+}
+
+.custom-foto-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.addjugador {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.addjugador-form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.addjugador-form-fields {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
