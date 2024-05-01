@@ -94,7 +94,7 @@ const EquiposList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" onClick={() => router.navigate('../agregar-equipo')} >Añadir equipo</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-equipo')} >Añadir equipo</Button>
             </div>
             {content}
         </section>

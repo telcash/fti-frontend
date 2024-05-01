@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import './fileInputField.css';
 
@@ -41,10 +41,10 @@ const FileInputField = ({onHandleFileChange, formSubmitted, prevImgUrl}) => {
                             src={previewUrl}
                             sx={{ width: 56, height: 56}}
                         />
-                        <Typography variant="h3">Cargar foto</Typography>
+                        <h3>Cargar foto</h3>
                         {
                             selectedFile &&
-                            <Typography variant="h5" gutterBottom>{selectedFile.name}</Typography>
+                            <h5>{selectedFile.name}</h5>
                         }
                     </div>
                 </label>

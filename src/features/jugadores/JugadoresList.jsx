@@ -117,7 +117,7 @@ const JugadoresList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" onClick={() => router.navigate('../agregar-jugador')} >Añadir jugador</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-jugador')} >Añadir jugador</Button>
             </div>
             {content}
         </section>

@@ -2,15 +2,17 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEquipo } from "./equiposSlice";
-
+import FileInputField from "../../components/file-input-field/FileInputField";
+import './equipos.css';
 
 const AddEquipoForm = () => {
     const dispatch = useDispatch();
 
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [nombre, setNombre] = useState('');
 
-    const handleFileChange = e => setSelectedFile(e.target.files[0]);
+    const onHandleFileChange = file => setSelectedFile(file);
     const onNombreChanged = e => setNombre(e.target.value);
 
     const onSaveEquipoClicked = () => {
@@ -21,25 +23,25 @@ const AddEquipoForm = () => {
             dispatch(addEquipo(formData));
         } catch (error) {
             console.error('Failed to save equipo', error);
+        } finally {
+            setFormSubmitted(true);
+            setSelectedFile(null);
+            setNombre('');
         }
     }
 
     return (
-        <section>
+        <section className="addequipo">
             <h2>Agregar equipo</h2>
-            <form>
-                <label htmlFor="foto">
-                    <input
-                        type="file"
-                        onChange={handleFileChange}
-                    />
-                </label>
+            <form className="addequipo-form">
+                <FileInputField formSubmitted={formSubmitted} onHandleFileChange={onHandleFileChange} />
                 <TextField
                     required
                     id="nombre"
                     label="Nombre"
                     value={nombre}
-                    onChange={onNombreChanged} 
+                    onChange={onNombreChanged}
+                    sx={{minWidth: 300}}
                 />
                 <div>
                     <Button variant="contained" onClick={onSaveEquipoClicked}>Salvar</Button>
