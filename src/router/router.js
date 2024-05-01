@@ -8,6 +8,8 @@ import EquiposList from "../features/equipos/EquiposList";
 import AddEquipoForm from "../features/equipos/AddEquipoForm";
 import UpdateEquipoForm from "../features/equipos/UpdateEquipoForm";
 import PosicionesList from "../features/posiciones/PosicionesList";
+import AddPosicionForm from "../features/posiciones/AddPosicionForm";
+import UpdatePosicionForm from "../features/posiciones/UpdatePosicionForm";
 
 export const router = createBrowserRouter([
     {
@@ -80,11 +82,11 @@ export const router = createBrowserRouter([
     },
     {
       path: "agregar-posicion",
-      element: <div>Agregar Posicion</div>
+      element: <AddPosicionForm />
     },
     {
       path: "actualizar-posicion",
-      element: <div>Actualizar Posicion</div>
+      element: <UpdatePosicionForm />
     },
     {
       path: "gestion-partidos",
