@@ -82,7 +82,6 @@ const jugadoresSlice = createSlice({
                 state.jugadores.push(action.payload);
             })
             .addCase(updateJugador.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === state.jugadorSelected.id), 1, action.payload);
             })
             .addCase(deleteJugador.fulfilled, (state, action) => {

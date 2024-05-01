@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getJugadoresStatus, selectAllJugadores, getJugadoresError, fetchJugadores, deleteJugador, jugadorSelected, getJugadorSelected } from "./jugadoresSlice";
 import { useEffect, useState } from "react";
 import Table from '@mui/material/Table';
-import { Button, IconButton, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Avatar, Button, IconButton, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import calculateAge from '../../utils/calculateAge';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,7 +10,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import './jugadores.css';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 import { router } from '../../router/router';
-import JugadorAvatar from "./JugadorAvatar";
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 
@@ -26,15 +25,16 @@ const JugadoresList = () => {
     const error = useSelector(getJugadoresError);
 
     const [open, setOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('Cancelar');
+    //const [selectedValue, setSelectedValue] = useState('Cancelar');
 
     const handleClickOpen = (jugador) => {
         dispatch(jugadorSelected(jugador));
         setOpen(true);
     };
+
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
+        //setSelectedValue(value);
         if (value === 'Eliminar') {
             dispatch(deleteJugador(jugador.id));
         }
@@ -74,8 +74,8 @@ const JugadoresList = () => {
                                 key={jugador.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">
-                                    <JugadorAvatar fotoJugador={imgUrl + jugador.foto} />
+                                <TableCell align="center" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                    <Avatar src={imgUrl + jugador.foto} />
                                 </TableCell>
                                 <TableCell align="center">{jugador.nombre}</TableCell>
                                 <TableCell align="center">{jugador.apellido}</TableCell>
@@ -87,10 +87,12 @@ const JugadoresList = () => {
                                 <TableCell align="center">{jugador.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
-                                        <IconButton onClick={() => {
-                                            dispatch(jugadorSelected(jugador));
-                                            router.navigate('../actualizar-jugador');
-                                        }}>
+                                        <IconButton
+                                            onClick={() => {
+                                                dispatch(jugadorSelected(jugador));
+                                                router.navigate('../actualizar-jugador');
+                                            }}
+                                        >
                                             <EditIcon color="primary"/>
                                         </IconButton>
                                         <IconButton onClick={() => handleClickOpen(jugador)}>

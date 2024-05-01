@@ -6,6 +6,8 @@ import AddJugadorForm from "../features/jugadores/AddJugadorForm";
 import UpdateJugadorForm from "../features/jugadores/UpdateJugadorForm";
 import EquiposList from "../features/equipos/EquiposList";
 import AddEquipoForm from "../features/equipos/AddEquipoForm";
+import UpdateEquipoForm from "../features/equipos/UpdateEquipoForm";
+import PosicionesList from "../features/posiciones/PosicionesList";
 
 export const router = createBrowserRouter([
     {
@@ -58,7 +60,7 @@ export const router = createBrowserRouter([
     },
     {
       path: "actualizar-equipo",
-      element: <div>Actualizar Equipo</div>
+      element: <UpdateEquipoForm />
     },
     {
       path: "gestion-fundamentos",
@@ -71,6 +73,18 @@ export const router = createBrowserRouter([
     {
       path: "actualizar-fundamento",
       element: <div>Actualizar fundamento</div>
+    },
+    {
+      path: "gestion-posiciones",
+      element: <PosicionesList />
+    },
+    {
+      path: "agregar-posicion",
+      element: <div>Agregar Posicion</div>
+    },
+    {
+      path: "actualizar-posicion",
+      element: <div>Actualizar Posicion</div>
     },
     {
       path: "gestion-partidos",

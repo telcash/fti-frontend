@@ -86,8 +86,6 @@ const UpdateJugadorForm = () => {
             formData.append('iniContrato', iniContrato);
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
-            console.log(jugador.id);
-            console.log(formData);
             dispatch(updateJugador({id: jugador.id, jugador: formData}));
         } catch (error) {
             console.error('Failed to save player', error);            

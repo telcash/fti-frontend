@@ -5,7 +5,7 @@ const EQUIPO_URL = process.env.REACT_APP_API_URL + "equipo";
 
 const initialState = {
     equipos: [],
-    equipoSelected: 0,
+    equipoSelected: null,
     status: 'idle',
     error: null 
 }
@@ -28,6 +28,15 @@ export const addEquipo = createAsyncThunk('equipos/addEquipo', async (equipo) =>
     }
 })
 
+export const updateEquipo = createAsyncThunk('equipos/updateEquipo', async (arg) => {
+    try {
+        const response = await axios.patch(`${EQUIPO_URL}/${arg.id}`, arg.equipo);
+        return response.data;
+    } catch (err) {
+        return err.message;
+    }
+})
+
 export const deleteEquipo = createAsyncThunk('equipos/deleteJugador', async (id) => {
     try {
         const response = await axios.delete(`${EQUIPO_URL}/${id}`);
@@ -41,11 +50,6 @@ const equiposSlice = createSlice({
     name: 'equipos',
     initialState,
     reducers: {
-        equipoAdded: {
-            reducer(state, action) {
-                state.equipos.push(action.payload)
-            }
-        },
         equipoSelected: {
             reducer(state, action) {
                 state.equipoSelected = action.payload;
@@ -68,11 +72,14 @@ const equiposSlice = createSlice({
         .addCase(addEquipo.fulfilled, (state, action) => {
             state.equipos.push(action.payload);
         })
+        .addCase(updateEquipo.fulfilled, (state, action) => {
+            state.equipos.splice(state.equipos.findIndex(equipo => equipo.id === state.equipoSelected.id), 1, action.payload);
+        })
         .addCase(deleteEquipo.fulfilled, (state, action) => {
             if(action.payload.affected === 1) {
-                state.equipos.splice(state.equipos.findIndex(equipo => equipo.id === state.equipoSelected), 1);
+                state.equipos.splice(state.equipos.findIndex(equipo => equipo.id === state.equipoSelected.id), 1);
             }
-            state.equipoSelected = 0;
+            state.equipoSelected = null;
         })
     }
 })
@@ -82,6 +89,6 @@ export const getEquiposStatus = (state) => state.equipos.status;
 export const getEquiposError = (state) => state.equipos.error;
 export const getEquipoSelected = (state) => state.equipos.equipoSelected;
 
-export const { equipoAdded, equipoSelected } = equiposSlice.actions;
+export const { equipoSelected } = equiposSlice.actions;
 
 export default equiposSlice.reducer;

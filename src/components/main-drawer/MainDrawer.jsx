@@ -137,6 +137,10 @@ const gestionList = [
     path: 'gestion-fundamentos'
   },
   {
+    text: 'Posiciones',
+    path: 'gestion-posiciones'
+  },
+  {
     text: 'Partidos',
     path: 'gestion-partidos'
   },

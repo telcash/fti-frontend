@@ -6,6 +6,7 @@ import { router } from '../../router/router';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
+import './equipos.css';
 
 const EquiposList = () => {
 
@@ -14,21 +15,21 @@ const EquiposList = () => {
     const dispatch = useDispatch();
 
     const equipos = useSelector(selectAllEquipos);
-    const equipoSelectedId = useSelector(getEquipoSelected);
+    const equipo = useSelector(getEquipoSelected);
     const equiposStatus = useSelector(getEquiposStatus);
     const error = useSelector(getEquiposError);
 
     const [open, setOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('Cancelar');
+    //const [selectedValue, setSelectedValue] = useState('Cancelar');
     const handleClickOpen = (id) => {
         dispatch(equipoSelected(id));
         setOpen(true);
     };
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
+        //setSelectedValue(value);
         if (value === 'Eliminar') {
-            dispatch(deleteEquipo(equipoSelectedId));
+            dispatch(deleteEquipo(equipo.id));
         }
     };
 
@@ -45,7 +46,7 @@ const EquiposList = () => {
         //content = equipos.map(equipo => <h1>{equipo.nombre}</h1>)
         content = (
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="lista equipoes">
+                <Table sx={{minWidth: 650}} aria-label="lista equipos">
                     <TableHead sx={{backgroundColor:'#273237'}}>
                         <TableRow>
                             <TableCell align="center" sx={{color: 'white'}}>Imagen</TableCell>
@@ -60,18 +61,23 @@ const EquiposList = () => {
                                 key={equipo.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">
+                                <TableCell align="center" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                     <Avatar src={imgUrl + equipo.foto}/>
                                 </TableCell>
                                 <TableCell align="center">{equipo.nombre}</TableCell>
                                 <TableCell align="center">{equipo.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
-                                        <IconButton>
-                                            <EditIcon/>
+                                        <IconButton
+                                            onClick={() => {
+                                                dispatch(equipoSelected(equipo));
+                                                router.navigate('../actualizar-equipo');
+                                            }}
+                                        >
+                                            <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(equipo.id)}>
-                                            <DeleteIcon/>
+                                        <IconButton onClick={() => handleClickOpen(equipo)}>
+                                            <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>
                                 </TableCell>
