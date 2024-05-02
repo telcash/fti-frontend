@@ -15,6 +15,7 @@ import AddFundamentoForm from "../features/fundamentos/AddFundamentoForm";
 import UpdateFundamentoForm from "../features/fundamentos/UpdateFundamentoForm";
 import PartidosList from "../features/partidos/PartidosList";
 import AddPartidoForm from "../features/partidos/AddPartidoForm";
+import UpdatePartidoForm from "../features/partidos/UpdatePartidoForm";
 
 export const router = createBrowserRouter([
     {
@@ -103,7 +104,7 @@ export const router = createBrowserRouter([
     },
     {
       path: "actualizar-partido",
-      element: <div>Actualizar partido</div>
+      element: <UpdatePartidoForm />
     },
     {
       path: "gestion-jornadas",
