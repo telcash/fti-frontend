@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPosicion } from "./posicionesSlice";
-
+import './posiciones.css';
 
 const AddPosicionForm = () => {
     const dispatch = useDispatch();
