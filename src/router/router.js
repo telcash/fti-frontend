@@ -11,7 +11,8 @@ import PosicionesList from "../features/posiciones/PosicionesList";
 import AddPosicionForm from "../features/posiciones/AddPosicionForm";
 import UpdatePosicionForm from "../features/posiciones/UpdatePosicionForm";
 import FundamentosList from "../features/fundamentos/FundamentosList";
-import AddFundamentoForm from "../features/fundamentos/AddFundamento";
+import AddFundamentoForm from "../features/fundamentos/AddFundamentoForm";
+import UpdateFundamentoForm from "../features/fundamentos/UpdateFundamentoForm";
 
 export const router = createBrowserRouter([
     {
@@ -76,7 +77,7 @@ export const router = createBrowserRouter([
     },
     {
       path: "actualizar-fundamento",
-      element: <div>Actualizar fundamento</div>
+      element: <UpdateFundamentoForm />
     },
     {
       path: "gestion-posiciones",

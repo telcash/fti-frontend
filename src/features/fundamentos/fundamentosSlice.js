@@ -87,7 +87,7 @@ const fundamentosSlice = createSlice({
 export const selectAllFundamentos = (state) => state.fundamentos.fundamentos;
 export const getFundamentosStatus = (state) => state.fundamentos.status;
 export const getFundamentosError = (state) => state.fundamentos.error;
-export const getFundamentoSelected = (state) => state.fundamentos.fundamentoSelecte;
+export const getFundamentoSelected = (state) => state.fundamentos.fundamentoSelected;
 
 export const { fundamentoSelected } = fundamentosSlice.actions;
 
