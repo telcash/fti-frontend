@@ -3,6 +3,7 @@ import jugadoresReducer from '../features/jugadores/jugadoresSlice';
 import equiposReducer from '../features/equipos/equiposSlice';
 import posicionesReducer from '../features/posiciones/posicionesSlice';
 import fundamentosReducer from '../features/fundamentos/fundamentosSlice';
+import partidosReducer from '../features/partidos/partidosSlice';
 
 export const store = configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
         equipos: equiposReducer,
         posiciones: posicionesReducer,
         fundamentos: fundamentosReducer,
+        partidos: partidosReducer,
     }
 })

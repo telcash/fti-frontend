@@ -13,6 +13,8 @@ import UpdatePosicionForm from "../features/posiciones/UpdatePosicionForm";
 import FundamentosList from "../features/fundamentos/FundamentosList";
 import AddFundamentoForm from "../features/fundamentos/AddFundamentoForm";
 import UpdateFundamentoForm from "../features/fundamentos/UpdateFundamentoForm";
+import PartidosList from "../features/partidos/PartidosList";
+import AddPartidoForm from "../features/partidos/AddPartidoForm";
 
 export const router = createBrowserRouter([
     {
@@ -93,11 +95,11 @@ export const router = createBrowserRouter([
     },
     {
       path: "gestion-partidos",
-      element: <div>Gestion partidos</div>
+      element: <PartidosList />
     },
     {
       path: "agregar-partido",
-      element: <div>Agregar partido</div>
+      element: <AddPartidoForm />
     },
     {
       path: "actualizar-partido",

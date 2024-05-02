@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { getFundamentoSelected, updateFundamento } from "./fundamentosSlice";
 import { useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import './fundamentos.css';
+import { router } from "../../router/router";
 
 
 const UpdateFundamentoForm = () => {
@@ -17,6 +19,7 @@ const UpdateFundamentoForm = () => {
     const onSaveFundamentoClicked = () => {
         try {
             dispatch(updateFundamento({id: fundamento.id, fundamento: {nombre: nombre, tipo: tipo}}));
+            router.navigate('../gestion-fundamentos');
         } catch (error) {
             console.error('Failed to save fundamento', error);
         }

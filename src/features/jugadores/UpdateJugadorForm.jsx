@@ -9,6 +9,7 @@ import { getJugadorSelected, updateJugador } from "./jugadoresSlice";
 import FileInputField from "../../components/file-input-field/FileInputField";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { router } from "../../router/router";
 
 
 
@@ -87,6 +88,7 @@ const UpdateJugadorForm = () => {
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
             dispatch(updateJugador({id: jugador.id, jugador: formData}));
+            router.navigate('../gestion-jugadores');
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {

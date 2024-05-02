@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosicionSelected, updatePosicion } from "./posicionesSlice";
 import { Button, TextField } from "@mui/material";
+import { router } from "../../router/router";
 
 
 
@@ -17,6 +18,7 @@ const UpdatePosicionForm = () => {
     const onSavePosicionClicked = () => {
         try {
             dispatch(updatePosicion({id: posicion.id, posicion: {nombre: nombre}}));
+            router.navigate('../gestion-posiciones');
         } catch (error) {
             console.error('Failed to save posicion', error);
         }

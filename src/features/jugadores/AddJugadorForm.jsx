@@ -10,6 +10,7 @@ import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../po
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
 import './jugadores.css';
 import FileInputField from "../../components/file-input-field/FileInputField";
+import { router } from "../../router/router";
 
 
 const AddJugadorForm = () => {
@@ -82,6 +83,7 @@ const AddJugadorForm = () => {
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
             dispatch(addJugador(formData));
+            router.navigate('../gestion-jugadores');
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {

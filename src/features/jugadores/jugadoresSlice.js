@@ -98,6 +98,6 @@ export const getJugadoresStatus = (state) => state.jugadores.status;
 export const getJugadoresError = (state) => state.jugadores.error;
 export const getJugadorSelected = (state) => state.jugadores.jugadorSelected;
 
-export const { jugadorAdded, jugadorSelected } = jugadoresSlice.actions;
+export const { jugadorSelected } = jugadoresSlice.actions;
 
 export default jugadoresSlice.reducer;

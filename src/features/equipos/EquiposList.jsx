@@ -20,14 +20,12 @@ const EquiposList = () => {
     const error = useSelector(getEquiposError);
 
     const [open, setOpen] = useState(false);
-    //const [selectedValue, setSelectedValue] = useState('Cancelar');
-    const handleClickOpen = (id) => {
-        dispatch(equipoSelected(id));
+    const handleClickOpen = (equipo) => {
+        dispatch(equipoSelected(equipo));
         setOpen(true);
     };
     const handleClose = (value) => {
         setOpen(false);
-        //setSelectedValue(value);
         if (value === 'Eliminar') {
             dispatch(deleteEquipo(equipo.id));
         }
@@ -43,7 +41,6 @@ const EquiposList = () => {
     if(equiposStatus === 'loading') {
         content = <p>"Loading..."</p>
     } else if (equiposStatus === 'succeeded') {
-        //content = equipos.map(equipo => <h1>{equipo.nombre}</h1>)
         content = (
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="lista equipos">
