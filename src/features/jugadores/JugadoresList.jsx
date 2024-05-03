@@ -25,7 +25,6 @@ const JugadoresList = () => {
     const error = useSelector(getJugadoresError);
 
     const [open, setOpen] = useState(false);
-    //const [selectedValue, setSelectedValue] = useState('Cancelar');
 
     const handleClickOpen = (jugador) => {
         dispatch(jugadorSelected(jugador));

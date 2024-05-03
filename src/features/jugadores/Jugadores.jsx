@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
+import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores } from "./jugadoresSlice";
+import JugadorAvatar from "./JugadorAvatar";
+import { router } from '../../router/router';
+import './jugadores.css';
 
 const Jugadores = () => {
 
@@ -9,16 +13,44 @@ const Jugadores = () => {
 
     const equipos = useSelector(selectAllEquipos);
     const equiposStatus = useSelector(getEquiposStatus);
+    const jugadores = useSelector(selectAllJugadores);
+    const jugadoresStatus = useSelector(getJugadoresStatus);
 
     const [equipo, setEquipo] = useState('');
+    const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
 
     const onEquipoChanged = e => setEquipo(e.target.value);
+
+    const handleJugadorClick = (jugador) => {
+        dispatch(jugadorSelected(jugador));
+        router.navigate('/jugador-datos');
+    }
 
     useEffect(() => {
         if(equiposStatus === 'idle') {
             dispatch(fetchEquipos());
         }
     }, [equiposStatus, dispatch])
+
+    useEffect(() => {
+        if(jugadoresStatus === 'idle') {
+            dispatch(fetchJugadores());
+        }
+    }  , [jugadoresStatus, dispatch])
+
+    useEffect(() => {
+        console.log(jugadores);
+        console.log(equipo);
+        if(equipo) {
+            setJugadoresEquipo(jugadores.filter(jugador => {
+                if(jugador.equipo) {
+                    return jugador.equipo.nombre === equipo;
+                }
+                return false;
+            }));
+        }
+    }   , [equipo, equipos, jugadores]);
+
 
     return (
         <div className="jugadores-cancha">
@@ -37,12 +69,19 @@ const Jugadores = () => {
                     ))
                 }
             </Select>
-            <div>
-                <img src="http://www.localhost:3000/3f4b3a6e-b755-4e03-b3c4-a70e0b4d1cae.jpg" alt="" />
+            <div className="jugadores-avatar-list">
+                {
+                    jugadoresEquipo.map((jugador, index) => (
+                        <div key={index} onClick={() => handleJugadorClick(jugador)}>
+                            <JugadorAvatar
+                                nombre={jugador.nombre}
+                                apellido={jugador.apellido}
+                                fotoJugador={jugador.foto}
+                            />
+                        </div>
+                    ))
+                }
             </div>
-           {/*  <div className="cancha">
-                <img src="assets/cancha.png" alt="" />
-            </div> */}
         </div>
     )
 }

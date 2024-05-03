@@ -7,7 +7,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { getPartidoSelected, updatePartido } from "./partidosSlice";
 import { router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Tab, Table, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { fetchJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
 
 
 const UpdatePartidoForm = () => {
@@ -22,6 +23,7 @@ const UpdatePartidoForm = () => {
     const [equipoLocal, setEquipoLocal] = useState(partido.equipoLocal.nombre);
     const [equipoVisitante, setEquipoVisitante] = useState(partido.equipoVisitante.nombre);
     const [resultado, setResultado] = useState(partido.resultado);
+    const [jugadoresToPartido, setJugadoresToPartido] = useState([])
 
     const onFechaChanged = e => setFecha(e);
     const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
@@ -52,6 +54,13 @@ const UpdatePartidoForm = () => {
             dispatch(fetchEquipos());
         }
     }, [equiposStatus, dispatch])
+
+    useEffect(() => {
+            dispatch(fetchJugadorToPartidos())
+                .then((response) => {
+                    setJugadoresToPartido(response.payload.filter(jtp => jtp.partidoId === partido.id));
+                })
+        }, [dispatch, partido.id])
 
     return (
         <section className="addpartido">
@@ -104,6 +113,25 @@ const UpdatePartidoForm = () => {
                         onChange={onResultadoChanged} 
                         sx={{minWidth: 300}}
                     />
+                    <TableContainer component={Paper}>
+                        <Table sx={{minWidth: 650}} aria-label="lista jugadores">
+                            <TableHead sx={{backgroundColor:'#273237'}}>
+                                <TableRow>
+                                    <TableCell align="center" sx={{color: 'white'}}>Imagen</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Apellido</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Convocado</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Lesionado</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Min Jugados</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Goles</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Asistencias</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Tarjetas Amarillas</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Tarjetas Rojas</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Valoración</TableCell>
+                                </TableRow>
+                            </TableHead>
+                        </Table>
+                    </TableContainer>
                 </div>
                 <div>
                     <Button variant="contained" onClick={onSavePartidoClicked}>Actualizar</Button>

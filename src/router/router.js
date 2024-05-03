@@ -19,11 +19,16 @@ import UpdatePartidoForm from "../features/partidos/UpdatePartidoForm";
 import SesionesList from "../features/sesion-individual/SesionesList";
 import AddSesionForm from "../features/sesion-individual/AddSesionForm";
 import UpdateSesionForm from "../features/sesion-individual/UpdateSesionForm";
+import JugadorDatos from "../features/jugadores/JugadorDatos";
 
 export const router = createBrowserRouter([
     {
       path: "jugadores",
       element: <Jugadores />
+    },
+    {
+      path: "jugador-datos",
+      element: <JugadorDatos />
     },
     {
       path: "estadisticas-jugador",

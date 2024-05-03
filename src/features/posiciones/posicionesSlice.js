@@ -81,7 +81,6 @@ const posicionesSlice = createSlice({
                 }
                 state.posicionSelected = null;
             })
-
     }
 })
 
