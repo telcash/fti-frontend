@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -14,7 +13,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import './maindrawer.css';
-import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, PlaylistAdd, ExpandLess, StarBorder } from '@mui/icons-material';
+import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, PlaylistAdd, ExpandLess } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import {router} from '../../router/router';
@@ -145,10 +144,6 @@ const gestionList = [
     path: 'gestion-partidos'
   },
   {
-    text: 'Jornadas',
-    path: 'gestion-jornadas'
-  },
-  {
     text: 'Sesiones Individuales',
     path: 'gestion-sesionesindividuales'
   },
@@ -192,8 +187,8 @@ export default function MainDrawer() {
         <DrawerHeader />
         <List>
           {menuList.map((item, index) => (
-            <div className='list'>
-                <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+            <div className='list' key={index}>
+                <ListItem disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
                         minHeight: 48,
@@ -247,9 +242,10 @@ export default function MainDrawer() {
           ))}
           <Collapse in={gestionOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                {gestionList.map(item => (
+                {gestionList.map((item, index) => (
                     <ListItemButton
-                        onClick={() => router.navigate(`../${item.path}`)} 
+                        onClick={() => router.navigate(`../${item.path}`)}
+                        key={index}
                         sx={{ 
                             pl: 6.5,
                             position: 'relative',

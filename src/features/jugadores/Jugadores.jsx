@@ -32,8 +32,8 @@ const Jugadores = () => {
                 sx={{width: 300}}
             >
                 {
-                    equipos.map((equipo) => (
-                        <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                    equipos.map((equipo, index) => (
+                        <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                     ))
                 }
             </Select>

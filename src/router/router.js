@@ -16,6 +16,9 @@ import UpdateFundamentoForm from "../features/fundamentos/UpdateFundamentoForm";
 import PartidosList from "../features/partidos/PartidosList";
 import AddPartidoForm from "../features/partidos/AddPartidoForm";
 import UpdatePartidoForm from "../features/partidos/UpdatePartidoForm";
+import SesionesList from "../features/sesion-individual/SesionesList";
+import { Add } from "@mui/icons-material";
+import AddSesionForm from "../features/sesion-individual/AddSesionForm";
 
 export const router = createBrowserRouter([
     {
@@ -107,24 +110,12 @@ export const router = createBrowserRouter([
       element: <UpdatePartidoForm />
     },
     {
-      path: "gestion-jornadas",
-      element: <div>Gestion jornadas</div>
-    },
-    {
-      path: "agregar-jornada",
-      element: <div>Agregar jornada</div>
-    },
-    {
-      path: "actualizar-jornada",
-      element: <div>Actualizar jornada</div>
-    },
-    {
       path: "gestion-sesionesindividuales",
-      element: <div>Sesion Individual</div>
+      element: <SesionesList />
     },
     {
       path: "agregar-sesionindividual",
-      element: <div>Agregar Sesion Individual</div>
+      element: <AddSesionForm />
     },
     {
       path: "actualizar-sesionindividual",

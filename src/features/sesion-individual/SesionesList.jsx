@@ -1,88 +1,92 @@
 import { useDispatch, useSelector } from "react-redux"
-import { deletePartido, fetchPartidos, getPartidoSelected, getPartidosError, getPartidosStatus, partidoSelected, selectAllPartidos } from "./partidosSlice";
+import { deleteSesion, fetchSesiones, getSesionesError, getSesionesStatus, getSesionSelected, selectAllSesiones, sesionSelected } from "./sesionIndividualSlice";
 import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import dayjs from 'dayjs';
 import { router } from "../../router/router";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
-import dayjs from 'dayjs';
 
 
-const PartidosList = () => {
+const SesionesList = () => {
     const dispatch = useDispatch();
 
-    const partidos = useSelector(selectAllPartidos);
-    const partido = useSelector(getPartidoSelected);
-    const partidosStatus = useSelector(getPartidosStatus);
-    const error = useSelector(getPartidosError);
+    const sesiones = useSelector(selectAllSesiones);
+    const sesion = useSelector(getSesionSelected);
+    const sesionesStatus = useSelector(getSesionesStatus);
+    const error = useSelector(getSesionesError);
 
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = (partido) => {
-        dispatch(partidoSelected(partido));
+    const handleClickOpen =(sesion) => {
+        dispatch(sesionSelected(sesion));
         setOpen(true);
     }
 
     const handleClose = (value) => {
         setOpen(false);
         if(value === 'Eliminar') {
-            dispatch(deletePartido(partido.id));
+            dispatch(deleteSesion(sesion.id));
         }
     }
 
     useEffect(() => {
-        if (partidosStatus === 'idle') {
-            dispatch(fetchPartidos());
+        if(sesionesStatus === 'idle') {
+            dispatch(fetchSesiones());
         }
-    }, [partidosStatus, dispatch])
+    }, [sesionesStatus, dispatch])
 
     let content;
-    if(partidosStatus === 'loading') {
+    console.log(sesiones)
+
+    if(sesionesStatus === 'loading') {
         content = <p>"Loading..."</p>
-    } else if (partidosStatus === 'succeeded') {
+    } else if (sesionesStatus === 'succeeded') {
         content = (
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="lista partidos">
+                <Table sx={{minWidth: 650}} aria-label="lista sesiones">
                     <TableHead sx={{backgroundColor:'#273237'}}>
                         <TableRow>
                             <TableCell align="center" sx={{color: 'white'}}>Fecha</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Equipo Local</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Equipo Visitante</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Resultado</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Id</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Jugador</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Ejercicios</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Acción</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {partidos.map((partido) => (
+                        {sesiones.map((sesion) => (
                             <TableRow
-                                key={partido.id}
+                                key={sesion.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">{dayjs(partido.fecha).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{partido.equipoLocal.nombre}</TableCell>
-                                <TableCell align="center">{partido.equipoVisitante.nombre}</TableCell>
-                                <TableCell align="center">{partido.resultado}</TableCell>
-                                <TableCell align="center">{partido.id}</TableCell>
+                                <TableCell align="center">{dayjs(sesion.fecha).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{`Id: ${sesion.jugador.id} - ${sesion.jugador.nombre} ${sesion.jugador.apellido}`}</TableCell>
+                                <TableCell align="center">
+                                    {sesion.ejercicios.map(ejercicio => (
+                                        <div key={ejercicio.id}>
+                                            {`${ejercicio.fundamento.tipo.slice(0, 3)} - ${ejercicio.fundamento.nombre} : ${ejercicio.valoracion}`}
+                                        </div>
+                                    ))}
+                                </TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(partidoSelected(partido));
-                                                router.navigate('../actualizar-partido');
+                                                dispatch(sesionSelected(sesion));
+                                                router.navigate('../actualizar-sesionindividual');
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(partido)}>
+                                        <IconButton onClick={() => handleClickOpen(sesion)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>
                                 </TableCell>
                                 <SimpleDialog 
-                                    title="Eliminar Partido"
-                                    contentText={`¿Deseas eliminar el partido de Id ${partido.id}?`}
+                                    title="Eliminar Sesion"
+                                    contentText={`¿Deseas eliminar la sesión de Id ${sesion.id}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />
@@ -92,18 +96,18 @@ const PartidosList = () => {
                 </Table>
             </TableContainer>
         )
-    } else if (partidosStatus === 'failed') {
+    } else if (sesionesStatus === 'failed') {
         content = <p>{error}</p>
     }
 
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-partido')} >Añadir partido</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-sesionindividual')} >Añadir sesión</Button>
             </div>
             {content}
         </section>
     )
 }
 
-export default PartidosList;
+export default SesionesList;

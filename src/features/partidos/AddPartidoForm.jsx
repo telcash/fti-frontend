@@ -76,7 +76,7 @@ const AddPartidoForm = () => {
                         >
                             {
                                 equipos.map((equipo) => (
-                                    <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                                    <MenuItem key={equipo.id} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                 ))
                             }
                         </Select>
