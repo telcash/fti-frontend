@@ -17,8 +17,8 @@ import PartidosList from "../features/partidos/PartidosList";
 import AddPartidoForm from "../features/partidos/AddPartidoForm";
 import UpdatePartidoForm from "../features/partidos/UpdatePartidoForm";
 import SesionesList from "../features/sesion-individual/SesionesList";
-import { Add } from "@mui/icons-material";
 import AddSesionForm from "../features/sesion-individual/AddSesionForm";
+import UpdateSesionForm from "../features/sesion-individual/UpdateSesionForm";
 
 export const router = createBrowserRouter([
     {
@@ -119,6 +119,6 @@ export const router = createBrowserRouter([
     },
     {
       path: "actualizar-sesionindividual",
-      element: <div>Actualizar Sesion Individual</div>
+      element: <UpdateSesionForm />
     }
   ]);

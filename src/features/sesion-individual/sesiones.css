@@ -1,0 +1,6 @@
+.addsesion-fundamento-slider {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 20px;
+}

@@ -38,7 +38,6 @@ const SesionesList = () => {
     }, [sesionesStatus, dispatch])
 
     let content;
-    console.log(sesiones)
 
     if(sesionesStatus === 'loading') {
         content = <p>"Loading..."</p>

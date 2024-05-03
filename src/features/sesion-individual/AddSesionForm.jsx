@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
-import { addSesion } from "./sesionIndividualSlice";
+import { addSesion, fetchSesiones } from "./sesionIndividualSlice";
 import { router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Slider } from "@mui/material";
 import { fetchFundamentos, getFundamentosStatus, selectAllFundamentos } from "../fundamentos/fundamentosSlice";
 import { addEjercicio } from "../ejercicios/ejerciciosSlice";
+import './sesiones.css';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,6 +36,8 @@ const AddSesionForm = () => {
     const [jugadorId, setJugador] = useState('');
     const [fundamentosDefensivos, setFundamentosDefensivos] = useState([]);
     const [fundamentosOfensivos, setFundamentosOfensivos] = useState([]);
+    const [ejerciciosDefensivos, setEjerciciosDefensivos] = useState({});
+    const [ejerciciosOfensivos, setEjerciciosOfensivos] = useState({});
 
     const onFechaChanged = e => setFecha(e);
     const onJugadorChanged = e => setJugador(e.target.value);
@@ -48,22 +52,35 @@ const AddSesionForm = () => {
             ))
             .then((response) => {
                 const sesionId = response.payload.id;
-                fundamentosDefensivos.forEach(fundamento => {
-                    dispatch(addEjercicio({
-                        sesionIndividualId: sesionId,
-                        fundamentoName: fundamento,
-                        valoracion: 0
-                    }));
-                });
-                fundamentosOfensivos.forEach(fundamento => {
-                    dispatch(addEjercicio({
-                        sesionIndividualId: sesionId,
-                        fundamentoName: fundamento,
-                        valoracion: 0
-                    }));
-                });
+                if(sesionId) {
+                    const fundamentosDefensivosPromises = fundamentosDefensivos.map((fundamento) => {
+                        return dispatch(
+                            addEjercicio({
+                                sesionIndividualId: sesionId,
+                                fundamentoName: fundamento,
+                                valoracion: ejerciciosDefensivos[fundamento] || 0,
+                            })
+                        )
+                    });
+                    const fundamentosOfensivosPromises = fundamentosOfensivos.map((fundamento) => {
+                        return dispatch(
+                            addEjercicio({
+                                sesionIndividualId: sesionId,
+                                fundamentoName: fundamento,
+                                valoracion: ejerciciosOfensivos[fundamento] || 0,
+                            })
+                        )
+                    });
+                    Promise.all(
+                        [...fundamentosDefensivosPromises, ...fundamentosOfensivosPromises]
+                    ).then(() => {
+                        dispatch(fetchSesiones()).then(() => {
+                            router.navigate('../gestion-sesionesindividuales');
+                        });
+                        //router.navigate('../gestion-sesionesindividuales');
+                    });
+                }
             });
-            router.navigate('../gestion-sesionesindividuales');
         } catch (error) {
             console.error('Failed to save sesion', error);
         } finally {
@@ -73,7 +90,6 @@ const AddSesionForm = () => {
     }
 
     const handleFundamentosDefensivosChange = (event) => {
-        console.log(fundamentosDefensivos);
         const { target: { value } } = event;
         setFundamentosDefensivos(typeof value === 'string' ? value.split(',') : value);
     };
@@ -82,6 +98,20 @@ const AddSesionForm = () => {
         const { target: { value } } = event;
         setFundamentosOfensivos(typeof value === 'string' ? value.split(',') : value);
     };
+
+    const handleValoracionFDefChange = (event, fundamentoName) => {
+        setEjerciciosDefensivos({
+            ...ejerciciosDefensivos,
+            [fundamentoName]: event.target.value
+        });
+    }
+
+    const handleValoracionFOfeChange = (event, fundamentoName) => {
+        setEjerciciosOfensivos({
+            ...ejerciciosOfensivos,
+            [fundamentoName]: event.target.value
+        });
+    }
 
     useEffect(() => {
         if(jugadoresStatus === 'idle') {
@@ -141,6 +171,21 @@ const AddSesionForm = () => {
                         ))}
                     </Select>
                 </FormControl>
+                {fundamentosDefensivos.map(fundamento => (
+                    <div className="addsesion-fundamento-slider" key={fundamento}>
+                        <h4>{fundamento}</h4>
+                        <Slider 
+                            defaultValue={0}
+                            valueLabelDisplay="on"
+                            step={1}
+                            marks
+                            min={0}
+                            max={10}
+                            sx={{width: 300}}
+                            onChange={(event) => handleValoracionFDefChange(event, fundamento)}
+                        />
+                    </div>
+                ))}
                 <FormControl sx={{m: 1, width: 300}}>
                     <InputLabel id="fundamento-ofensivo-label">Fundamentos Ofensivos</InputLabel>
                     <Select
@@ -160,6 +205,21 @@ const AddSesionForm = () => {
                         ))}
                     </Select>
                 </FormControl>
+                {fundamentosOfensivos.map(fundamento => (
+                    <div className="addsesion-fundamento-slider" key={fundamento}>
+                        <h4>{fundamento}</h4>
+                        <Slider 
+                            defaultValue={0}
+                            valueLabelDisplay="on"
+                            step={1}
+                            marks
+                            min={0}
+                            max={10}
+                            sx={{width: 300}}
+                            onChange={(event) => handleValoracionFOfeChange(event, fundamento)}
+                        />
+                    </div>
+                ))}
                 <div>
                     <Button variant="contained" onClick={onSaveSesionClicked}>Salvar</Button>
                 </div>
