@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 
 export default function SimpleDialog(props) {
-    const { title, contentText, onClose, selectedValue, open } = props;
+    const { title, contentText, onClose, open } = props;
 
     const handleClose = (value) => {
         onClose(value);

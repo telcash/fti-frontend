@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
 import { fetchFundamentos, getFundamentosStatus, selectAllFundamentos } from "../fundamentos/fundamentosSlice";
+import { paths, router } from "../../router/router";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -140,8 +141,9 @@ const UpdateSesionForm = () => {
                         ))}
                     </Select>
                 </FormControl>
-                <div>
-                    <Button variant="contained">Actualizar</Button>
+                <div className="addsesion-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained">Actualizar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionSesionesIndividuales, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

@@ -3,7 +3,7 @@ import { getFundamentoSelected, updateFundamento } from "./fundamentosSlice";
 import { useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import './fundamentos.css';
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 
 const UpdateFundamentoForm = () => {
@@ -50,8 +50,9 @@ const UpdateFundamentoForm = () => {
                         <MenuItem value="Ofensivo">Ofensivo</MenuItem>
                     </Select>
                 </FormControl>
-                <div>
-                    <Button variant="contained" onClick={onSaveFundamentoClicked}>Actualizar</Button>
+                <div className="addfundamento-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveFundamentoClicked}>Actualizar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionFundamentos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

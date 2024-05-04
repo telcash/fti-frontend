@@ -35,8 +35,9 @@ const AddPosicionForm = () => {
                     onChange={onNombreChanged}
                     sx={{minWidth: 300}}
                 />
-                <div>
-                    <Button variant="contained" onClick={onSavePosicionClicked}>Salvar</Button>
+                <div className="addposicion-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePosicionClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionPosiciones, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

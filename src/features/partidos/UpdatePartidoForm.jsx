@@ -9,7 +9,7 @@ import { paths, router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { fetchJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
-
+import './partidos.css';
 
 const UpdatePartidoForm = () => {
     const dispatch = useDispatch();
@@ -133,8 +133,9 @@ const UpdatePartidoForm = () => {
                         </Table>
                     </TableContainer>
                 </div>
-                <div>
-                    <Button variant="contained" onClick={onSavePartidoClicked}>Actualizar</Button>
+                <div className="addpartido-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePartidoClicked}>Actualizar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionPartidos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

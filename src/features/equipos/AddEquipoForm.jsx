@@ -45,8 +45,9 @@ const AddEquipoForm = () => {
                     onChange={onNombreChanged}
                     sx={{minWidth: 300}}
                 />
-                <div>
-                    <Button variant="contained" onClick={onSaveEquipoClicked}>Salvar</Button>
+                <div className="addequipo-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveEquipoClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionEquipos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

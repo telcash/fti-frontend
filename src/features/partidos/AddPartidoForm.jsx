@@ -141,8 +141,9 @@ const AddPartidoForm = () => {
                         sx={{minWidth: 300}}
                     />
                 </div>
-                <div>
-                    <Button variant="contained" onClick={onSavePartidoClicked}>Salvar</Button>
+                <div className="addpartido-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePartidoClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionPartidos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

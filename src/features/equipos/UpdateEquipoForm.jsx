@@ -4,7 +4,7 @@ import { useState } from "react";
 import FileInputField from "../../components/file-input-field/FileInputField";
 import { Button, TextField } from "@mui/material";
 import { paths, router } from "../../router/router";
-
+import './equipos.css';
 
 
 const UpdateEquipoForm = () => {
@@ -54,8 +54,9 @@ const UpdateEquipoForm = () => {
                     onChange={onNombreChanged}
                     sx={{minWidth: 300}}
                 />
-                <div>
-                    <Button variant="contained" onClick={onSaveEquipoClicked}>Actualizar</Button>
+                <div className="addequipo-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveEquipoClicked}>Actualizar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionEquipos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

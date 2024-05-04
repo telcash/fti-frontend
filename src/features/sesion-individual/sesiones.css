@@ -4,3 +4,11 @@
   align-items: center;
   column-gap: 20px;
 }
+
+.addsesion-form-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px
+}

@@ -14,6 +14,14 @@
     gap: 30px;
 }
 
+.addequipo-form-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px
+}
+
 .action-buttons {
     display: flex;
     flex-flow: row nowrap;

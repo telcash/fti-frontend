@@ -16,7 +16,7 @@ import './maindrawer.css';
 import { CalendarMonth, ExpandMore, NotificationsRounded, PermIdentity, PlaylistAdd, ExpandLess } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
-import {router} from '../../router/router';
+import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
 
 
@@ -84,37 +84,37 @@ const menuList = [
     {
         icon: <PermIdentity />,
         text: 'Jugadores',
-        path: 'jugadores'
+        path: paths.jugadores
     },
     {
         icon: <MaterialSymbolsFinance />,
         text: 'Estadísticas jugador',
-        path: 'estadisticas-jugador'
+        path: paths.estadisticasJugador
     },
     {
         icon: <MaterialSymbolsClockLoader90 />,
         text: 'Gráficas',
-        path: 'graficas'
+        path: paths.graficas
     },
     {
         icon: <MaterialSymbolsBidLandscape />,
         text: 'Desarrollo Táctico Individual',
-        path: 'desarrollo-tactico-individual'
+        path: paths.desarrolloTacticoIndividual
     },
     {
         icon: <MaterialSymbolsLightFinanceMode />,
         text: 'Estadísticas de equipo',
-        path: 'estadisticas-equipo'
+        path: paths.estadisticasEquipo
     },
     {
         icon: <CalendarMonth />,
         text: 'Calendario',
-        path: 'calendario'
+        path: paths.calendario
     },
     {
         icon: <NotificationsRounded />,
         text: 'Notificaciones',
-        path: 'notificaciones'
+        path: paths.notificaciones
     },
     {
         icon: <PlaylistAdd />,
@@ -125,27 +125,27 @@ const menuList = [
 const gestionList = [
   {
     text: 'Jugadores',
-    path: 'gestion-jugadores'
+    path: paths.gestionJugadores
   },
   {
     text: 'Equipos',
-    path: 'gestion-equipos'
+    path: paths.gestionEquipos
   },
   {
     text: 'Fundamentos',
-    path: 'gestion-fundamentos'
+    path: paths.gestionFundamentos
   },
   {
     text: 'Posiciones',
-    path: 'gestion-posiciones'
+    path: paths.gestionPosiciones
   },
   {
     text: 'Partidos',
-    path: 'gestion-partidos'
+    path: paths.gestionPartidos
   },
   {
     text: 'Sesiones Individuales',
-    path: 'gestion-sesionesindividuales'
+    path: paths.gestionSesionesIndividuales
   },
 ]
 

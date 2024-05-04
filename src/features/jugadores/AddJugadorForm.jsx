@@ -214,8 +214,8 @@ const AddJugadorForm = () => {
                     </LocalizationProvider>
                 </div>
                 <div className="addjugador-form-buttons">
-                    <Button variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
-                    <Button variant="contained" color="error" onClick={() => router.navigate(paths.gestionJugadores, {replace: true})}>Cancelar</Button>
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" color="error" onClick={() => router.navigate(paths.gestionJugadores, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

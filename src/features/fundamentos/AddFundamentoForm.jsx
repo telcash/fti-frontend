@@ -51,8 +51,9 @@ const AddFundamentoForm = () => {
                         <MenuItem value="Ofensivo">Ofensivo</MenuItem>
                     </Select>
                 </FormControl>
-                <div>
-                    <Button variant="contained" onClick={onSaveFundamentoClicked}>Salvar</Button>
+                <div className="addfundamento-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveFundamentoClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionFundamentos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

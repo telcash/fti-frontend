@@ -219,8 +219,9 @@ const AddSesionForm = () => {
                         />
                     </div>
                 ))}
-                <div>
-                    <Button variant="contained" onClick={onSaveSesionClicked}>Salvar</Button>
+                <div className="addsesion-form-buttons">
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSaveSesionClicked}>Salvar</Button>
+                    <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionSesionesIndividuales, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>
