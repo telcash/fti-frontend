@@ -213,8 +213,9 @@ const AddJugadorForm = () => {
                         />
                     </LocalizationProvider>
                 </div>
-                <div>
+                <div className="addjugador-form-buttons">
                     <Button variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
+                    <Button variant="contained" color="error" onClick={() => router.navigate('../gestion-jugadores')}>Cancelar</Button>
                 </div>
             </form>
         </section>

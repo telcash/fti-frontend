@@ -40,6 +40,14 @@ input[type="file"]{
     gap: 30px;
 }
 
+.addjugador-form-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px
+}
+
 .jugadores-avatar-list {
     display: flex;
     flex-flow: row wrap;

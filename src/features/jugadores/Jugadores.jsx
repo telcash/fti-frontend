@@ -39,8 +39,6 @@ const Jugadores = () => {
     }  , [jugadoresStatus, dispatch])
 
     useEffect(() => {
-        console.log(jugadores);
-        console.log(equipo);
         if(equipo) {
             setJugadoresEquipo(jugadores.filter(jugador => {
                 if(jugador.equipo) {
