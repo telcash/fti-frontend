@@ -10,7 +10,7 @@ import { fetchPosiciones, getPosicionesStatus, selectAllPosiciones } from "../po
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
 import './jugadores.css';
 import FileInputField from "../../components/file-input-field/FileInputField";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 
 const AddJugadorForm = () => {
@@ -83,7 +83,7 @@ const AddJugadorForm = () => {
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
             dispatch(addJugador(formData));
-            router.navigate('../gestion-jugadores');
+            router.navigate(paths.gestionJugadores, {replace: true});
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {
@@ -215,7 +215,7 @@ const AddJugadorForm = () => {
                 </div>
                 <div className="addjugador-form-buttons">
                     <Button variant="contained" onClick={onSaveJugadorClicked}>Salvar</Button>
-                    <Button variant="contained" color="error" onClick={() => router.navigate('../gestion-jugadores')}>Cancelar</Button>
+                    <Button variant="contained" color="error" onClick={() => router.navigate(paths.gestionJugadores, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

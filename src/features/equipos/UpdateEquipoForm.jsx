@@ -3,7 +3,7 @@ import { getEquipoSelected, updateEquipo } from "./equiposSlice";
 import { useState } from "react";
 import FileInputField from "../../components/file-input-field/FileInputField";
 import { Button, TextField } from "@mui/material";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 
 
@@ -28,7 +28,7 @@ const UpdateEquipoForm = () => {
             formData.append('nombre', nombre);
             formData.append('file', selectedFile);
             dispatch(updateEquipo({id: equipo.id, equipo: formData}));
-            router.navigate('../gestion-equipos');
+            router.navigate(paths.gestionEquipos, {replace: true});
         } catch (error) {
             console.error('Failed to save equipo', error);
         } finally {

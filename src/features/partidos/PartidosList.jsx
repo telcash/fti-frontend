@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { deletePartido, fetchPartidos, getPartidoSelected, getPartidosError, getPartidosStatus, partidoSelected, selectAllPartidos } from "./partidosSlice";
 import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
@@ -70,7 +70,7 @@ const PartidosList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(partidoSelected(partido));
-                                                router.navigate('../actualizar-partido');
+                                                router.navigate(paths.actualizarPartido, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -99,7 +99,7 @@ const PartidosList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-partido')} >Añadir partido</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarPartido, { replace: true})} >Añadir partido</Button>
             </div>
             {content}
         </section>

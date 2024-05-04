@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import './jugadores.css';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
-import { router } from '../../router/router';
+import { paths, router } from '../../router/router';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 
@@ -89,7 +89,7 @@ const JugadoresList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(jugadorSelected(jugador));
-                                                router.navigate('../actualizar-jugador');
+                                                router.navigate(paths.actualizarJugador, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -118,7 +118,7 @@ const JugadoresList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-jugador')} >Añadir jugador</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarJugador, {replace: true})} >Añadir jugador</Button>
             </div>
             {content}
         </section>

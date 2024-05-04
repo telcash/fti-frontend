@@ -5,9 +5,9 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { getPartidoSelected, updatePartido } from "./partidosSlice";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Tab, Table, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { fetchJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
 
 
@@ -43,7 +43,7 @@ const UpdatePartidoForm = () => {
                     }
                 }
             ));
-            router.navigate('../gestion-partidos');
+            router.navigate(paths.gestionPartidos, {replace: true});
         } catch (error) {
             console.error('Failed to save partido', error);
         }

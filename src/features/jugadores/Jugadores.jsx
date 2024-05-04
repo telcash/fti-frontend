@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
 import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores } from "./jugadoresSlice";
 import JugadorAvatar from "./JugadorAvatar";
-import { router } from '../../router/router';
+import { paths, router } from '../../router/router';
 import './jugadores.css';
 
 const Jugadores = () => {
@@ -23,7 +23,7 @@ const Jugadores = () => {
 
     const handleJugadorClick = (jugador) => {
         dispatch(jugadorSelected(jugador));
-        router.navigate('/jugador-datos');
+        router.navigate(paths.jugadorDatos, {replace: true});
     }
 
     useEffect(() => {

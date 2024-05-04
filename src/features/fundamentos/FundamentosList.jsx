@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteFundamento, fetchFundamentos, fundamentoSelected, getFundamentoSelected, getFundamentosError, getFundamentosStatus, selectAllFundamentos } from "./fundamentosSlice";
 import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { router } from '../../router/router';
+import { paths, router } from '../../router/router';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -66,7 +66,7 @@ const FundamentosList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(fundamentoSelected(fundamento));
-                                                router.navigate('../actualizar-fundamento');
+                                                router.navigate(paths.actualizarFundamento, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -95,7 +95,7 @@ const FundamentosList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-fundamento')} >Añadir fundamento</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarFundamento, {replace: true})} >Añadir fundamento</Button>
             </div>
             {content}
         </section>

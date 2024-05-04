@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addEquipo } from "./equiposSlice";
 import FileInputField from "../../components/file-input-field/FileInputField";
 import './equipos.css';
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 const AddEquipoForm = () => {
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const AddEquipoForm = () => {
             formData.append('nombre', nombre);
             formData.append('file', selectedFile);
             dispatch(addEquipo(formData));
-            router.navigate('../gestion-equipos');
+            router.navigate(paths.gestionEquipos, { replace: true });
         } catch (error) {
             console.error('Failed to save equipo', error);
         } finally {

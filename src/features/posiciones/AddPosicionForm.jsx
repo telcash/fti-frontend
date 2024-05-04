@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPosicion } from "./posicionesSlice";
 import './posiciones.css';
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 const AddPosicionForm = () => {
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const AddPosicionForm = () => {
     const onSavePosicionClicked = () => {
         try {
             dispatch(addPosicion({nombre: nombre}));
-            router.navigate('../gestion-posiciones');
+            router.navigate(paths.gestionPosiciones, {replace: true});
         } catch (error) {
             console.error('Failed to save posicion', error);
         } finally {

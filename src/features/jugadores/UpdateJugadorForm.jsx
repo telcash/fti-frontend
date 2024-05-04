@@ -9,7 +9,7 @@ import { getJugadorSelected, updateJugador } from "./jugadoresSlice";
 import FileInputField from "../../components/file-input-field/FileInputField";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 
 
 
@@ -88,7 +88,7 @@ const UpdateJugadorForm = () => {
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
             dispatch(updateJugador({id: jugador.id, jugador: formData}));
-            router.navigate('../gestion-jugadores');
+            router.navigate(paths.gestionJugadores, {replace: true});
         } catch (error) {
             console.error('Failed to save player', error);            
         } finally {
@@ -216,7 +216,7 @@ const UpdateJugadorForm = () => {
                 </div>
                 <div className="addjugador-form-buttons">
                     <Button variant="contained" onClick={onSaveJugadorClicked}>Actualizar</Button>
-                    <Button variant="contained" color="error" onClick={() => router.navigate('../gestion-jugadores')}>Cancelar</Button>
+                    <Button variant="contained" color="error" onClick={() => router.navigate(paths.gestionJugadores, {replace: true})}>Cancelar</Button>
                 </div>
             </form>
         </section>

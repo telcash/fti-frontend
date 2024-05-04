@@ -3,7 +3,7 @@ import { deleteSesion, fetchSesiones, getSesionesError, getSesionesStatus, getSe
 import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import dayjs from 'dayjs';
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
@@ -73,7 +73,7 @@ const SesionesList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(sesionSelected(sesion));
-                                                router.navigate('../actualizar-sesionindividual');
+                                                router.navigate(paths.actualizarSesionIndividual, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -102,7 +102,7 @@ const SesionesList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-sesionindividual')} >Añadir sesión</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarSesionIndividual, {replace: true})} >Añadir sesión</Button>
             </div>
             {content}
         </section>

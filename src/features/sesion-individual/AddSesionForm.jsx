@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
 import { addSesion, fetchSesiones } from "./sesionIndividualSlice";
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Slider } from "@mui/material";
@@ -75,9 +75,8 @@ const AddSesionForm = () => {
                         [...fundamentosDefensivosPromises, ...fundamentosOfensivosPromises]
                     ).then(() => {
                         dispatch(fetchSesiones()).then(() => {
-                            router.navigate('../gestion-sesionesindividuales');
+                            router.navigate(paths.gestionSesionesIndividuales, {replace: true});
                         });
-                        //router.navigate('../gestion-sesionesindividuales');
                     });
                 }
             });

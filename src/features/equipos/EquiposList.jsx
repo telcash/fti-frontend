@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getEquiposStatus, selectAllEquipos, getEquiposError, fetchEquipos, getEquipoSelected, equipoSelected, deleteEquipo } from "./equiposSlice";
 import { useEffect, useState } from "react";
 import { Avatar, Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { router } from '../../router/router';
+import { paths, router } from '../../router/router';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
@@ -68,7 +68,7 @@ const EquiposList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(equipoSelected(equipo));
-                                                router.navigate('../actualizar-equipo');
+                                                router.navigate(paths.actualizarEquipo, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -97,7 +97,7 @@ const EquiposList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-equipo')} >Añadir equipo</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarEquipo, {replace: true})} >Añadir equipo</Button>
             </div>
             {content}
         </section>

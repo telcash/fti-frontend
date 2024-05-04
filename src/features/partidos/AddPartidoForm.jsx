@@ -8,7 +8,7 @@ import { addPartido } from "./partidosSlice";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import './partidos.css';
-import { router } from "../../router/router";
+import { paths, router } from "../../router/router";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
 import { addJugadorToPartido } from "../jugador-to-partido/jugadorToPartidoSlice";
 
@@ -63,7 +63,7 @@ const AddPartidoForm = () => {
                     });
                     Promise.all(jugadoresPromises)
                     .then(() => {
-                        router.navigate('../gestion-partidos');
+                        router.navigate(paths.gestionPartidos, {replace: true});
                     });
                 }
             });

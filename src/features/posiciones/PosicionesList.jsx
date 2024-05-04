@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { router } from '../../router/router';
+import { paths, router } from '../../router/router';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const PosicionesList = () => {
@@ -62,7 +62,7 @@ const PosicionesList = () => {
                                         <IconButton
                                             onClick={() => {
                                                 dispatch(posicionSelected(posicion));
-                                                router.navigate('../actualizar-posicion');
+                                                router.navigate(paths.actualizarPosicion, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
@@ -91,7 +91,7 @@ const PosicionesList = () => {
     return (
         <section>
             <div>
-                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate('../agregar-posicion')} >Añadir posicion</Button>
+                <Button variant="contained" sx={{mb: 1}} onClick={() => router.navigate(paths.agregarPosicion, {replace: true})} >Añadir posicion</Button>
             </div>
             {content}
         </section>

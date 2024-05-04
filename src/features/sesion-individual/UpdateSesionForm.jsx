@@ -5,7 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { useEffect, useState } from "react";
-import { Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Slider } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
 import { fetchFundamentos, getFundamentosStatus, selectAllFundamentos } from "../fundamentos/fundamentosSlice";
 
@@ -54,7 +54,6 @@ const UpdateSesionForm = () => {
     const onJugadorChanged = e => setJugador(e.target.value);
 
     const handleFundamentosDefensivosChange = (event) => {
-        console.log(fundamentosDefensivos);
         const { target: { value } } = event;
         setFundamentosDefensivos(typeof value === 'string' ? value.split(',') : value);
     };
