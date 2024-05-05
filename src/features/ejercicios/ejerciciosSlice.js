@@ -80,11 +80,11 @@ const ejerciciosSlice = createSlice({
                 state.ejercicios.push(action.payload);
             })
             .addCase(updateEjercicio.fulfilled, (state, action) => {
-                state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === state.ejercicioSelected.id), 1, action.payload);
+                state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === action.payload.id), 1, action.payload);
             })
             .addCase(deleteEjercicio.fulfilled, (state, action) => {
                 if (action.payload.affected === 1) {
-                    state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === state.ejercicioSelected.id), 1);
+                    state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === action.payload.id), 1);
                 }
             });
     }

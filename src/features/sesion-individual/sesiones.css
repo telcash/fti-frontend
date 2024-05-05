@@ -2,7 +2,31 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  column-gap: 20px;
+  column-gap: 30px;
+}
+
+.addsesion-form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.addsesion-form-s1 {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
+}
+
+.addsesion-form-s2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
 }
 
 .addsesion-form-buttons {
@@ -11,4 +35,12 @@
   justify-content: center;
   align-items: center;
   gap: 30px
+}
+
+.addsesion-form-ejercicio {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
 }

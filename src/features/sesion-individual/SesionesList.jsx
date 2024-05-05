@@ -64,7 +64,7 @@ const SesionesList = () => {
                                 <TableCell align="center">
                                     {sesion.ejercicios.map(ejercicio => (
                                         <div key={ejercicio.id}>
-                                            {`${ejercicio.fundamento.tipo.slice(0, 3)} - ${ejercicio.fundamento.nombre} : ${ejercicio.valoracion}`}
+                                            {`${ejercicio.fundamento.tipo.slice(0, 3)} - ${ejercicio.fundamento.nombre} : ${ejercicio.valoracion}/${ejercicio.valoracionMaxima}`}
                                         </div>
                                     ))}
                                 </TableCell>
