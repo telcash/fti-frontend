@@ -7,6 +7,7 @@ import JugadorAvatar from "./JugadorAvatar";
 import { paths, router } from '../../router/router';
 import './jugadores.css';
 import Draggable from "react-draggable";
+import { useLocation } from "react-router-dom";
 
 const Jugadores = () => {
 
@@ -18,6 +19,8 @@ const Jugadores = () => {
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
     const initialPositions = useSelector(getDraggablePositions);
+
+    const { pathname } = useLocation();
 
     const [equipo, setEquipo] = useState(equipoCancha?.nombre ?? '');
     const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
@@ -39,7 +42,16 @@ const Jugadores = () => {
         if (!isDragging) {
             dispatch(selectDraggablePositions(draggablePositions));
             dispatch(jugadorSelected(jugador));
-            router.navigate(paths.jugadorDatos, {replace: true});
+            const navPaths = {
+                '/jugadores': paths.jugadorDatos,
+                '/estadisticas-jugador': paths.jugadorEstadistica,
+                '/graficas': paths.graficas,
+                '/desarrollo-tactico-individual': paths.desarrolloTacticoIndividual,
+                '/estadisticas-equipo': paths.estadisticasEquipo,
+                '/calendario': paths.calendario,
+                '/notificaciones': paths.notificaciones,
+            }
+            router.navigate(navPaths[pathname], {replace: true});
         } else {
             setIsDragging(false);
         }
@@ -103,7 +115,6 @@ const Jugadores = () => {
                             bounds="parent"
                             position={draggablePositions[index]}
                             onDrag={(e, data) => {
-                                // Update the position in the state when the element is dragged
                                 const updatedPositions = { ...draggablePositions };
                                 updatedPositions[index] = { x: data.x, y: data.y };
                                 setDraggablePositions(updatedPositions);

@@ -20,11 +20,13 @@ import SesionesList from "../features/sesion-individual/SesionesList";
 import AddSesionForm from "../features/sesion-individual/AddSesionForm";
 import UpdateSesionForm from "../features/sesion-individual/UpdateSesionForm";
 import JugadorDatos from "../features/jugadores/JugadorDatos";
+import JugadorEstadisticas from "../features/jugadores/JugadorEstadisticas";
 
 export const paths = {
   jugadores: "/jugadores",
   jugadorDatos: "/jugador-datos",
   estadisticasJugador: "/estadisticas-jugador",
+  jugadorEstadistica: "/jugador-estadisticas",
   graficas: "/graficas",
   desarrolloTacticoIndividual: "/desarrollo-tactico-individual",
   estadisticasEquipo: "/estadisticas-equipo",
@@ -61,7 +63,11 @@ export const router = createBrowserRouter([
   },
   {
     path: paths.estadisticasJugador,
-    element: <div>Estadisticas Jugador</div>
+    element: <Jugadores />
+  },
+  {
+    path: paths.jugadorEstadistica,
+    element: <JugadorEstadisticas />
   },
   {
     path: paths.graficas,

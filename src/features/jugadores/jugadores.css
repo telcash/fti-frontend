@@ -76,3 +76,37 @@ input[type="file"]{
     align-items: center;
     flex: 30%;
 }
+
+.jugador-estadisticas {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+}
+
+.stats-labels {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.stat-label {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 240px;
+    height: 100px;
+    background-color: var(--gray);
+    color: white;
+    border-radius: 10%;
+}
+
+.stat-label h3, h4 {
+    margin: 0;
+}

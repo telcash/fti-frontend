@@ -27,12 +27,12 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
             />
             {
                 (nombre && apellido) && (
-                    <Typography variant="h5" gutterBottom>{`${nombre} ${apellido}`}</Typography>
+                    <h5>{`${nombre} ${apellido}`}</h5>
                 )
             }
             {
                 posicion && (
-                    <Typography variant="h6" gutterBottom>{posicion}</Typography>
+                    <h6>{posicion}</h6>
                 )
             }
         </div>
