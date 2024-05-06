@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { equipoSelected, fetchEquipos, getDraggablePositions, getEquipoSelected, getEquiposStatus, selectAllEquipos, selectDraggablePositions } from "../equipos/equiposSlice";
+import { fetchEquipos, getDraggablePositions, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectDraggablePositions, selectEquipoCancha } from "../equipos/equiposSlice";
 import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores } from "./jugadoresSlice";
 import JugadorAvatar from "./JugadorAvatar";
 import { paths, router } from '../../router/router';
@@ -14,12 +14,12 @@ const Jugadores = () => {
 
     const equipos = useSelector(selectAllEquipos);
     const equiposStatus = useSelector(getEquiposStatus);
-    const equipoSelect = useSelector(getEquipoSelected);
+    const equipoCancha = useSelector(getEquipoCancha);
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
     const initialPositions = useSelector(getDraggablePositions);
 
-    const [equipo, setEquipo] = useState(equipoSelect?.nombre ?? '');
+    const [equipo, setEquipo] = useState(equipoCancha?.nombre ?? '');
     const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
 
     const [draggablePositions, setDraggablePositions] = useState(initialPositions ?? {});
@@ -27,7 +27,7 @@ const Jugadores = () => {
 
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
-        dispatch(equipoSelected(equipos.find(equipo => equipo.nombre === e.target.value)));
+        dispatch(selectEquipoCancha(equipos.find(equipo => equipo.nombre === e.target.value)));
         const initialPositions = {};
         jugadoresEquipo.forEach((jugador, index) => {
             initialPositions[index] = { x: 0, y: 0 };
