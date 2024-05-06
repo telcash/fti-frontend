@@ -49,7 +49,7 @@ const Jugadores = () => {
                 '/desarrollo-tactico-individual': paths.desarrolloTacticoIndividual,
                 '/estadisticas-equipo': paths.estadisticasEquipo,
                 '/calendario': paths.calendario,
-                '/notificaciones': paths.notificaciones,
+                '/notificaciones': paths.jugadoresNotificaciones,
             }
             router.navigate(navPaths[pathname], {replace: true});
         } else {
