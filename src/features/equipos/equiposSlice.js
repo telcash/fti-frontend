@@ -6,6 +6,7 @@ const EQUIPO_URL = process.env.REACT_APP_API_URL + "equipo";
 const initialState = {
     equipos: [],
     equipoSelected: null,
+    draggablePositions: {},
     status: 'idle',
     error: null 
 }
@@ -54,6 +55,11 @@ const equiposSlice = createSlice({
             reducer(state, action) {
                 state.equipoSelected = action.payload;
             }
+        },
+        selectDraggablePositions: {
+            reducer(state, action) {
+                state.draggablePositions = action.payload;
+            }
         }
     },
     extraReducers(builder) {
@@ -88,7 +94,8 @@ export const selectAllEquipos = (state) => state.equipos.equipos;
 export const getEquiposStatus = (state) => state.equipos.status;
 export const getEquiposError = (state) => state.equipos.error;
 export const getEquipoSelected = (state) => state.equipos.equipoSelected;
+export const getDraggablePositions = (state) => state.equipos.draggablePositions;
 
-export const { equipoSelected } = equiposSlice.actions;
+export const { equipoSelected, selectDraggablePositions } = equiposSlice.actions;
 
 export default equiposSlice.reducer;

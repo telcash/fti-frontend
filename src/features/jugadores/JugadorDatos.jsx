@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import JugadorAvatar from "./JugadorAvatar"
 import { getJugadorSelected } from "./jugadoresSlice";
+import { Button } from "@mui/material";
+import { paths, router } from "../../router/router";
 
 const JugadorDatos = () => {
 
@@ -32,6 +34,9 @@ const JugadorDatos = () => {
                     <h3>Finalización de contrato</h3>
                     <p>{jugador.finContrato ?? ''}</p>
                 </div>
+            </div>
+            <div>
+                <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={() => router.navigate(paths.jugadores, {replace: true})}>Regresar</Button>
             </div>
         </div>
     )
