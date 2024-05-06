@@ -45,7 +45,7 @@ const AddPartidoForm = () => {
             .then((response) => {
                 const partidoId = response.payload.id;
                 if(partidoId) {
-                    const jugadoresPromises = jugadores.filter(jugador => jugador.equipo.nombre === equipoLocal || jugador.equipo.nombre === equipoVisitante).map((jugador) => {
+                    const jugadoresPromises = jugadores.filter(jugador => jugador.equipo && (jugador.equipo.nombre === equipoLocal || jugador.equipo.nombre === equipoVisitante)).map((jugador) => {
                         return dispatch(
                             addJugadorToPartido({
                                 jugadorId: jugador.id,

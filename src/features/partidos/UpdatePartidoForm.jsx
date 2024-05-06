@@ -7,9 +7,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { getPartidoSelected, updatePartido } from "./partidosSlice";
 import { paths, router } from "../../router/router";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
-import { fetchJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
+import { Avatar, Button, FormControl, Input, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { fetchJugadorToPartidos, getJugadorToPartidosStatus, selectAllJugadorToPartidos, updateJugadorToPartido } from "../jugador-to-partido/jugadorToPartidoSlice";
 import './partidos.css';
+
+const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
 
 const UpdatePartidoForm = () => {
     const dispatch = useDispatch();
@@ -25,16 +27,98 @@ const UpdatePartidoForm = () => {
     const [resultado, setResultado] = useState(partido.resultado);
     const [jugadoresToPartido, setJugadoresToPartido] = useState([])
 
+    console.log(jugadoresToPartido);
+
+    const onConvocadoChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, convocado: e.target.value === 'Si' ? true : false}
+            }
+            return jtp;
+        });
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onLesionadoChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, lesionado: e.target.value === 'Si' ? true : false}
+            }
+            return jtp;
+        });
+        setJugadoresToPartido(updatedJtp)
+    }
+
+    const onMinJugadosChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, minJugados: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onGolesChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, goles: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onAsistenciasChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, asistencias: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onTarjetasAmarillasChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, tarjetasAmarillas: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onTarjetasRojasChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, tarjetasRojas: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
+    const onValoracionChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorToPartidoId === id) {
+                return {...jtp, valoracion: e.target.value}
+            }
+            return jtp;
+        })
+        setJugadoresToPartido(updatedJtp);
+    }
+
     const onFechaChanged = e => setFecha(e);
     const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
     const onEquipoVisitanteChanged = e => setEquipoVisitante(e.target.value);
     const onResultadoChanged = e => setResultado(e.target.value);
 
-    const onSavePartidoClicked = () => {
+    const onUpdatePartidoClicked = () => {
         try {
             dispatch(updatePartido(
                 {
-                    id: 1,
+                    id: partido.id,
                     partido: {
                         fecha: fecha,
                         resultado: resultado,
@@ -42,8 +126,27 @@ const UpdatePartidoForm = () => {
                         equipoVisitanteId: equipos.filter(equipo => equipo.nombre === equipoVisitante)[0].id
                     }
                 }
-            ));
-            router.navigate(paths.gestionPartidos, {replace: true});
+            ))
+            .then(() => {
+                const jtpPromises = jugadoresToPartido.map(jtp => dispatch(updateJugadorToPartido(
+                    {
+                        id: jtp.jugadorToPartidoId,
+                        jugadorToPartido: {
+                            convocado: jtp.convocado,
+                            lesionado: jtp.lesionado,
+                            minJugados: jtp.minJugados,
+                            goles: jtp.goles,
+                            asistencias: jtp.asistencias,
+                            tarjetasAmarillas: jtp.tarjetasAmarillas,
+                            tarjetasRojas: jtp.tarjetasRojas,
+                            valoracion: jtp.valoracion
+                        }
+                    }
+                )));
+                Promise.all(jtpPromises).then(() => {
+                    router.navigate(paths.gestionPartidos, {replace: true});
+                })
+            })
         } catch (error) {
             console.error('Failed to save partido', error);
         }
@@ -56,12 +159,13 @@ const UpdatePartidoForm = () => {
     }, [equiposStatus, dispatch])
 
     useEffect(() => {
-            dispatch(fetchJugadorToPartidos())
-                .then((response) => {
-                    setJugadoresToPartido(response.payload.filter(jtp => jtp.partidoId === partido.id));
-                })
-        }, [dispatch, partido.id])
+        dispatch(fetchJugadorToPartidos())
+            .then((response) => {
+                setJugadoresToPartido(response.payload.filter(jtp => jtp.partido.id === partido.id));
+            })
+    }, [dispatch, partido.id])
 
+    
     return (
         <section className="addpartido">
             <h2>Actualizar partido</h2>
@@ -130,11 +234,119 @@ const UpdatePartidoForm = () => {
                                     <TableCell align="center" sx={{color: 'white'}}>Valoración</TableCell>
                                 </TableRow>
                             </TableHead>
+                            <TableBody>
+                                {jugadoresToPartido.map((jtp) => (
+                                    <TableRow
+                                        key={jtp.id}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell>
+                                            <Avatar src={imgUrl + jtp.jugador.foto} />
+                                        </TableCell>
+                                        <TableCell align="center">{jtp.jugador.nombre}</TableCell>
+                                        <TableCell align="center">{jtp.jugador.apellido}</TableCell>
+                                        <TableCell align="center">
+                                            <FormControl sx={{minWidth: 100}}>
+                                                <Select
+                                                    labelId="convocado-label"
+                                                    id="convocado"
+                                                    value={jtp.convocado ? 'Si' : 'No'}
+                                                    label="Convocado"
+                                                    onChange={(e) => onConvocadoChanged(e, jtp.jugadorToPartidoId)}
+                                                >
+                                                    <MenuItem value="Si">Si</MenuItem>
+                                                    <MenuItem value="No">No</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <FormControl sx={{minWidth: 100}}>
+                                                <Select
+                                                    labelId="lesionado-label"
+                                                    id="lesionado"
+                                                    value={jtp.lesionado ? 'Si' : 'No'}
+                                                    label="Lesionado"
+                                                    onChange={(e) => onLesionadoChanged(e, jtp.jugadorToPartidoId)}
+                                                >
+                                                    <MenuItem value="Si">Si</MenuItem>
+                                                    <MenuItem value="No">No</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.minJugados}
+                                                inputProps={{min: 0, max: 120, step: 1}}
+                                                onChange={(e) => onMinJugadosChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.goles}
+                                                inputProps={{min: 0, max: 20, step: 1}}
+                                                onChange={(e) => onGolesChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.asistencias}
+                                                inputProps={{min: 0, max: 20, step: 1}}
+                                                onChange={(e) => onAsistenciasChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.tarjetasAmarillas}
+                                                inputProps={{min: 0, max: 2, step: 1}}
+                                                onChange={(e) => onTarjetasAmarillasChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.tarjetasRojas}
+                                                inputProps={{min: 0, max: 1, step: 1}}
+                                                onChange={(e) => onTarjetasRojasChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <Input
+                                                sx={{minWidth: 100}}
+                                                size="small"
+                                                type="number"
+                                                value={jtp.valoracion}
+                                                inputProps={{min: 0, max: 10, step: 1}}
+                                                onChange={(e) => onValoracionChanged(e, jtp.jugadorToPartidoId)}
+                                            >
+                                            </Input>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
                         </Table>
                     </TableContainer>
                 </div>
                 <div className="addpartido-form-buttons">
-                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePartidoClicked}>Actualizar</Button>
+                    <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onUpdatePartidoClicked}>Actualizar</Button>
                     <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionPartidos, {replace: true})}>Cancelar</Button>
                 </div>
             </form>

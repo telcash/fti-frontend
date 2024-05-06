@@ -74,7 +74,7 @@ const jugadorToPartidoSlice = createSlice({
                 state.jugadorToPartidos.push(action.payload);
             })
             .addCase(updateJugadorToPartido.fulfilled, (state, action) => {
-                state.jugadorToPartidos.splice(state.jugadorToPartidos.findIndex(jugadorToPartido => jugadorToPartido.id === state.jugadorToPartidoSelected.id), 1, action.payload);
+                state.jugadorToPartidos.splice(state.jugadorToPartidos.findIndex(jugadorToPartido => jugadorToPartido.jugadorToPartidoId === action.payload.jugadorToPartidoId), 1, action.payload);
             })
             .addCase(deleteJugadorToPartido.fulfilled, (state, action) => {
                 if(action.payload.affected === 1) {
