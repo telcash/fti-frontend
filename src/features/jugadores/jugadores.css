@@ -110,3 +110,26 @@ input[type="file"]{
 .stat-label h3, h4 {
     margin: 0;
 }
+
+.stat-graphs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.graph {
+    padding: 1rem;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--light-gray);
+    border-radius: 2%;
+}
+
+.graph h4 {
+    margin: 0;
+}

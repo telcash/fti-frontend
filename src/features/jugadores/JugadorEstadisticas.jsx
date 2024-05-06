@@ -4,6 +4,12 @@ import './jugadores.css';
 import { fetchJugadorToPartidos, selectAllJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
 import { useEffect, useState } from "react";
 import JugadorAvatar from "./JugadorAvatar";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { LineChart } from "@mui/x-charts/LineChart";
+
+const GRAPH_WIDTH = 350;
+const GRAPH_HEIGHT = 200;
 
 const JugadorEstadisticas = () => {
 
@@ -37,7 +43,6 @@ const JugadorEstadisticas = () => {
     , [jugadorToPartidos, jugador]);
 
     useEffect(() => {
-        console.log(jugadorSelectedToPartidos);
         if (jugadorSelectedToPartidos.length > 0) {
             setMinutos(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.minJugados, 0));
             setConvocado(jugadorSelectedToPartidos.filter(jtp => jtp.convocado).length);
@@ -55,7 +60,7 @@ const JugadorEstadisticas = () => {
     return (
         <section className="jugador-estadisticas">
             <div>
-                <JugadorAvatar fotoJugador={jugador.foto} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion}/>
+                <JugadorAvatar nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion}/>
             </div>
             <div className="stats-labels">
                 <div className="stat-label">
@@ -96,7 +101,61 @@ const JugadorEstadisticas = () => {
                 </div>
             </div>
             <div className="stat-graphs">
-                
+                <div className="graph">
+                    <h4>Convocatorias</h4>
+                    <PieChart
+                        series={[
+                            {
+                                data: [
+                                    { id: 0, value: convocado, label: 'Convocado' },
+                                    { id: 1, value: noConvocado, label: 'No Convocado' },
+                                    { id: 2, value: lesionado, label: 'Lesionado' }
+                                ],
+                                cx: 90,
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Minutos</h4>
+                    <BarChart
+                        dataset={
+                            jugadorSelectedToPartidos.map((jugador, index) => {
+                                return {
+                                    minutos: jugador.minJugados,
+                                    index: index
+                                }
+                            })
+                        }
+                        xAxis={[
+                            {
+                                scaleType: 'band',
+                                dataKey: 'index',
+                            }
+                        ]}
+                        series={[
+                            {
+                                dataKey: 'minutos'
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Valoración</h4>
+                    <LineChart
+                        series={[
+                            {
+                                data: jugadorSelectedToPartidos.map(jugador => jugador.valoracion)
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
             </div>
         </section>
     )
