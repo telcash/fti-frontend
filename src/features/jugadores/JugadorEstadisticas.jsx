@@ -16,6 +16,7 @@ const JugadorEstadisticas = () => {
     const dispatch = useDispatch();
 
     const jugador = useSelector(getJugadorSelected);
+    console.log(jugador)
     const jugadorToPartidos = useSelector(selectAllJugadorToPartidos);
 
     const [jugadorSelectedToPartidos, setJugadorSelectedToPartidos] = useState([]);
@@ -60,7 +61,7 @@ const JugadorEstadisticas = () => {
     return (
         <section className="jugador-estadisticas">
             <div>
-                <JugadorAvatar nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion}/>
+                <JugadorAvatar fotoJugador={jugador.foto ?? ''} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion ? jugador.posicion.nombre : ''}/>
             </div>
             <div className="stats-labels">
                 <div className="stat-label">

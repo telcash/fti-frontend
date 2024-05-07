@@ -22,6 +22,7 @@ import UpdateSesionForm from "../features/sesion-individual/UpdateSesionForm";
 import JugadorDatos from "../features/jugadores/JugadorDatos";
 import JugadorEstadisticas from "../features/jugadores/JugadorEstadisticas";
 import JugadoresNotificaciones from "../features/jugadores/JugadoresNotificaciones";
+import JugadorCalendario from "../features/jugadores/JugadorCalendario";
 
 export const paths = {
   jugadores: "/jugadores",
@@ -32,6 +33,7 @@ export const paths = {
   desarrolloTacticoIndividual: "/desarrollo-tactico-individual",
   estadisticasEquipo: "/estadisticas-equipo",
   calendario: "/calendario",
+  jugadorCalendario : "/jugador-calendario",
   notificaciones: "/notificaciones",
   jugadoresNotificaciones: "/jugadores-notificaciones",
   gestionJugadores: "/gestion-jugadores",
@@ -85,7 +87,11 @@ export const router = createBrowserRouter([
   },
   {
     path: paths.calendario,
-    element: <div>Calendario</div>
+    element: <Jugadores />
+  },
+  {
+    path: paths.jugadorCalendario,
+    element: <JugadorCalendario />
   },
   {
     path: paths.notificaciones,

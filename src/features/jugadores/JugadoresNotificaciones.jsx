@@ -4,7 +4,7 @@ import { fetchSesiones, getSesionesStatus, selectAllSesiones } from "../sesion-i
 import { useEffect, useState } from "react";
 import './jugadores.css';
 
-const PORCENTAJE_ALERTA = 60;
+const PORCENTAJE_ALERTA = 100;
 
 const JugadoresNotificaciones = () => {
 

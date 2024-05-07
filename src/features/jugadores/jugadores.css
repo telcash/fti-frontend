@@ -53,6 +53,8 @@ input[type="file"]{
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
+    position: relative;
+    margin-top: 20px;
 }
 
 .jugador-datos {
@@ -153,4 +155,13 @@ input[type="file"]{
 .notificacion {
     font-size: 16px;
     font-weight: 900;
+}
+
+.MuiDayCalendar-weekDayLabel {
+    color: var(--blue)!important;
+    font-weight: bolder!important;
+}
+
+.MuiButtonBase-root {
+    font-weight: bolder!important;
 }

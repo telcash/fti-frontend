@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Avatar, Container, Typography } from "@mui/material";
+import { Avatar, Container } from "@mui/material";
 
 const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
 
@@ -18,7 +18,7 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
     }, []);
 
     return (
-        <div style={{maxWidth: 200, m:0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <Container sx={{maxWidth: 200, m:0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <Avatar
                 ref={avatarRef}
                 alt="avatar jugador"
@@ -35,7 +35,7 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
                     <h6>{posicion}</h6>
                 )
             }
-        </div>
+        </Container>
     )
 }
 

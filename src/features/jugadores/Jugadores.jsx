@@ -48,7 +48,7 @@ const Jugadores = () => {
                 '/graficas': paths.graficas,
                 '/desarrollo-tactico-individual': paths.desarrolloTacticoIndividual,
                 '/estadisticas-equipo': paths.estadisticasEquipo,
-                '/calendario': paths.calendario,
+                '/calendario': paths.jugadorCalendario,
                 '/notificaciones': paths.jugadoresNotificaciones,
             }
             router.navigate(navPaths[pathname], {replace: true});
@@ -94,12 +94,13 @@ const Jugadores = () => {
                     ))
                 }
             </Select>
-            <div className="jugadores-avatar-list" style={{position: "relative"}}>
+            <div className="jugadores-avatar-list">
                 <Box
                     height={600}
                     width={'100%'}
                     position="relative"
                     id="cancha"
+                    mb={2}
                     sx={{
                         backgroundImage: `url(${'../../assets/cancha.png'})`,
                         backgroundSize: 'cover',
@@ -116,6 +117,7 @@ const Jugadores = () => {
                             position={draggablePositions[index]}
                             onDrag={(e, data) => {
                                 const updatedPositions = { ...draggablePositions };
+                                //TODO: Base de datos
                                 updatedPositions[index] = { x: data.x, y: data.y };
                                 setDraggablePositions(updatedPositions);
                                 setIsDragging(true);
