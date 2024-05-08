@@ -6,7 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useState } from "react";
 import { addPartido } from "./partidosSlice";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Input } from "@mui/material";
 import './partidos.css';
 import { paths, router } from "../../router/router";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
@@ -24,22 +24,28 @@ const AddPartidoForm = () => {
     const [fecha, setFecha] = useState(dayjs());
     const [equipoLocal, setEquipoLocal] = useState('');
     const [equipoVisitante, setEquipoVisitante] = useState('');
-    const [resultado, setResultado] = useState('');
+    //const [resultado, setResultado] = useState('');
+    const [golesLocal, setGolesLocal] = useState(0);
+    const [golesVisitante, setGolesVisitante] = useState(0);
 
 
     const onFechaChanged = e => setFecha(e);
     const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
     const onEquipoVisitanteChanged = e => setEquipoVisitante(e.target.value);
-    const onResultadoChanged = e => setResultado(e.target.value);
+    const onGolesLocalChanged = e => setGolesLocal(e.target.value);
+    const onGolesVisitanteChanged = e => setGolesVisitante(e.target.value);
+    //const onResultadoChanged = e => setResultado(e.target.value);
 
     const onSavePartidoClicked = () => {
         try {
             dispatch(addPartido(
                 {
                     fecha: fecha,
-                    resultado: resultado,
+                    //resultado: resultado,
                     equipoLocalId: equipos.filter(equipo => equipo.nombre === equipoLocal)[0].id,
-                    equipoVisitanteId: equipos.filter(equipo => equipo.nombre === equipoVisitante)[0].id
+                    equipoVisitanteId: equipos.filter(equipo => equipo.nombre === equipoVisitante)[0].id,
+                    golesLocal: golesLocal,
+                    golesVisitante: golesVisitante,
                 }
             ))
             .then((response) => {
@@ -73,7 +79,9 @@ const AddPartidoForm = () => {
             setFecha(dayjs());
             setEquipoLocal('');
             setEquipoVisitante('');
-            setResultado('');
+            setGolesLocal(0);
+            setGolesVisitante(0);
+            //setResultado('');
         }
     }
 
@@ -117,6 +125,17 @@ const AddPartidoForm = () => {
                             }
                         </Select>
                     </FormControl>
+                    <Input
+                        sx={{width: 200}}
+                        size="small"
+                        placeholder="Goles equipo local"
+                        type="number"
+                        onChange={onGolesLocalChanged}
+                        inputProps={{
+                            min: 0,
+                            max: 100,
+                        }}
+                    />
                     <FormControl sx={{minWidth: 300}}>
                         <InputLabel id="equipovisitante-label">Equipo Visitante</InputLabel>
                         <Select
@@ -133,13 +152,24 @@ const AddPartidoForm = () => {
                             }
                         </Select>
                     </FormControl>
-                    <TextField
+                    <Input
+                        sx={{width: 200}}
+                        size="small"
+                        placeholder="Goles equipo local"
+                        type="number"
+                        onChange={onGolesVisitanteChanged}
+                        inputProps={{
+                            min: 0,
+                            max: 100,
+                        }}
+                    />
+                    {/* <TextField
                         id="resultado"
                         label="Resultado"
                         value={resultado}
                         onChange={onResultadoChanged} 
                         sx={{minWidth: 300}}
-                    />
+                    /> */}
                 </div>
                 <div className="addpartido-form-buttons">
                     <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePartidoClicked}>Salvar</Button>

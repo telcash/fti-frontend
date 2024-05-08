@@ -24,10 +24,10 @@ const UpdatePartidoForm = () => {
     const [fecha, setFecha] = useState(dayjs(partido.fecha));
     const [equipoLocal, setEquipoLocal] = useState(partido.equipoLocal.nombre);
     const [equipoVisitante, setEquipoVisitante] = useState(partido.equipoVisitante.nombre);
-    const [resultado, setResultado] = useState(partido.resultado);
+    const [golesLocal, setGolesLocal] = useState(partido.golesLocal);
+    const [golesVisitante, setGolesVisitante] = useState(partido.golesVisitante);
+    //const [resultado, setResultado] = useState(partido.resultado);
     const [jugadoresToPartido, setJugadoresToPartido] = useState([])
-
-    console.log(jugadoresToPartido);
 
     const onConvocadoChanged = (e, id) => {
         const updatedJtp = jugadoresToPartido.map(jtp => {
@@ -112,7 +112,9 @@ const UpdatePartidoForm = () => {
     const onFechaChanged = e => setFecha(e);
     const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
     const onEquipoVisitanteChanged = e => setEquipoVisitante(e.target.value);
-    const onResultadoChanged = e => setResultado(e.target.value);
+    //const onResultadoChanged = e => setResultado(e.target.value);
+    const onGolesLocalChanged = e => setGolesLocal(e.target.value);
+    const onGolesVisitanteChanged = e => setGolesVisitante(e.target.value);
 
     const onUpdatePartidoClicked = () => {
         try {
@@ -121,7 +123,9 @@ const UpdatePartidoForm = () => {
                     id: partido.id,
                     partido: {
                         fecha: fecha,
-                        resultado: resultado,
+                        //resultado: resultado,
+                        golesLocal: golesLocal,
+                        golesVisitante: golesVisitante,
                         equipoLocalId: equipos.filter(equipo => equipo.nombre === equipoLocal)[0].id,
                         equipoVisitanteId: equipos.filter(equipo => equipo.nombre === equipoVisitante)[0].id
                     }
@@ -194,6 +198,17 @@ const UpdatePartidoForm = () => {
                             }
                         </Select>
                     </FormControl>
+                    <Input
+                        sx={{width: 200}}
+                        size="small"
+                        placeholder="Goles equipo local"
+                        type="number"
+                        onChange={onGolesLocalChanged}
+                        inputProps={{
+                            min: 0,
+                            max: 100,
+                        }}
+                    />
                     <FormControl sx={{minWidth: 300}}>
                         <InputLabel id="equipovisitante-label">Equipo Visitante</InputLabel>
                         <Select
@@ -210,13 +225,24 @@ const UpdatePartidoForm = () => {
                             }
                         </Select>
                     </FormControl>
-                    <TextField
+                    <Input
+                        sx={{width: 200}}
+                        size="small"
+                        placeholder="Goles equipo local"
+                        type="number"
+                        onChange={onGolesVisitanteChanged}
+                        inputProps={{
+                            min: 0,
+                            max: 100,
+                        }}
+                    />
+                    {/* <TextField
                         id="resultado"
                         label="Resultado"
                         value={resultado}
                         onChange={onResultadoChanged} 
                         sx={{minWidth: 300}}
-                    />
+                    /> */}
                     <TableContainer component={Paper}>
                         <Table sx={{minWidth: 650}} aria-label="lista jugadores">
                             <TableHead sx={{backgroundColor:'#273237'}}>
