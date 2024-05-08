@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getDraggablePositions, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectDraggablePositions, selectEquipoCancha } from "../equipos/equiposSlice";
-import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores } from "./jugadoresSlice";
+import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores, updateJugador } from "./jugadoresSlice";
 import JugadorAvatar from "./JugadorAvatar";
 import { paths, router } from '../../router/router';
 import './jugadores.css';
@@ -18,29 +18,53 @@ const Jugadores = () => {
     const equipoCancha = useSelector(getEquipoCancha);
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
-    const initialPositions = useSelector(getDraggablePositions);
 
     const { pathname } = useLocation();
 
     const [equipo, setEquipo] = useState(equipoCancha?.nombre ?? '');
     const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
 
-    const [draggablePositions, setDraggablePositions] = useState(initialPositions ?? {});
+    const [draggablePositions, setDraggablePositions] = useState([]);
+
     const [isDragging, setIsDragging] = useState(false);
 
     const onEquipoChanged = e => {
+        /* draggablePositions.forEach(position => 
+            dispatch(updateJugador({
+                id: position.jugadorId,
+                jugador: { 
+                    posX: position.coords.x,
+                    posY: position.coords.y
+                }
+            }))
+        ); */
         setEquipo(e.target.value);
         dispatch(selectEquipoCancha(equipos.find(equipo => equipo.nombre === e.target.value)));
-        const initialPositions = {};
-        jugadoresEquipo.forEach((jugador, index) => {
-            initialPositions[index] = { x: 0, y: 0 };
-        });
-        setDraggablePositions(initialPositions);
     }
 
+    const resetPositions = () => {
+        setDraggablePositions(jugadoresEquipo.map(jugador => {
+            return {
+                jugadorId: jugador.id,
+                coords: {
+                    x: 0,
+                    y: 0
+                }
+            }
+        }))
+        draggablePositions.forEach(position =>
+            dispatch(updateJugador({
+                id: position.jugadorId,
+                jugador: { 
+                    posX: 0,
+                    posY: 0
+                }
+            })
+        ));
+    }
     const handleJugadorClick = (jugador) => {
         if (!isDragging) {
-            dispatch(selectDraggablePositions(draggablePositions));
+            //dispatch(selectDraggablePositions(draggablePositions));
             dispatch(jugadorSelected(jugador));
             const navPaths = {
                 '/jugadores': paths.jugadorDatos,
@@ -71,10 +95,35 @@ const Jugadores = () => {
 
     useEffect(() => {
         if(equipo) {
-            const filteredJugadores = jugadores.filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo);
+            const filteredJugadores = jugadores
+                .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
+                .sort((a, b) => a.id - b.id);
             setJugadoresEquipo(filteredJugadores);
+            setDraggablePositions(filteredJugadores.map(jugador => {
+                return {
+                    jugadorId: jugador.id,
+                    coords: {
+                        x: jugador.posX,
+                        y: jugador.posY
+                    }
+                }
+            }))
         }
     }   , [equipo, equipos, jugadores]);
+
+    useEffect(() => {
+        if(jugadoresEquipo.length > 0) {
+            setDraggablePositions(jugadoresEquipo.map(jugador => {
+                return {
+                    jugadorId: jugador.id,
+                    coords: {
+                        x: jugador.posX,
+                        y: jugador.posY
+                    }
+                }
+            }))
+        }
+    }, [jugadoresEquipo]);
 
 
     return (
@@ -94,7 +143,8 @@ const Jugadores = () => {
                     ))
                 }
             </Select>
-            <div className="jugadores-avatar-list">
+            <Button onClick={resetPositions}>Reset</Button>
+            <div className="jugadores-avatar-list" id="avatar-list">
                 <Box
                     height={600}
                     width={'100%'}
@@ -114,14 +164,39 @@ const Jugadores = () => {
                         <Draggable
                             key={index}
                             bounds="parent"
-                            position={draggablePositions[index]}
+                            position= {{ 
+                                x: draggablePositions.find(position => position.jugadorId === jugador.id).coords.x,
+                                y: draggablePositions.find(position => position.jugadorId === jugador.id).coords.y
+                            }}
                             onDrag={(e, data) => {
-                                const updatedPositions = { ...draggablePositions };
-                                //TODO: Base de datos
-                                updatedPositions[index] = { x: data.x, y: data.y };
-                                setDraggablePositions(updatedPositions);
+                                /* const updatedPositions = [ ...draggablePositions ]
+                                updatedPositions.forEach(position => {
+                                    if(position.jugadorId === jugador.id) {
+                                        position.coords.x = data.x;
+                                        position.coords.y = data.y;
+                                    }
+                                })
+                                setDraggablePositions(updatedPositions); */
                                 setIsDragging(true);
                             }}
+                            onStop={(e, data) => {
+                                const updatedPositions = [ ...draggablePositions ]
+                                updatedPositions.forEach(position => {
+                                    if(position.jugadorId === jugador.id) {
+                                        position.coords.x = data.x;
+                                        position.coords.y = data.y;
+                                    }
+                                })
+                                setDraggablePositions(updatedPositions);
+                                dispatch(updateJugador({
+                                    id: jugador.id,
+                                    jugador: { 
+                                        posX: data.x,
+                                        posY: data.y
+                                    }
+                                }))
+                            }}
+       
                         >
                             <div onClick={() => handleJugadorClick(jugador)}>
                                 <JugadorAvatar
