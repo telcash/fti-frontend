@@ -82,16 +82,17 @@ const Jugadores = () => {
     }
 
     useEffect(() => {
-        if(equiposStatus === 'idle') {
-            dispatch(fetchEquipos());
-        }
-    }, [equiposStatus, dispatch])
-
-    useEffect(() => {
         if(jugadoresStatus === 'idle') {
             dispatch(fetchJugadores());
         }
     }  , [jugadoresStatus, dispatch])
+
+    useEffect(() => {
+        if(equiposStatus === 'idle') {
+            dispatch(fetchEquipos());
+        }
+    }
+    , [equiposStatus, dispatch])
 
     useEffect(() => {
         if(equipo) {
@@ -147,11 +148,12 @@ const Jugadores = () => {
             <div className="jugadores-avatar-list" id="avatar-list">
                 <Box
                     height={600}
-                    width={'100%'}
+                    width={1160}
                     position="relative"
                     id="cancha"
                     mb={2}
                     sx={{
+                        flex: '100%',
                         backgroundImage: `url(${'../../assets/cancha.png'})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
