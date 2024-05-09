@@ -18,7 +18,6 @@ const JugadorEstadisticas = () => {
     const dispatch = useDispatch();
 
     const jugador = useSelector(getJugadorSelected);
-    console.log(jugador)
     const jugadorToPartidos = useSelector(selectAllJugadorToPartidos);
 
     const [jugadorSelectedToPartidos, setJugadorSelectedToPartidos] = useState([]);
@@ -154,6 +153,44 @@ const JugadorEstadisticas = () => {
                             {
                                 data: jugadorSelectedToPartidos.map(jugador => jugador.valoracion)
                             }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Tarjetas</h4>
+                    <BarChart
+                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
+                            return {
+                                amarilla: jugador.tarjetasAmarillas,
+                                roja: jugador.tarjetasRojas,
+                                index: index
+                            }
+                        })}
+                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
+                        series={[
+                            { dataKey: 'amarilla', label: 'Amarillas', color: '#ffc107'},
+                            { dataKey: 'roja', label: 'Rojas', color: '#dc3545'}
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>G/A</h4>
+                    <BarChart
+                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
+                            return {
+                                goles: jugador.goles,
+                                asistencias: jugador.asistencias,
+                                index: index
+                            }
+                        })}
+                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
+                        series={[
+                            { dataKey: 'goles', label: 'Goles', color: '#007bff'},
+                            { dataKey: 'asistencias', label: 'Asistencias', color: '#273237'}
                         ]}
                         width={GRAPH_WIDTH}
                         height={GRAPH_HEIGHT}
