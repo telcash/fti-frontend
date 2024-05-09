@@ -18,6 +18,14 @@ const PartidosList = () => {
     const error = useSelector(getPartidosError);
 
     const [open, setOpen] = useState(false);
+    const [partidosSorted, setPartidosSorted] = useState([]);
+
+    useEffect(() => {
+        if(partidos) {
+            const mutablePartidos = [...partidos];
+            setPartidosSorted(mutablePartidos.sort((a, b) => dayjs(b.fecha).valueOf() - dayjs(a.fecha).valueOf()));
+        }
+    }, [partidos])
 
     const handleClickOpen = (partido) => {
         dispatch(partidoSelected(partido));
@@ -55,7 +63,7 @@ const PartidosList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {partidos.map((partido) => (
+                        {partidosSorted.map((partido) => (
                             <TableRow
                                 key={partido.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

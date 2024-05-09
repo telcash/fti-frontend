@@ -16,10 +16,19 @@
 
 .addpartido-form-fields {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
     gap: 30px;
+}
+
+.addpartido-equipo-goles {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
 }
 
 .addpartido-form-buttons {

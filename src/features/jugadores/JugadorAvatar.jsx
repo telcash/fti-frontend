@@ -18,7 +18,7 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
     }, []);
 
     return (
-        <Container sx={{width: 200, m:0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <Container className="avatar-container" sx={{width: 200, m:0, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <Avatar
                 ref={avatarRef}
                 alt="avatar jugador"

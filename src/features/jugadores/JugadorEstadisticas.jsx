@@ -7,6 +7,8 @@ import JugadorAvatar from "./JugadorAvatar";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { Button } from "@mui/material";
+import { paths, router } from "../../router/router";
 
 const GRAPH_WIDTH = 350;
 const GRAPH_HEIGHT = 200;
@@ -157,6 +159,9 @@ const JugadorEstadisticas = () => {
                         height={GRAPH_HEIGHT}
                     />
                 </div>
+            </div>
+            <div>
+                <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={() => router.navigate(paths.estadisticasJugador, {replace: true})}>Regresar</Button>
             </div>
         </section>
     )

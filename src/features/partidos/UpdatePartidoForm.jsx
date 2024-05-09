@@ -27,7 +27,7 @@ const UpdatePartidoForm = () => {
     const [golesLocal, setGolesLocal] = useState(partido.golesLocal);
     const [golesVisitante, setGolesVisitante] = useState(partido.golesVisitante);
     //const [resultado, setResultado] = useState(partido.resultado);
-    const [jugadoresToPartido, setJugadoresToPartido] = useState([])
+    const [jugadoresToPartido, setJugadoresToPartido] = useState([]);
 
     const onConvocadoChanged = (e, id) => {
         const updatedJtp = jugadoresToPartido.map(jtp => {
@@ -182,60 +182,66 @@ const UpdatePartidoForm = () => {
                             onChange={onFechaChanged}
                         />
                     </LocalizationProvider>
-                    <FormControl sx={{minWidth: 300}}>
-                        <InputLabel id="equipolocal-label">Equipo Local</InputLabel>
-                        <Select
-                            labelId="equipolocal-label"
-                            id="equipolocal"
-                            value={equipoLocal}
-                            label="Equipo Local"
-                            onChange={onEquipoLocalChanged}
-                        >
-                            {
-                                equipos.map((equipo) => (
-                                    <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
-                    <Input
-                        sx={{width: 200}}
-                        size="small"
-                        placeholder="Goles equipo local"
-                        type="number"
-                        onChange={onGolesLocalChanged}
-                        inputProps={{
-                            min: 0,
-                            max: 100,
-                        }}
-                    />
-                    <FormControl sx={{minWidth: 300}}>
-                        <InputLabel id="equipovisitante-label">Equipo Visitante</InputLabel>
-                        <Select
-                            labelId="equipovisitante-label"
-                            id="equipovisitante"
-                            value={equipoVisitante}
-                            label="Equipo Visitante"
-                            onChange={onEquipoVisitanteChanged}
-                        >
-                            {
-                                equipos.map((equipo) => (
-                                    <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
-                    <Input
-                        sx={{width: 200}}
-                        size="small"
-                        placeholder="Goles equipo local"
-                        type="number"
-                        onChange={onGolesVisitanteChanged}
-                        inputProps={{
-                            min: 0,
-                            max: 100,
-                        }}
-                    />
+                    <div className="addpartido-equipo-goles">
+                        <FormControl sx={{minWidth: 300}}>
+                            <InputLabel id="equipolocal-label">Equipo Local</InputLabel>
+                            <Select
+                                labelId="equipolocal-label"
+                                id="equipolocal"
+                                value={equipoLocal}
+                                label="Equipo Local"
+                                onChange={onEquipoLocalChanged}
+                            >
+                                {
+                                    equipos.map((equipo) => (
+                                        <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                        <Input
+                            sx={{width: 200}}
+                            value={partido.golesLocal || 0}
+                            size="small"
+                            placeholder="Goles equipo local"
+                            type="number"
+                            onChange={onGolesLocalChanged}
+                            inputProps={{
+                                min: 0,
+                                max: 100,
+                            }}
+                        />
+                    </div>
+                    <div className="addpartido-equipo-goles">
+                        <FormControl sx={{minWidth: 300}}>
+                            <InputLabel id="equipovisitante-label">Equipo Visitante</InputLabel>
+                            <Select
+                                labelId="equipovisitante-label"
+                                id="equipovisitante"
+                                value={equipoVisitante}
+                                label="Equipo Visitante"
+                                onChange={onEquipoVisitanteChanged}
+                            >
+                                {
+                                    equipos.map((equipo) => (
+                                        <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                        <Input
+                            sx={{width: 200}}
+                            value={partido.golesVisitante || 0}
+                            size="small"
+                            placeholder="Goles equipo visitante"
+                            type="number"
+                            onChange={onGolesVisitanteChanged}
+                            inputProps={{
+                                min: 0,
+                                max: 100,
+                            }}
+                        />
+                    </div>
                     {/* <TextField
                         id="resultado"
                         label="Resultado"
