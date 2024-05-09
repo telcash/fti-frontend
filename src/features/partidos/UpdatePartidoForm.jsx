@@ -110,9 +110,19 @@ const UpdatePartidoForm = () => {
     }
 
     const onFechaChanged = e => setFecha(e);
-    const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
-    const onEquipoVisitanteChanged = e => setEquipoVisitante(e.target.value);
-    //const onResultadoChanged = e => setResultado(e.target.value);
+    const onEquipoLocalChanged = e => {
+        const selectedEquipo = e.target.value;
+        if(selectedEquipo !== equipoVisitante) {
+            setEquipoLocal(selectedEquipo);
+        }
+    }
+
+    const onEquipoVisitanteChanged = e => {
+        const selectedEquipo = e.target.value;
+        if(selectedEquipo !== equipoLocal) {
+            setEquipoVisitante(selectedEquipo);
+        }
+    }
     const onGolesLocalChanged = e => setGolesLocal(e.target.value);
     const onGolesVisitanteChanged = e => setGolesVisitante(e.target.value);
 
@@ -123,7 +133,6 @@ const UpdatePartidoForm = () => {
                     id: partido.id,
                     partido: {
                         fecha: fecha,
-                        //resultado: resultado,
                         golesLocal: golesLocal,
                         golesVisitante: golesVisitante,
                         equipoLocalId: equipos.filter(equipo => equipo.nombre === equipoLocal)[0].id,

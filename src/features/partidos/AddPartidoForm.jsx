@@ -149,12 +149,22 @@ const AddPartidoForm = () => {
         setJugadoresEnEquipos(jugadoresTotales);
     }, [equipoLocal, equipoVisitante, jugadores]);
 
-
-
-
     const onFechaChanged = e => setFecha(e);
-    const onEquipoLocalChanged = e => setEquipoLocal(e.target.value);
-    const onEquipoVisitanteChanged = e => setEquipoVisitante(e.target.value);
+    
+    const onEquipoLocalChanged = e => {
+        const selectedEquipo = e.target.value;
+        if(selectedEquipo !== equipoVisitante) {
+            setEquipoLocal(selectedEquipo);
+        }
+    }
+
+    const onEquipoVisitanteChanged = e => {
+        const selectedEquipo = e.target.value;
+        if(selectedEquipo !== equipoLocal) {
+            setEquipoVisitante(selectedEquipo);
+        }
+    }
+
     const onGolesLocalChanged = e => setGolesLocal(e.target.value);
     const onGolesVisitanteChanged = e => setGolesVisitante(e.target.value);
 
