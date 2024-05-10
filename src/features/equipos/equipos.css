@@ -39,3 +39,19 @@ input[type="file"]{
     padding: 6px 12px;
     cursor: pointer;
 }
+
+.estadisticas-equipo {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.estadisticas-equipo-filtros {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}

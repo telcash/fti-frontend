@@ -24,6 +24,7 @@ import JugadorEstadisticas from "../features/jugadores/JugadorEstadisticas";
 import JugadoresNotificaciones from "../features/jugadores/JugadoresNotificaciones";
 import JugadorCalendario from "../features/jugadores/JugadorCalendario";
 import JugadorGraficas from "../features/jugadores/JugadorGraficas";
+import EstadisticasEquipo from "../features/equipos/EstadisticasEquipo";
 
 export const paths = {
   jugadores: "/jugadores",
@@ -89,7 +90,7 @@ export const router = createBrowserRouter([
   },
   {
     path: paths.estadisticasEquipo,
-    element: <div>Estadisticas de equipo</div>
+    element: <EstadisticasEquipo />
   },
   {
     path: paths.calendario,

@@ -210,7 +210,6 @@ export default function MainDrawer() {
                         }}
                         onClick={() => {
                             setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
-                            console.log(activeMenu);
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
                                 setOpen(true);

@@ -6,11 +6,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useState } from "react";
 import { addPartido } from "./partidosSlice";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Input, TableContainer, Table, TableHead, Paper, TableRow, TableCell, TableBody, Avatar } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Input, TableContainer, Table, TableHead, Paper, TableRow, TableCell, TableBody, Avatar } from "@mui/material";
 import './partidos.css';
 import { paths, router } from "../../router/router";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
-import { addJugadorToPartido, fetchJugadorToPartidos } from "../jugador-to-partido/jugadorToPartidoSlice";
+import { addJugadorToPartido } from "../jugador-to-partido/jugadorToPartidoSlice";
 
 const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
 
