@@ -84,37 +84,37 @@ const menuList = [
     {
         icon: <PermIdentity />,
         text: 'Jugadores',
-        path: paths.jugadores
+        path: paths.jugadores,
     },
     {
         icon: <MaterialSymbolsFinance />,
         text: 'Estadísticas jugador',
-        path: paths.estadisticasJugador
+        path: paths.estadisticasJugador,
     },
     {
         icon: <MaterialSymbolsClockLoader90 />,
         text: 'Gráficas',
-        path: paths.graficas
+        path: paths.graficas,
     },
     {
         icon: <MaterialSymbolsBidLandscape />,
         text: 'Desarrollo Táctico Individual',
-        path: paths.desarrolloTacticoIndividual
+        path: paths.desarrolloTacticoIndividual,
     },
     {
         icon: <MaterialSymbolsLightFinanceMode />,
         text: 'Estadísticas de equipo',
-        path: paths.estadisticasEquipo
+        path: paths.estadisticasEquipo,
     },
     {
         icon: <CalendarMonth />,
         text: 'Calendario',
-        path: paths.calendario
+        path: paths.calendario,
     },
     {
         icon: <NotificationsRounded />,
         text: 'Notificaciones',
-        path: paths.notificaciones
+        path: paths.notificaciones,
     },
     {
         icon: <PlaylistAdd />,
@@ -152,6 +152,7 @@ const gestionList = [
 export default function MainDrawer() {
   const [open, setOpen] = useState(true);
   const [gestionOpen, setGestionOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(menuList.map((menuItem, index) => index === 0 ? true : false));
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -204,9 +205,12 @@ export default function MainDrawer() {
                             bottom: 0,
                             backgroundColor: 'rgba(86, 179, 227, 0.3)',
                             zIndex: 2,
-                        }
+                        },
+                        backgroundColor: activeMenu[index] ? '#007bff' : 'transparent',
                         }}
                         onClick={() => {
+                            setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
+                            console.log(activeMenu);
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
                                 setOpen(true);
