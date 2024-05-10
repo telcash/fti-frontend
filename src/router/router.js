@@ -23,6 +23,7 @@ import JugadorDatos from "../features/jugadores/JugadorDatos";
 import JugadorEstadisticas from "../features/jugadores/JugadorEstadisticas";
 import JugadoresNotificaciones from "../features/jugadores/JugadoresNotificaciones";
 import JugadorCalendario from "../features/jugadores/JugadorCalendario";
+import JugadorGraficas from "../features/jugadores/JugadorGraficas";
 
 export const paths = {
   jugadores: "/jugadores",
@@ -30,6 +31,7 @@ export const paths = {
   estadisticasJugador: "/estadisticas-jugador",
   jugadorEstadistica: "/jugador-estadisticas",
   graficas: "/graficas",
+  jugadorGraficas: "/jugador-graficas",
   desarrolloTacticoIndividual: "/desarrollo-tactico-individual",
   estadisticasEquipo: "/estadisticas-equipo",
   calendario: "/calendario",
@@ -75,7 +77,11 @@ export const router = createBrowserRouter([
   },
   {
     path: paths.graficas,
-    element: <div>Graficas</div>
+    element: <Jugadores />
+  },
+  {
+    path: paths.jugadorGraficas,
+    element: <JugadorGraficas />
   },
   {
     path: paths.desarrolloTacticoIndividual,

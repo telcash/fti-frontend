@@ -69,7 +69,7 @@ const Jugadores = () => {
             const navPaths = {
                 '/jugadores': paths.jugadorDatos,
                 '/estadisticas-jugador': paths.jugadorEstadistica,
-                '/graficas': paths.graficas,
+                '/graficas': paths.jugadorGraficas,
                 '/desarrollo-tactico-individual': paths.desarrolloTacticoIndividual,
                 '/estadisticas-equipo': paths.estadisticasEquipo,
                 '/calendario': paths.jugadorCalendario,
