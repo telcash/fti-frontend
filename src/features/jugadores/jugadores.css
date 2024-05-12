@@ -49,8 +49,8 @@ input[type="file"]{
 }
 
 .main-box {
-    width: 100%;
-    min-width: 1200px;
+    width: 90%;
+    min-width: 800px;
 }
 
 .background-cancha {

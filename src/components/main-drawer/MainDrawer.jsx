@@ -23,7 +23,6 @@ import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymb
 const drawerWidth = window.innerWidth / 4.32;
 
 const openedMixin = (theme) => ({
-  width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,

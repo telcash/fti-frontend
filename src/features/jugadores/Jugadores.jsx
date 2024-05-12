@@ -12,6 +12,27 @@ import { useLocation } from "react-router-dom";
 const Jugadores = () => {
 
     const dispatch = useDispatch();
+    const [mainBoxElement, setMainBoxElement] = useState(null);
+
+    const handleMainBoxRef = (element) => {
+        if (element) {
+            const width = element.offsetWidth;
+            const height = element.offsetHeight;
+            return { width, height }
+        }
+    };
+
+    useEffect(() => {
+        setMainBoxElement(document.getElementById('main-box'));
+    }
+    , []);
+
+    const handleResize = 
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const equipos = useSelector(selectAllEquipos);
     const equiposStatus = useSelector(getEquiposStatus);
@@ -70,6 +91,8 @@ const Jugadores = () => {
         }
     }
 
+    
+
     useEffect(() => {
         if(jugadoresStatus === 'idle') {
             dispatch(fetchJugadores());
@@ -89,19 +112,20 @@ const Jugadores = () => {
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
                 .sort((a, b) => a.id - b.id);
             setJugadoresEquipo(filteredJugadores);
+            const { width, height } = handleMainBoxRef(mainBoxElement);
             setDraggablePositions(filteredJugadores.map(jugador => {
                 return {
                     jugadorId: jugador.id,
                     coords: {
-                        x: jugador.posX,
-                        y: jugador.posY
+                        x: jugador.posX * width,
+                        y: jugador.posY * height
                     }
                 }
             }))
         }
     }   , [equipo, equipos, jugadores]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(jugadoresEquipo.length > 0) {
             setDraggablePositions(jugadoresEquipo.map(jugador => {
                 return {
@@ -113,7 +137,7 @@ const Jugadores = () => {
                 }
             }))
         }
-    }, [jugadoresEquipo]);
+    }, [jugadoresEquipo]); */
 
 
     return (
@@ -135,7 +159,8 @@ const Jugadores = () => {
             </Select>
             <Button onClick={resetPositions}>Reset</Button>
             <div className="jugadores-avatar-list" id="avatar-list">
-                <div className="main-box background-cancha">
+                <div id="main-box" className="main-box">
+                    <div className="background-cancha"></div>
                     {/* <Box
                         width={'100%'}
                         height={'auto'}
@@ -165,6 +190,9 @@ const Jugadores = () => {
                             onDrag={() => {
                                 setIsDragging(true);
                             }}
+                            onStart={() => {
+
+                            }}
                             onStop={(e, data) => {
                                 const updatedPositions = [ ...draggablePositions ]
                                 updatedPositions.forEach(position => {
@@ -174,11 +202,12 @@ const Jugadores = () => {
                                     }
                                 })
                                 setDraggablePositions(updatedPositions);
+                                const { width, height } = handleMainBoxRef(mainBoxElement);
                                 dispatch(updateJugador({
                                     id: jugador.id,
                                     jugador: { 
-                                        posX: data.x,
-                                        posY: data.y
+                                        posX: data.x / width,
+                                        posY: data.y / height
                                     }
                                 }))
                             }}
