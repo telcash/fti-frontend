@@ -186,3 +186,74 @@ input[type="file"]{
     align-items: center;
     gap: 30px;
 }
+
+.jugador-desarrollo-tactico {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.jugador-desarrollo-tactico-info {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.jugador-desarrollo-tactico-fundamentos {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.jugador-desarrollo-tactico-info-calendario {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+}
+
+.jugador-desarrollo-tactico-info-jugador {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.jugador-desarrollo-tactico-info-jugador-leyendas {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.jugador-desarrollo-tactico-info-jugador-leyendas-item {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.jugador-desarrollo-tactico-info-jugador-leyendas-item h5 {
+    margin: 0;
+}
+
+.jugador-notificaciones-item {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}

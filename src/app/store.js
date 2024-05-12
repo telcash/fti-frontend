@@ -7,6 +7,7 @@ import partidosReducer from '../features/partidos/partidosSlice';
 import sesionesReducer from '../features/sesion-individual/sesionIndividualSlice';
 import ejerciciosReducer from '../features/ejercicios/ejerciciosSlice';
 import jugadorToPartidosReducer from '../features/jugador-to-partido/jugadorToPartidoSlice';
+import notificacionesReducer from '../features/notificaciones/notificacionesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         partidos: partidosReducer,
         sesiones: sesionesReducer,
         ejercicios: ejerciciosReducer,
-        jugadorToPartidos: jugadorToPartidosReducer
+        jugadorToPartidos: jugadorToPartidosReducer,
+        notificaciones: notificacionesReducer
     }
 })

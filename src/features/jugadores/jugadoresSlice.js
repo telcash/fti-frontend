@@ -6,6 +6,7 @@ const JUGADOR_URL = process.env.REACT_APP_API_URL + "jugador";
 const initialState = {
     jugadores: [],
     jugadorSelected: null,
+    notificaciones: [],
     status: 'idle',
     error: null 
 }
@@ -63,7 +64,7 @@ const jugadoresSlice = createSlice({
             reducer(state, action) {
                 state.jugadorSelected = action.payload;
             }
-        }
+        },
     },
     extraReducers(builder) {
         builder

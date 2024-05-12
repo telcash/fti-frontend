@@ -1,64 +1,39 @@
-import { useDispatch, useSelector } from "react-redux";
-import { getJugadorSelected } from "./jugadoresSlice";
-import { fetchSesiones, getSesionesStatus, selectAllSesiones } from "../sesion-individual/sesionIndividualSlice";
-import { useEffect, useState } from "react";
 import './jugadores.css';
-
-const PORCENTAJE_ALERTA = 100;
+import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
+import { getNotificaciones, setNotificaciones } from '../notificaciones/notificacionesSlice';
 
 const JugadoresNotificaciones = () => {
 
     const dispatch = useDispatch();
+    const notificaciones = useSelector(getNotificaciones);
 
-    const jugador = useSelector(getJugadorSelected)
-    const sesiones = useSelector(selectAllSesiones);
-    const sesionesStatus = useSelector(getSesionesStatus);
+    const [notificacionesActuales, setNotificacionesActuales] = useState(notificaciones)
+    console.log(notificacionesActuales);
 
-    const [fundamentosEvaluados, setFundamentosEvaluados] = useState([]);
+    const borrarNotificaciones = () => {
+        dispatch(setNotificaciones([]));
+        setNotificacionesActuales([]);
+    }
 
-    useEffect(() => {
-        if(sesionesStatus === 'idle') {
-            dispatch(fetchSesiones());
-        }
-    }, [dispatch, sesionesStatus]);
-
-    useEffect(() => {
-        if (sesiones.length > 0) {
-            const sesionesJugador = sesiones.filter(s => s.jugador.id === jugador.id);
-            const fundamentosNames = [];
-            const fundamentos = [];
-            sesionesJugador.forEach(s => {
-                s.ejercicios.forEach(e => {
-                    if(!fundamentosNames.includes(e.fundamento.nombre)) {
-                        fundamentosNames.push(e.fundamento.nombre);
-                        fundamentos.push({
-                            nombre: e.fundamento.nombre,
-                            valoracion: e.valoracion,
-                            valoracionMaxima: e.valoracionMaxima,
-                            porcentaje: 100 * e.valoracion / e.valoracionMaxima
-                        });
-                    } else {
-                        const index = fundamentos.findIndex(f => f.nombre === e.fundamento.nombre);
-                        fundamentos[index].valoracion += e.valoracion;
-                        fundamentos[index].valoracionMaxima += e.valoracionMaxima;
-                        fundamentos[index].porcentaje = 100 * fundamentos[index].valoracion / fundamentos[index].valoracionMaxima;
-                    }
-                })
-            })
-            setFundamentosEvaluados(fundamentos);
-        }
-    }, [sesiones, jugador]);
+    const borrarNotificacion = (index) => {
+        const notificaciones = notificacionesActuales.filter((notificacion, i) => i !== index);
+        dispatch(setNotificaciones(notificaciones));
+        setNotificacionesActuales(notificaciones);
+    }
 
     return (
         <section className="jugador-notificaciones">
             <h2>Notificaciones</h2>
-            <ul className="jugador-notificaciones-list">
-                {fundamentosEvaluados.filter(f => f.porcentaje <= PORCENTAJE_ALERTA).map(f => (
-                    <li className="notificacion" key={f.nombre}>
-                        {`El jugador ${jugador.nombre} ${jugador.apellido}, de Id: ${jugador.id} tiene un ${f.porcentaje}% en el fundamento ${f.nombre}.`}
-                    </li>
-                ))}
-            </ul>
+            {notificacionesActuales && notificacionesActuales.map((notificacion, index) => (
+                <div key={index} className="jugador-notificaciones-item">
+                    <p>{notificacion}</p>
+                    <Button onClick={() => borrarNotificacion(index)} color='error'>X</Button>
+                </div>
+            ))
+            }
+            <Button onClick={borrarNotificaciones}>Borrar todas las notificaciones</Button>
         </section>
     )
 }

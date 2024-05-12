@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEquipos, getDraggablePositions, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectDraggablePositions, selectEquipoCancha } from "../equipos/equiposSlice";
+import { fetchEquipos, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectEquipoCancha } from "../equipos/equiposSlice";
 import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores, updateJugador } from "./jugadoresSlice";
 import JugadorAvatar from "./JugadorAvatar";
 import { paths, router } from '../../router/router';
@@ -29,15 +29,6 @@ const Jugadores = () => {
     const [isDragging, setIsDragging] = useState(false);
 
     const onEquipoChanged = e => {
-        /* draggablePositions.forEach(position => 
-            dispatch(updateJugador({
-                id: position.jugadorId,
-                jugador: { 
-                    posX: position.coords.x,
-                    posY: position.coords.y
-                }
-            }))
-        ); */
         setEquipo(e.target.value);
         dispatch(selectEquipoCancha(equipos.find(equipo => equipo.nombre === e.target.value)));
     }
@@ -64,16 +55,14 @@ const Jugadores = () => {
     }
     const handleJugadorClick = (jugador) => {
         if (!isDragging) {
-            //dispatch(selectDraggablePositions(draggablePositions));
             dispatch(jugadorSelected(jugador));
             const navPaths = {
                 '/jugadores': paths.jugadorDatos,
                 '/estadisticas-jugador': paths.jugadorEstadistica,
                 '/graficas': paths.jugadorGraficas,
-                '/desarrollo-tactico-individual': paths.desarrolloTacticoIndividual,
+                '/desarrollo-tactico-individual': paths.jugadorDesarrolloTactico,
                 '/estadisticas-equipo': paths.estadisticasEquipo,
                 '/calendario': paths.jugadorCalendario,
-                '/notificaciones': paths.jugadoresNotificaciones,
             }
             router.navigate(navPaths[pathname], {replace: true});
         } else {
