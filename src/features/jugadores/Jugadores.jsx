@@ -13,26 +13,43 @@ const Jugadores = () => {
 
     const dispatch = useDispatch();
     const [mainBoxElement, setMainBoxElement] = useState(null);
+    const [jugadoresCanchaElement, setJugadoresCanchaElement] = useState(null);
 
-    const handleMainBoxRef = (element) => {
+    const handleElementRef = (element) => {
         if (element) {
-            const width = element.offsetWidth;
-            const height = element.offsetHeight;
+            const width = element.clientWidth;
+            const height = element.clientHeight;
             return { width, height }
         }
     };
 
     useEffect(() => {
         setMainBoxElement(document.getElementById('main-box'));
+        setJugadoresCanchaElement(document.getElementById('jugadores-cancha-box'));
     }
     , []);
 
-    const handleResize = 
-
     useEffect(() => {
+        const handleResize = () => {
+            const { width, height } = handleElementRef(mainBoxElement);
+            const boxW = width;
+            const boxH = height;
+            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+            setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
+                return {
+                    jugadorId: jugador.id,
+                    coords: {
+                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 75.92)
+                    }
+                }
+            }))
+        }
+
         window.addEventListener('resize', handleResize);
+
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    },);
 
     const equipos = useSelector(selectAllEquipos);
     const equiposStatus = useSelector(getEquiposStatus);
@@ -112,18 +129,25 @@ const Jugadores = () => {
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
                 .sort((a, b) => a.id - b.id);
             setJugadoresEquipo(filteredJugadores);
-            const { width, height } = handleMainBoxRef(mainBoxElement);
-            setDraggablePositions(filteredJugadores.map(jugador => {
+            const { width, height } = handleElementRef(mainBoxElement);
+            const boxW = width;
+            const boxH = height;
+            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+            setDraggablePositions(filteredJugadores.map((jugador, index) => {
                 return {
                     jugadorId: jugador.id,
-                    coords: {
+                    /* coords: {
                         x: jugador.posX * width,
                         y: jugador.posY * height
+                    } */
+                    coords: {
+                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 75.92)
                     }
                 }
             }))
         }
-    }   , [equipo, equipos, jugadores]);
+    }   , [equipo, jugadores, jugadoresCanchaElement, mainBoxElement]);
 
     /* useEffect(() => {
         if(jugadoresEquipo.length > 0) {
@@ -141,7 +165,7 @@ const Jugadores = () => {
 
 
     return (
-        <div className="jugadores-cancha">
+        <div className="jugadores-cancha" id="jugadores-cancha-box">
             <InputLabel id="equipo-label">Seleccionar equipo</InputLabel>
             <Select
                 labelId="equipo-label"
@@ -190,9 +214,6 @@ const Jugadores = () => {
                             onDrag={() => {
                                 setIsDragging(true);
                             }}
-                            onStart={() => {
-
-                            }}
                             onStop={(e, data) => {
                                 const updatedPositions = [ ...draggablePositions ]
                                 updatedPositions.forEach(position => {
@@ -202,18 +223,22 @@ const Jugadores = () => {
                                     }
                                 })
                                 setDraggablePositions(updatedPositions);
-                                const { width, height } = handleMainBoxRef(mainBoxElement);
+                                const { width, height } = handleElementRef(mainBoxElement);
+                                const boxW = width;
+                                const boxH = height;
+                                const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+                                console.log((index * dw + data.x) / boxW);
                                 dispatch(updateJugador({
                                     id: jugador.id,
                                     jugador: { 
-                                        posX: data.x / width,
-                                        posY: data.y / height
+                                        posX: ((index - 1) * dw + data.x) / boxW,
+                                        posY: (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
                                     }
                                 }))
                             }}
        
                         >
-                            <div onClick={() => handleJugadorClick(jugador)}>
+                            <div style={{ flex: '25%'}} onClick={() => handleJugadorClick(jugador)}>
                                 <JugadorAvatar
                                     nombre={jugador.nombre}
                                     apellido={jugador.apellido}
