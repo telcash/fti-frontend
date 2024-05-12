@@ -48,14 +48,33 @@ input[type="file"]{
     gap: 30px
 }
 
+.main-box {
+    width: 100%;
+    min-width: 1200px;
+}
+
+.background-cancha {
+    background-image: url('/public/assets/cancha.png');
+    background-size: cover;
+    background-position: 'center';
+    background-repeat: 'no-repeat';
+    height: 0;
+    padding-top: 51.73%;
+}
+
+.jugadores-cancha {
+    width: 100%;
+}
+
 .jugadores-avatar-list {
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
     position: relative;
     margin-top: 20px;
-    max-width: 1160px;
+    /* max-width: 1160px; */
 }
 
 .jugador-datos {

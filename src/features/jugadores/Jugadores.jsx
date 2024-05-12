@@ -135,21 +135,24 @@ const Jugadores = () => {
             </Select>
             <Button onClick={resetPositions}>Reset</Button>
             <div className="jugadores-avatar-list" id="avatar-list">
-                <Box
-                    height={600}
-                    width={1160}
-                    position="relative"
-                    id="cancha"
-                    mb={2}
-                    sx={{
-                        flex: '100%',
-                        backgroundImage: `url(${'../../assets/cancha.png'})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                    }}
-                >
-                </Box>
+                <div className="main-box background-cancha">
+                    {/* <Box
+                        width={'100%'}
+                        height={'auto'}
+                        position="relative"
+                        id="cancha"
+                        mb={2}
+                        sx={{
+                            minWidth: '100%',
+                            height: 'auto',
+                            backgroundImage: `url(${'../../assets/cancha.png'})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                        }}
+                    >
+                    </Box> */}
+                </div>
                 {
                     jugadoresEquipo.map((jugador, index) => (
                         <Draggable
@@ -159,15 +162,7 @@ const Jugadores = () => {
                                 x: draggablePositions.find(position => position.jugadorId === jugador.id).coords.x,
                                 y: draggablePositions.find(position => position.jugadorId === jugador.id).coords.y
                             }}
-                            onDrag={(e, data) => {
-                                /* const updatedPositions = [ ...draggablePositions ]
-                                updatedPositions.forEach(position => {
-                                    if(position.jugadorId === jugador.id) {
-                                        position.coords.x = data.x;
-                                        position.coords.y = data.y;
-                                    }
-                                })
-                                setDraggablePositions(updatedPositions); */
+                            onDrag={() => {
                                 setIsDragging(true);
                             }}
                             onStop={(e, data) => {
