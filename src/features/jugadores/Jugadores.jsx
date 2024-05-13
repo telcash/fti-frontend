@@ -40,6 +40,7 @@ const Jugadores = () => {
     };
 
     useEffect(() => {
+        console.log('useEffect')
         setMainBoxElement(document.getElementById('main-box'));
         setJugadoresCanchaElement(document.getElementById('jugadores-cancha-box'));
     }
@@ -124,7 +125,7 @@ const Jugadores = () => {
     , [equiposStatus, dispatch])
 
     useEffect(() => {
-        if(equipo) {
+        if(equipo && jugadoresCanchaElement && mainBoxElement) {
             const filteredJugadores = jugadores
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
                 .sort((a, b) => a.id - b.id);

@@ -195,7 +195,7 @@ input[type="file"]{
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 50px;
 }
 
 .jugador-graficas-filtros {
@@ -204,6 +204,7 @@ input[type="file"]{
     justify-content: center;
     align-items: center;
     gap: 30px;
+    margin-bottom: 40px;
 }
 
 .jugador-desarrollo-tactico {

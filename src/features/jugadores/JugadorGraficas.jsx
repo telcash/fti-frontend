@@ -22,7 +22,7 @@ const JugadorGraficas = () => {
 
     const [sesionesJugador, setSesionesJugador] = useState([]);
     const [tipoGrafica, setTipoGrafica] = useState();
-    const [tipoFundamento, setTipoFundamento] = useState('');
+    const [fundamento, setFundamento] = useState('');
     const [selectedSesion, setSelectedSesion] = useState();
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const JugadorGraficas = () => {
                         onChange={(e) => setTipoGrafica(e.target.value)}
                     >
                         <MenuItem value="barras">Diagrama de barras</MenuItem>
-                        <MenuItem value="lineal">Gráfica lineal</MenuItem>
+                        {/* <MenuItem value="lineal">Gráfica lineal</MenuItem> */}
                         <MenuItem value="circular">Gráfica circular</MenuItem>
                     </Select>
                 </FormControl>
@@ -79,23 +79,37 @@ const JugadorGraficas = () => {
                     </Select>
                 </FormControl>
                 <FormControl sx={{ width: 300}}>
-                    <InputLabel id="fundamento-tipo-label">Tipo de Fundamento</InputLabel>
+                    <InputLabel id="fundamento-label">Fundamento</InputLabel>
                     <Select
-                        labelId="fundamento-tipo-label"
-                        id="fundamento-tipo"
-                        label="Tipo de Fundamento"
-                        value={tipoFundamento || ''}
-                        onChange={(e) => setTipoFundamento(e.target.value)}
+                        labelId="fundamento-label"
+                        id="fundamento"
+                        label="Fundamento"
+                        value={fundamento || ''}
+                        onChange={(e) => setFundamento(e.target.value)}
                     >
-                        <MenuItem value="Defensivo">Defensivo</MenuItem>
-                        <MenuItem value="Ofensivo">Ofensivo</MenuItem>
+                        {tipoGrafica === 'barras' && 
+                            <MenuItem value="Defensivo">Defensivo</MenuItem>
+                        }
+                        {tipoGrafica === 'barras' && 
+                            <MenuItem value="Ofensivo">Ofensivo</MenuItem>
+                        }
+                        {tipoGrafica === 'circular' &&
+                            selectedSesion && selectedSesion.ejercicios.map(ejercicio => (
+                                <MenuItem
+                                    key={ejercicio.fundamento.id}
+                                    value={ejercicio.fundamento.nombre}
+                                >
+                                    {ejercicio.fundamento.nombre}
+                                </MenuItem>
+                            ))
+                        }
                     </Select>
                 </FormControl>
             </div>
             <div className="jugador-graficas-grafica">
-                {tipoGrafica === 'barras' && selectedSesion && tipoFundamento &&
+                {tipoGrafica === 'barras' && selectedSesion && fundamento &&
                     <BarChart
-                        dataset={selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.tipo === tipoFundamento).map(ejercicio => {
+                        dataset={selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.tipo === fundamento).map(ejercicio => {
                             return {
                                 valorIdeal: ejercicio.valoracionMaxima,
                                 valorObtenido: ejercicio.valoracion,
@@ -111,20 +125,26 @@ const JugadorGraficas = () => {
                         height={GRAPH_HEIGHT}
                     />
                 }
-                {tipoGrafica === 'lineal' && selectedSesion && tipoFundamento &&
+                {/* {tipoGrafica === 'lineal' && selectedSesion && fundamento &&
                     <h3>Gráfica lineal</h3>
-                }
-                {tipoGrafica === 'circular' && selectedSesion && tipoFundamento &&
+                } */}
+                {tipoGrafica === 'circular' && selectedSesion && fundamento &&
                     <PieChart
                         series={[
                             {
-                                data: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.tipo === tipoFundamento).map(ejercicio => {
-                                    return {
-                                        id: ejercicio.fundamento.id,
-                                        value: ejercicio.valoracion,
-                                        label: ejercicio.fundamento.nombre
+                                data: [
+                                    {
+                                        id: 0,
+                                        value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                        label: `${fundamento} (A favor)`
+                                    },
+                                    {
+                                        id: 1,
+                                        value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                        label: `${fundamento} (En contra)`
                                     }
-                                }),
+                                ],
+                                cx: 200,
                             }
                         ]}
                         width={GRAPH_WIDTH}
