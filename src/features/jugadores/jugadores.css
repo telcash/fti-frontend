@@ -66,6 +66,30 @@ input[type="file"]{
     width: 100%;
 }
 
+.avatar-container h5, h6 {
+    margin: 0;
+}
+
+.avatar-info {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.avatar-info-dark {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: var(--gray);
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+}
+
+
 .jugadores-avatar-list {
     width: 100%;
     display: flex;
@@ -219,11 +243,12 @@ input[type="file"]{
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 100px;
 }
 
 .jugador-desarrollo-tactico-fundamentos {
+    width: 100%;
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -238,16 +263,20 @@ input[type="file"]{
     justify-content: center;
     align-items: center;
     gap: 30px;
-
+    border-color: var(--blue);
+    border-width: 1px;
+    border-style: solid;
 }
 
 .jugador-desarrollo-tactico-info-jugador {
+
     flex: 1;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 80px;
+    margin-top: 20px;
 }
 
 .jugador-desarrollo-tactico-info-jugador-leyendas {
@@ -259,9 +288,10 @@ input[type="file"]{
 }
 
 .jugador-desarrollo-tactico-info-jugador-leyendas-item {
+    flex: 40%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }

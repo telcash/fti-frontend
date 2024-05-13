@@ -3,7 +3,7 @@ import { Avatar, Container } from "@mui/material";
 
 const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
 
-const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
+const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion, darkMode }) => {
 
     const avatarRef = useRef();
 
@@ -25,16 +25,18 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion }) => {
                 src={imgUrl + fotoJugador}
                 sx={{ width: 56, height: 56 }}
             />
-            {
-                (nombre && apellido) && (
-                    <h5>{`${nombre} ${apellido}`}</h5>
-                )
-            }
-            {
-                posicion && (
-                    <h6>{posicion}</h6>
-                )
-            }
+            <div className={darkMode ? 'avatar-info-dark' : 'avatar-info'}>
+                {
+                    (nombre && apellido) && (
+                        <h5>{`${nombre} ${apellido}`}</h5>
+                    )
+                }
+                {
+                    posicion && (
+                        <h6>{posicion}</h6>
+                    )
+                }
+            </div>
         </Container>
     )
 }

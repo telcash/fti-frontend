@@ -52,7 +52,7 @@ const JugadorDesarrolloTactico = () => {
             <h2>Análisis Táctico</h2>
             <div className="jugador-desarrollo-tactico-info">
                 <div className="jugador-desarrollo-tactico-info-jugador">
-                    <JugadorAvatar />
+                    <JugadorAvatar fotoJugador={jugador.foto} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion.nombre} />
                     <div className="jugador-desarrollo-tactico-info-jugador-leyendas">
                         <div className="jugador-desarrollo-tactico-info-jugador-leyendas-item">
                             <Box bgcolor="#A8D6A6" sx={{ width: 60, height: 20, borderRadius: '5%' }} />
@@ -83,15 +83,15 @@ const JugadorDesarrolloTactico = () => {
                 </div>
             </div>
             <div className="jugador-desarrollo-tactico-fundamentos">
-                <Box>
+                <div className="jugador-desarrollo-tactico-fundamentos-tabs">
                     <Tabs
                         value={tipoFundamento}
                         onChange={onTipoFundamentoChange}
                     >
-                        <Tab value="Defensivo" label="Fundamentos defensivos"/>
-                        <Tab value="Ofensivo" label="Fundamentos ofensivos"/>
+                        <Tab sx={{mr: 5, ml: 5}} value="Defensivo" label="Fundamentos defensivos"/>
+                        <Tab sx={{mr: 5, ml: 5}} value="Ofensivo" label="Fundamentos ofensivos"/>
                     </Tabs>
-                </Box>
+                </div>
                 <TableContainer component={Paper}>
                     <Table sx={{minWidth: 650}}>
                         <TableBody>

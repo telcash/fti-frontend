@@ -244,6 +244,7 @@ const Jugadores = () => {
                                     nombre={jugador.nombre}
                                     apellido={jugador.apellido}
                                     fotoJugador={jugador.foto}
+                                    darkMode={true}
                                 />
                             </div>
                         </Draggable>

@@ -20,9 +20,10 @@ import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
 
 
-const drawerWidth = window.innerWidth / 4.32;
+const drawerWidth = window.innerWidth / 5.32;
 
 const openedMixin = (theme) => ({
+
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
