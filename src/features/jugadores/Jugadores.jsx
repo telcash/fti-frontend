@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectEquipoCancha } from "../equipos/equiposSlice";
 import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores, updateJugador } from "./jugadoresSlice";
@@ -12,6 +12,22 @@ import { useLocation } from "react-router-dom";
 const Jugadores = () => {
 
     const dispatch = useDispatch();
+
+    const jugadores = useSelector(selectAllJugadores);
+    const jugadoresStatus = useSelector(getJugadoresStatus);
+    const equipos = useSelector(selectAllEquipos);
+    const equiposStatus = useSelector(getEquiposStatus);
+    const equipoCancha = useSelector(getEquipoCancha);
+
+    const { pathname } = useLocation();
+
+    const [equipo, setEquipo] = useState(equipoCancha?.nombre ?? '');
+    const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
+
+    const [draggablePositions, setDraggablePositions] = useState([]);
+
+    const [isDragging, setIsDragging] = useState(false);
+
     const [mainBoxElement, setMainBoxElement] = useState(null);
     const [jugadoresCanchaElement, setJugadoresCanchaElement] = useState(null);
 
@@ -51,21 +67,6 @@ const Jugadores = () => {
         return () => window.removeEventListener('resize', handleResize);
     },);
 
-    const equipos = useSelector(selectAllEquipos);
-    const equiposStatus = useSelector(getEquiposStatus);
-    const equipoCancha = useSelector(getEquipoCancha);
-    const jugadores = useSelector(selectAllJugadores);
-    const jugadoresStatus = useSelector(getJugadoresStatus);
-
-    const { pathname } = useLocation();
-
-    const [equipo, setEquipo] = useState(equipoCancha?.nombre ?? '');
-    const [jugadoresEquipo, setJugadoresEquipo] = useState([]);
-
-    const [draggablePositions, setDraggablePositions] = useState([]);
-
-    const [isDragging, setIsDragging] = useState(false);
-
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
         dispatch(selectEquipoCancha(equipos.find(equipo => equipo.nombre === e.target.value)));
@@ -91,6 +92,7 @@ const Jugadores = () => {
             })
         ));
     }
+
     const handleJugadorClick = (jugador) => {
         if (!isDragging) {
             dispatch(jugadorSelected(jugador));
@@ -107,8 +109,6 @@ const Jugadores = () => {
             setIsDragging(false);
         }
     }
-
-    
 
     useEffect(() => {
         if(jugadoresStatus === 'idle') {
