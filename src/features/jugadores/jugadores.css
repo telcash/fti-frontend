@@ -85,7 +85,7 @@ input[type="file"]{
     align-items: center;
     color: white;
     background-color: var(--gray);
-    padding: 0.25rem 0.5rem;
+    padding: 0.15rem 0.4rem;
     border-radius: 10px;
 }
 
@@ -98,7 +98,6 @@ input[type="file"]{
     justify-content: flex-start;
     position: relative;
     margin-top: 20px;
-    /* max-width: 1160px; */
 }
 
 .jugador-datos {

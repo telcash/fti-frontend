@@ -40,7 +40,6 @@ const Jugadores = () => {
     };
 
     useEffect(() => {
-        console.log('useEffect')
         setMainBoxElement(document.getElementById('main-box'));
         setJugadoresCanchaElement(document.getElementById('jugadores-cancha-box'));
     }
@@ -137,10 +136,6 @@ const Jugadores = () => {
             setDraggablePositions(filteredJugadores.map((jugador, index) => {
                 return {
                     jugadorId: jugador.id,
-                    /* coords: {
-                        x: jugador.posX * width,
-                        y: jugador.posY * height
-                    } */
                     coords: {
                         x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
                         y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 75.92)
@@ -149,21 +144,6 @@ const Jugadores = () => {
             }))
         }
     }   , [equipo, jugadores, jugadoresCanchaElement, mainBoxElement]);
-
-    /* useEffect(() => {
-        if(jugadoresEquipo.length > 0) {
-            setDraggablePositions(jugadoresEquipo.map(jugador => {
-                return {
-                    jugadorId: jugador.id,
-                    coords: {
-                        x: jugador.posX,
-                        y: jugador.posY
-                    }
-                }
-            }))
-        }
-    }, [jugadoresEquipo]); */
-
 
     return (
         <div className="jugadores-cancha" id="jugadores-cancha-box">
@@ -186,22 +166,6 @@ const Jugadores = () => {
             <div className="jugadores-avatar-list" id="avatar-list">
                 <div id="main-box" className="main-box">
                     <div className="background-cancha"></div>
-                    {/* <Box
-                        width={'100%'}
-                        height={'auto'}
-                        position="relative"
-                        id="cancha"
-                        mb={2}
-                        sx={{
-                            minWidth: '100%',
-                            height: 'auto',
-                            backgroundImage: `url(${'../../assets/cancha.png'})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                        }}
-                    >
-                    </Box> */}
                 </div>
                 {
                     jugadoresEquipo.map((jugador, index) => (
@@ -219,8 +183,8 @@ const Jugadores = () => {
                                 const updatedPositions = [ ...draggablePositions ]
                                 updatedPositions.forEach(position => {
                                     if(position.jugadorId === jugador.id) {
-                                        position.coords.x = data.x;
-                                        position.coords.y = data.y;
+                                        position.coords.x = (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : data.x;
+                                        position.coords.y = (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : data.y;
                                     }
                                 })
                                 setDraggablePositions(updatedPositions);
@@ -228,18 +192,17 @@ const Jugadores = () => {
                                 const boxW = width;
                                 const boxH = height;
                                 const dw = handleElementRef(jugadoresCanchaElement).width / 4;
-                                console.log((index * dw + data.x) / boxW);
                                 dispatch(updateJugador({
                                     id: jugador.id,
                                     jugador: { 
-                                        posX: ((index - 1) * dw + data.x) / boxW,
-                                        posY: (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
+                                        posX: (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : ((index - 1) * dw + data.x) / boxW,
+                                        posY: (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
                                     }
                                 }))
                             }}
        
                         >
-                            <div style={{ flex: '25%'}} onClick={() => handleJugadorClick(jugador)}>
+                            <div style={{ flex: '25%', maxWidth: handleElementRef(jugadoresCanchaElement).width / 4 }} onClick={() => handleJugadorClick(jugador)}>
                                 <JugadorAvatar
                                     nombre={jugador.nombre}
                                     apellido={jugador.apellido}

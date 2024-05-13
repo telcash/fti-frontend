@@ -28,7 +28,7 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion, darkMode }) =>
             <div className={darkMode ? 'avatar-info-dark' : 'avatar-info'}>
                 {
                     (nombre && apellido) && (
-                        <h5>{`${nombre} ${apellido}`}</h5>
+                        <h5>{`${nombre} ${apellido}`.slice(0,18)}</h5>
                     )
                 }
                 {
