@@ -10,7 +10,7 @@
 
 .MuiDrawer-paper {
     background-color: #273237!important;
-    width: 270px!important;
+    max-width: 270px!important;
 }
 
 .MuiTypography-root {

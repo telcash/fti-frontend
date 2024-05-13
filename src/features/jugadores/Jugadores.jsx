@@ -8,10 +8,13 @@ import { paths, router } from '../../router/router';
 import './jugadores.css';
 import Draggable from "react-draggable";
 import { useLocation } from "react-router-dom";
+import { getDrawerOpen } from "../../components/main-drawer/mainDrawerSlice";
 
 const Jugadores = () => {
 
     const dispatch = useDispatch();
+
+    const isDrawerOpen = useSelector(getDrawerOpen);
 
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
@@ -47,6 +50,7 @@ const Jugadores = () => {
 
     useEffect(() => {
         const handleResize = () => {
+            console.log('resize');
             const { width, height } = handleElementRef(mainBoxElement);
             const boxW = width;
             const boxH = height;
@@ -56,7 +60,7 @@ const Jugadores = () => {
                     jugadorId: jugador.id,
                     coords: {
                         x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 75.92)
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
                     }
                 }
             }))
@@ -66,6 +70,25 @@ const Jugadores = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     },);
+
+    useEffect(() => {
+        console.log('useEffect toggle');
+        if(mainBoxElement && jugadoresCanchaElement && jugadoresEquipo.length > 0) {
+            const { width, height } = handleElementRef(mainBoxElement);
+            const boxW = width;
+            const boxH = height;
+            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+            setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
+                return {
+                    jugadorId: jugador.id,
+                    coords: {
+                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
+                    }
+                }
+            }))
+        }
+    }, [isDrawerOpen, jugadoresCanchaElement, jugadoresEquipo, mainBoxElement]);
 
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
@@ -138,7 +161,7 @@ const Jugadores = () => {
                     jugadorId: jugador.id,
                     coords: {
                         x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 75.92)
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
                     }
                 }
             }))
@@ -183,8 +206,8 @@ const Jugadores = () => {
                                 const updatedPositions = [ ...draggablePositions ]
                                 updatedPositions.forEach(position => {
                                     if(position.jugadorId === jugador.id) {
-                                        position.coords.x = (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : data.x;
-                                        position.coords.y = (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : data.y;
+                                        position.coords.x = (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : data.x;
+                                        position.coords.y = (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : data.y;
                                     }
                                 })
                                 setDraggablePositions(updatedPositions);
@@ -195,8 +218,8 @@ const Jugadores = () => {
                                 dispatch(updateJugador({
                                     id: jugador.id,
                                     jugador: { 
-                                        posX: (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : ((index - 1) * dw + data.x) / boxW,
-                                        posY: (-data.y < Math.floor(1 + (index + 1) / 4) * 75.92) ? 0 : (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
+                                        posX: (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : ((index - 1) * dw + data.x) / boxW,
+                                        posY: (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
                                     }
                                 }))
                             }}

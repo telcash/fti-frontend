@@ -98,6 +98,7 @@ input[type="file"]{
     justify-content: flex-start;
     position: relative;
     margin-top: 20px;
+    row-gap: 10px;
 }
 
 .jugador-datos {

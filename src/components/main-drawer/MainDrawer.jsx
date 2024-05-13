@@ -18,12 +18,13 @@ import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
+import { toggleDrawer } from './mainDrawerSlice';
+import { useDispatch } from 'react-redux';
 
-
-const drawerWidth = window.innerWidth / 5.32;
+const drawerWidth = window.innerWidth / 4.32;
 
 const openedMixin = (theme) => ({
-
+  width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -54,7 +55,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme }) => ({
+})(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: '#273237',
   transition: theme.transitions.create(['width', 'margin'], {
@@ -150,12 +151,16 @@ const gestionList = [
 ]
 
 export default function MainDrawer() {
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(true);
   const [gestionOpen, setGestionOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(menuList.map((menuItem, index) => index === 0 ? true : false));
 
-  const toggleDrawer = () => {
+  const handleToggleDrawer = () => {
     setOpen(!open);
+    dispatch(toggleDrawer());
   };
 
   const handleGestionClick = () => {
@@ -163,13 +168,14 @@ export default function MainDrawer() {
   }
 
   return (
-    <Box sx={{ display: 'flex', width: '100%' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
       <AppBar position="fixed">
         <Toolbar>
           <IconButton
             aria-label="open drawer"
-            onClick={toggleDrawer}
+            onClick={handleToggleDrawer}
+
             edge="start"
             sx={{
               marginRight: 2,
@@ -186,7 +192,7 @@ export default function MainDrawer() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader />
-        <List>
+        <List >
           {menuList.map((item, index) => (
             <div className='list' key={index}>
                 <ListItem disablePadding sx={{ display: 'block' }}>
@@ -272,7 +278,7 @@ export default function MainDrawer() {
           </Collapse>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <RouterProvider router={router} />
       </Box>
