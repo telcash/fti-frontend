@@ -65,14 +65,23 @@ Jugadores
     width: 100%;
 }
 
+.jugador-cancha-draggable-container {
+    position: relative;
+    width: 100%;
+    min-width: 800px;
+    grid-template-columns: repeat(5, 1fr);
+    display: grid;
+    grid-gap: 10px;
+}
+
 .main-box {
     width: 100%;
     min-width: 800px;
-    grid-column: 1 / 5;
+    grid-column: 1 / 6;
 }
 
 .jugadores-cancha {
-    width: 100%;
+    width: 80%;
 }
 
 .background-cancha {
@@ -117,15 +126,6 @@ Jugadores
     position: relative;
     margin-top: 20px;
     row-gap: 10px;
-}
-
-.jugador-cancha-draggable-container {
-    position: relative;
-    width: 100%;
-    min-width: 800px;
-    grid-template-columns: repeat(4, 1fr);
-    display: grid;
-    grid-gap: 10px;
 }
 
 /**
@@ -246,6 +246,14 @@ JugadorEstadisticas
 .notificacion {
     font-size: 16px;
     font-weight: 900;
+}
+
+.jugador-calendario-acciones {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
 }
 
 .MuiDayCalendar-weekDayLabel {
@@ -390,4 +398,12 @@ JugadorEstadisticas
     justify-content: center;
     align-items: center;
     gap: 30px;
+}
+
+.addsesion {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }

@@ -61,11 +61,18 @@ const JugadorCalendario = () => {
                     />
                 </LocalizationProvider>
             </div>
-            <Button variant="contained" color="primary"
-                onClick={handleOnViewSesion}
-            >
-                Ver sesion
-            </Button>
+            <div className="jugador-calendario-acciones">
+                <Button variant="contained" color="primary"
+                    onClick={handleOnViewSesion}
+                >
+                    Ver sesion
+                </Button>
+                <Button variant="contained" color="primary"
+                    onClick={() => router.navigate(paths.calendario, { replace: true })}
+                >
+                    Regresar
+                </Button>
+            </div>
         </section>
     )
 }

@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 
 export default function SimpleDialog(props) {
-    const { title, contentText, onClose, open } = props;
+    const { title, contentText, onClose, open, confirmText='Eliminar' } = props;
 
     const handleClose = (value) => {
         onClose(value);
@@ -24,7 +24,7 @@ export default function SimpleDialog(props) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => handleClose('Cancelar')} autoFocus>Cancelar</Button>
-                <Button onClick={() => handleClose('Eliminar')}>Eliminar</Button>
+                <Button onClick={() => handleClose(confirmText)}>{confirmText}</Button>
             </DialogActions>
         </Dialog>
     )

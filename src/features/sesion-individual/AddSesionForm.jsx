@@ -10,6 +10,7 @@ import { fetchFundamentos, getFundamentosStatus, selectAllFundamentos } from "..
 import { paths, router } from "../../router/router";
 import { addSesion, fetchSesiones } from "./sesionIndividualSlice";
 import { addEjercicio } from "../ejercicios/ejerciciosSlice";
+import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "../equipos/equiposSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,14 +31,19 @@ const AddSesionForm = () => {
     const jugadoresStatus = useSelector(getJugadoresStatus);
     const fundamentos = useSelector(selectAllFundamentos);
     const fundamentosStatus = useSelector(getFundamentosStatus);
+    const equipos = useSelector(selectAllEquipos);
+    const equiposStatus = useSelector(getEquiposStatus);
 
     const [fecha, setFecha] = useState(dayjs());
     const [jugadorId, setJugadorId] = useState('');
+    const [equipoId, setEquipoId] = useState('');
     const [fundamentosDefensivos, setFundamentosDefensivos] = useState([]);
     const [fundamentosOfensivos, setFundamentosOfensivos] = useState([]);
     const [ejercicios, setEjercicios] = useState([]);
+    const [jugadoresFiltered, setJugadoresFiltered] = useState([]);
 
     const onFechaChanged = e => setFecha(e);
+    const onEquipoChanged = e => setEquipoId(e.target.value);
     const onJugadorChanged = e => setJugadorId(e.target.value);
 
     const handleFundamentosDefensivosChange = (event) => {
@@ -130,6 +136,16 @@ const AddSesionForm = () => {
         }
     }, [fundamentosStatus, dispatch])
 
+    useEffect(() => {
+        if(equiposStatus === 'idle') {
+            dispatch(fetchEquipos());
+        }
+    }, [equiposStatus, dispatch])
+
+    useEffect(() => {
+        setJugadoresFiltered(jugadores.filter(jugador => jugador.equipo.id === equipoId));
+    }, [equipoId, jugadores])
+
     const onSaveSesionClicked = () => {
         try {
             dispatch(addSesion({
@@ -186,13 +202,13 @@ const AddSesionForm = () => {
                 <div className="addsesion-form-s1">
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                         <DatePicker
-                        sx={{minWidth: 300}}
+                        sx={{width: 300}}
                             label="Fecha"
                             value={fecha}
                             onChange={onFechaChanged}
                         />
                     </LocalizationProvider>
-                    <FormControl sx={{ minWidth: 300}}>
+                    <FormControl sx={{ width: 300}}>
                         <InputLabel id="jugador-label">Jugador</InputLabel>
                         <Select
                             labelId="jugador-label"
@@ -201,9 +217,25 @@ const AddSesionForm = () => {
                             label="Jugador"
                             onChange={onJugadorChanged}
                         >
-                            {jugadores.map(jugador => (
+                            {jugadoresFiltered.map(jugador => (
                                 <MenuItem key={jugador.id} value={jugador.id}>
                                     {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ width: 300}}>
+                        <InputLabel id="equipo-label">Equipo</InputLabel>
+                        <Select
+                            labelId="equipo-label"
+                            id="equipo"
+                            value={equipoId}
+                            label="Jugador"
+                            onChange={onEquipoChanged}
+                        >
+                            {equipos.map(equipo => (
+                                <MenuItem key={equipo.id} value={equipo.id}>
+                                    {equipo.nombre}
                                 </MenuItem>
                             ))}
                         </Select>

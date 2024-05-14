@@ -9,9 +9,10 @@ import './jugadores.css';
 import Draggable from "react-draggable";
 import { useLocation } from "react-router-dom";
 import { getDrawerOpen } from "../../components/main-drawer/mainDrawerSlice";
+import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const DRAGGABLE_HEIGHT = 80.72;
-const DRAGGABLE_BY_ROW = 4;
+const DRAGGABLE_BY_ROW = 5;
 
 const Jugadores = () => {
 
@@ -34,6 +35,8 @@ const Jugadores = () => {
 
     const [isDragging, setIsDragging] = useState(false);
 
+    const [open, setOpen] = useState(false);
+
     const [mainBoxElement, setMainBoxElement] = useState(null);
     const [jugadoresCanchaElement, setJugadoresCanchaElement] = useState(null);
 
@@ -42,6 +45,14 @@ const Jugadores = () => {
             const width = element.clientWidth;
             const height = element.clientHeight;
             return { width, height }
+        }
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+        //setSelectedValue(value);
+        if (value === 'Reiniciar') {
+            resetPositions();
         }
     };
 
@@ -190,7 +201,14 @@ const Jugadores = () => {
                             ))
                         }
                     </Select>
-                    <Button onClick={resetPositions}>Reset</Button>
+                    <Button onClick={() => setOpen(true)}>Reiniciar todas la posiciones</Button>
+                    <SimpleDialog 
+                        title="Reiniciar posiciones"
+                        contentText={`¿Deseas reiniciar todas las posiciones?`}
+                        open={open}
+                        onClose={handleClose}
+                        confirmText="Reiniciar"
+                    />
                 </div>
                 <div className="jugador-cancha-draggable-container" id="avatar-list">
                     <div id="main-box" className="main-box">
@@ -231,7 +249,7 @@ const Jugadores = () => {
                                 }}
         
                             >
-                                <div style={{ flex: '24%', maxWidth: handleElementRef(jugadoresCanchaElement).width / 4 }} onClick={() => handleJugadorClick(jugador)}>
+                                <div style={{ maxWidth: handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW }} onClick={() => handleJugadorClick(jugador)}>
                                     <JugadorAvatar
                                         nombre={jugador.nombre}
                                         apellido={jugador.apellido}

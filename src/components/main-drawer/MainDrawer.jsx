@@ -203,14 +203,15 @@ export default function MainDrawer() {
                         px: 2.5,
                         position: 'relative',
                         '&:hover::after': {
+                            color: 'white',
                             content: '""',
                             position: 'absolute',
                             top: 0,
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundColor: 'rgba(86, 179, 227, 0.3)',
-                            zIndex: 2,
+                            backgroundColor: activeMenu[index] ? '#007bff' : 'rgba(86, 179, 227, 0.3)',
+                            zIndex: 0,
                         },
                         backgroundColor: activeMenu[index] ? '#007bff' : 'transparent',
                         }}
@@ -254,6 +255,7 @@ export default function MainDrawer() {
                 {gestionList.map((item, index) => (
                     <ListItemButton
                         onClick={() => router.navigate(`../${item.path}`)}
+                        disabled={!open}
                         key={index}
                         sx={{ 
                             pl: 6.5,
@@ -270,7 +272,7 @@ export default function MainDrawer() {
                             }
                         }}
                     >
-                        <ListItemText primary={item.text} sx={{color: 'white', textTransform: 'uppercase',}} />
+                        <ListItemText primary={item.text} sx={{color: open ? 'white' : 'transparent', textTransform: 'uppercase',}} />
                     </ListItemButton>
                 ))
                 }
