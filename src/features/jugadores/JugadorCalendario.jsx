@@ -5,8 +5,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSesiones, getSesionesStatus, selectAllSesiones } from '../sesion-individual/sesionIndividualSlice';
+import { fetchSesiones, getSesionesStatus, selectAllSesiones, sesionSelected } from '../sesion-individual/sesionIndividualSlice';
 import { getJugadorSelected } from './jugadoresSlice';
+import { Button } from '@mui/material';
+import { paths, router } from '../../router/router';
 
 const JugadorCalendario = () => {
 
@@ -17,6 +19,7 @@ const JugadorCalendario = () => {
     const sesiones = useSelector(selectAllSesiones);
     const sesionesStatus = useSelector(getSesionesStatus);
 
+    const [sesionesJugador, setSesionesJugador] = useState([]);
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const activeDates = sesiones.filter(sesion => sesion.jugador.id === jugador.id).map(sesion => dayjs(sesion.fecha));
 
@@ -29,16 +32,40 @@ const JugadorCalendario = () => {
     }
     , [sesionesStatus, dispatch]);
 
+    useEffect(() => {
+        if (sesiones) {
+            setSesionesJugador(sesiones.filter(sesion => sesion.jugador.id === jugador.id));
+        }
+    }
+    , [sesiones, jugador]);
+
+    const handleOnViewSesion = () => {
+        console.log(selectedDate);
+        console.log(sesionesJugador);
+        const sesion = sesionesJugador.find(sesion => dayjs(sesion.fecha).isSame(selectedDate, 'day'));
+        if (sesion) {
+            dispatch(sesionSelected(sesion));
+            router.navigate(paths.jugadorCalendarioSesion, { replace: true });
+        }
+    }
+
     return (
         <section className="jugador-calendario">
             <h2>Calendario</h2>
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-                <DateCalendar 
-                    value={selectedDate}
-                    onChange={onDateChange}
-                    shouldDisableDate={(date) => !activeDates.some(activeDate => activeDate.isSame(date, 'day'))}
-                />
-            </LocalizationProvider>
+            <div className="jugador-calendario-calendario">
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+                    <DateCalendar
+                        value={selectedDate}
+                        onChange={onDateChange}
+                        shouldDisableDate={(date) => !activeDates.some(activeDate => activeDate.isSame(date, 'day'))}
+                    />
+                </LocalizationProvider>
+            </div>
+            <Button variant="contained" color="primary"
+                onClick={handleOnViewSesion}
+            >
+                Ver sesion
+            </Button>
         </section>
     )
 }

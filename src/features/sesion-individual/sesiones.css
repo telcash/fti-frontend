@@ -18,7 +18,8 @@
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
 .addsesion-form-s2 {
@@ -26,7 +27,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px
+  gap: 20px;
 }
 
 .addsesion-form-buttons {
@@ -38,6 +39,22 @@
 }
 
 .addsesion-form-ejercicio {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
+}
+
+.addsesion-form-ejercicio-general {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px
+}
+
+.addsesion-form-ejercicio-fases {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;

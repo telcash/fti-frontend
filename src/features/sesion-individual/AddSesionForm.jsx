@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Button, FormControl, Input, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
+import { Button, FormControl, Input, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJugadores, getJugadoresStatus, selectAllJugadores } from "../jugadores/jugadoresSlice";
 import { fetchFundamentos, getFundamentosStatus, selectAllFundamentos } from "../fundamentos/fundamentosSlice";
@@ -39,6 +39,7 @@ const AddSesionForm = () => {
 
     const onFechaChanged = e => setFecha(e);
     const onJugadorChanged = e => setJugadorId(e.target.value);
+
     const handleFundamentosDefensivosChange = (event) => {
         const { target: { value } } = event;
         setFundamentosDefensivos(typeof value === 'string' ? value.split(',') : value);
@@ -48,7 +49,7 @@ const AddSesionForm = () => {
         setFundamentosOfensivos(typeof value === 'string' ? value.split(',') : value);
     };
 
-    const handleValoracionDefensivaChange = (e, fundamento) => {
+    const handleValoracionChange = (e, fundamento) => {
         setEjercicios({
             ...ejercicios,
             [fundamento]: {
@@ -57,7 +58,7 @@ const AddSesionForm = () => {
             }
         })
     }
-    const handleValoracionDefensivaMaxChange = (e, fundamento) => {
+    const handleValoracionMaxChange = (e, fundamento) => {
         setEjercicios({
             ...ejercicios,
             [fundamento]: {
@@ -66,21 +67,53 @@ const AddSesionForm = () => {
             }
         })
     }
-    const handleValoracionOfensivaChange = (e, fundamento) => { 
+
+    const handleValoracionFisicaChange = (e, fundamento) => {
         setEjercicios({
             ...ejercicios,
             [fundamento]: {
                 ...ejercicios[fundamento],
-                valoracion: e.target.value
+                valoracionFisica: e.target.value
             }
         })
     }
-    const handleValoracionOfensivaMaxChange = (e, fundamento) => {
+
+    const handleValoracionTecnicaChange = (e, fundamento) => {
         setEjercicios({
             ...ejercicios,
             [fundamento]: {
                 ...ejercicios[fundamento],
-                valoracionMax: e.target.value
+                valoracionTecnica: e.target.value
+            }
+        })
+    }
+
+    const handleValoracionTacticaChange = (e, fundamento) => {
+        setEjercicios({
+            ...ejercicios,
+            [fundamento]: {
+                ...ejercicios[fundamento],
+                valoracionTactica: e.target.value
+            }
+        })
+    }
+
+    const handleValoracionPsicologicaChange = (e, fundamento) => {
+        setEjercicios({
+            ...ejercicios,
+            [fundamento]: {
+                ...ejercicios[fundamento],
+                valoracionPsicologica: e.target.value
+            }
+        })
+    }
+
+    const handleObservacionesChange = (e, fundamento) => {
+        setEjercicios({
+            ...ejercicios,
+            [fundamento]: {
+                ...ejercicios[fundamento],
+                observaciones: e.target.value
             }
         })
     }
@@ -112,6 +145,11 @@ const AddSesionForm = () => {
                             fundamentoName: fundamento,
                             valoracion: ejercicios[fundamento].valoracion || 0,
                             valoracionMaxima: ejercicios[fundamento].valoracionMax || ejercicios[fundamento].valoracion || 20,
+                            valoracionFisica: ejercicios[fundamento].valoracionFisica || null,
+                            valoracionTecnica: ejercicios[fundamento].valoracionTecnica || null,
+                            valoracionTactica: ejercicios[fundamento].valoracionTactica || null,
+                            valoracionPsicologica: ejercicios[fundamento].valoracionPsicologica || null,
+                            observaciones: ejercicios[fundamento].observaciones || null,
                         }))
                     })
                     const ejerciciosOfensivosPromises = fundamentosOfensivos.map(fundamento => {
@@ -120,6 +158,11 @@ const AddSesionForm = () => {
                             fundamentoName: fundamento,
                             valoracion: ejercicios[fundamento].valoracion || 0,
                             valoracionMaxima: ejercicios[fundamento].valoracionMax || ejercicios[fundamento].valoracion || 20,
+                            valoracionFisica: ejercicios[fundamento].valoracionFisica || null,
+                            valoracionTecnica: ejercicios[fundamento].valoracionTecnica || null,
+                            valoracionTactica: ejercicios[fundamento].valoracionTactica || null,
+                            valoracionPsicologica: ejercicios[fundamento].valoracionPsicologica || null,
+                            observaciones: ejercicios[fundamento].observaciones || null,
                         }))
                     })
                     Promise.all([...ejerciciosDefensivosPromises, ...ejerciciosOfensivosPromises])
@@ -189,28 +232,84 @@ const AddSesionForm = () => {
                     {fundamentosDefensivos.map((fundamento, index) => (
                         <div className="addsesion-form-ejercicios" key={index}>
                             <div className="addsesion-form-ejercicio">
-                                <h3>{fundamento}:</h3>
-                                <Input
-                                    sx={{width: 200}}
-                                    size="small"
-                                    placeholder="Valoración"
-                                    type="number"
-                                    onChange={(e) => handleValoracionDefensivaChange(e, fundamento)}
-                                    inputProps={{ 
-                                        min: 0, 
-                                        max: ejercicios[fundamento]?.valoracionMax || 20 ,
-                                    }}
-                                />
-                                <Input
-                                    sx={{width: 200}}
-                                    size="small"
-                                    placeholder="Valoración máxima"
-                                    type="number"
-                                    onChange={(e) => handleValoracionDefensivaMaxChange(e, fundamento)}
-                                    inputProps={{
-                                        min: ejercicios[fundamento]?.valoracion || 20,
-                                        max: 20,
-                                    }}
+                                <div className="addsesion-form-ejercicio-general">
+                                    <h3>{fundamento}:</h3>
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración general"
+                                        type="number"
+                                        onChange={(e) => handleValoracionChange(e, fundamento)}
+                                        inputProps={{ 
+                                            min: 0, 
+                                            max: ejercicios[fundamento]?.valoracionMax || 20 ,
+                                        }}
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración máxima"
+                                        type="number"
+                                        onChange={(e) => handleValoracionMaxChange(e, fundamento)}
+                                        inputProps={{
+                                            min: ejercicios[fundamento]?.valoracion || 20,
+                                            max: 20,
+                                        }}
+                                    />
+                                </div>
+                                <div className="addsesion-form-ejercicio-fases">
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Física"
+                                        type="number"
+                                        onChange={(e) => handleValoracionFisicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Técnica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionTecnicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Táctica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionTacticaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Psicológica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionPsicologicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                </div>
+                                <TextField 
+                                    sx={{width: 350}}
+                                    multiline
+                                    rows={4}
+                                    placeholder="Observaciones"
+                                    variant="outlined"
+                                    onChange = {(e) => handleObservacionesChange(e, fundamento)}
                                 />
                             </div>
                         </div>     
@@ -237,28 +336,84 @@ const AddSesionForm = () => {
                     {fundamentosOfensivos.map((fundamento, index) => (
                         <div className="addsesion-form-ejercicios" key={index}>
                             <div className="addsesion-form-ejercicio">
-                                <h3>{fundamento}:</h3>
-                                <Input
-                                    sx={{width: 200}}
-                                    size="small"
-                                    placeholder="Valoración"
-                                    type="number"
-                                    inputProps={{ 
-                                        min: 0, 
-                                        max: ejercicios[fundamento]?.valoracionMax || 20 ,
-                                    }}
-                                    onChange={(e) => handleValoracionOfensivaChange(e, fundamento)}
-                                />
-                                <Input
-                                    sx={{width: 200}}
-                                    size="small"
-                                    placeholder="Valoración máxima"
-                                    type="number"
-                                    onChange={(e) => handleValoracionOfensivaMaxChange(e, fundamento)}
-                                    inputProps={{
-                                        min: ejercicios[fundamento]?.valoracion || 0,
-                                        max: 20,
-                                    }}
+                                <div className="addsesion-form-ejercicio-general">
+                                    <h3>{fundamento}:</h3>
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración general"
+                                        type="number"
+                                        inputProps={{ 
+                                            min: 0, 
+                                            max: ejercicios[fundamento]?.valoracionMax || 20 ,
+                                        }}
+                                        onChange={(e) => handleValoracionChange(e, fundamento)}
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración máxima"
+                                        type="number"
+                                        onChange={(e) => handleValoracionMaxChange(e, fundamento)}
+                                        inputProps={{
+                                            min: ejercicios[fundamento]?.valoracion || 0,
+                                            max: 20,
+                                        }}
+                                    />
+                                </div>        
+                                <div className="addsesion-form-ejercicio-fases">
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Física"
+                                        type="number"
+                                        onChange={(e) => handleValoracionFisicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Técnica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionTecnicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Táctica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionTacticaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                    <Input
+                                        sx={{width: 200}}
+                                        size="small"
+                                        placeholder="Valoración Psicológica"
+                                        type="number"
+                                        onChange = {(e) => handleValoracionPsicologicaChange(e, fundamento)}
+                                        inputProps={{
+                                            min: 0,
+                                            max: 10,
+                                        }} 
+                                    />
+                                </div>
+                                <TextField 
+                                    sx={{width: 350}}
+                                    multiline
+                                    rows={4}
+                                    placeholder="Observaciones"
+                                    variant="outlined"
+                                    onChange = {(e) => handleObservacionesChange(e, fundamento)}
                                 />
                             </div>
                         </div>     

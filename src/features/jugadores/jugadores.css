@@ -366,3 +366,28 @@ JugadorEstadisticas
     align-items: center;
     gap: 30px;
 }
+
+.jugador-calendario {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.jugador-calendario-calendario {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.jugador-sesion {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
