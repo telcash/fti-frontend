@@ -42,6 +42,7 @@ const JugadorGraficas = () => {
 
     return (
         <section className="jugador-graficas">
+            <h2>Gráficas</h2>
             <JugadorAvatar fotoJugador={jugador.foto ?? ''} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion ? jugador.posicion.nombre : ''} />
             <div className="jugador-graficas-filtros">
                 <FormControl sx={{ width: 300}}>

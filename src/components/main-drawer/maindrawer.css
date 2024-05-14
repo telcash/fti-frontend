@@ -16,3 +16,7 @@
 .MuiTypography-root {
     font-size: 0.68em!important;
 }
+
+.MuiDrawer-docked {
+    max-width: 270px!important;
+}

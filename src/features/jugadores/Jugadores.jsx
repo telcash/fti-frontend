@@ -10,6 +10,9 @@ import Draggable from "react-draggable";
 import { useLocation } from "react-router-dom";
 import { getDrawerOpen } from "../../components/main-drawer/mainDrawerSlice";
 
+const DRAGGABLE_HEIGHT = 80.72;
+const DRAGGABLE_BY_ROW = 4;
+
 const Jugadores = () => {
 
     const dispatch = useDispatch();
@@ -60,7 +63,7 @@ const Jugadores = () => {
                     jugadorId: jugador.id,
                     coords: {
                         x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)
                     }
                 }
             }))
@@ -71,7 +74,7 @@ const Jugadores = () => {
         return () => window.removeEventListener('resize', handleResize);
     },);
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log('useEffect toggle');
         if(mainBoxElement && jugadoresCanchaElement && jugadoresEquipo.length > 0) {
             const { width, height } = handleElementRef(mainBoxElement);
@@ -88,7 +91,7 @@ const Jugadores = () => {
                 }
             }))
         }
-    }, [isDrawerOpen, jugadoresCanchaElement, jugadoresEquipo, mainBoxElement]);
+    }, [isDrawerOpen, jugadoresCanchaElement, jugadoresEquipo, mainBoxElement]); */
 
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
@@ -161,7 +164,7 @@ const Jugadores = () => {
                     jugadorId: jugador.id,
                     coords: {
                         x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
+                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)
                     }
                 }
             }))
@@ -169,75 +172,80 @@ const Jugadores = () => {
     }   , [equipo, jugadores, jugadoresCanchaElement, mainBoxElement]);
 
     return (
-        <div className="jugadores-cancha" id="jugadores-cancha-box">
-            <InputLabel id="equipo-label">Seleccionar equipo</InputLabel>
-            <Select
-                labelId="equipo-label"
-                id="equipo"
-                value={equipo}
-                label="Seleccionar equipo"
-                onChange={onEquipoChanged}
-                sx={{width: 300}}
-            >
-                {
-                    equipos.map((equipo, index) => (
-                        <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
-                    ))
-                }
-            </Select>
-            <Button onClick={resetPositions}>Reset</Button>
-            <div className="jugadores-avatar-list" id="avatar-list">
-                <div id="main-box" className="main-box">
-                    <div className="background-cancha"></div>
+        <div className="jugadores-container">
+            <div className="jugadores-cancha" id="jugadores-cancha-box">
+                <div>
+                    <InputLabel id="equipo-label">Seleccionar equipo</InputLabel>
+                    <Select
+                        labelId="equipo-label"
+                        id="equipo"
+                        value={equipo}
+                        label="Seleccionar equipo"
+                        onChange={onEquipoChanged}
+                        sx={{width: 300, mb: 2}}
+                    >
+                        {
+                            equipos.map((equipo, index) => (
+                                <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
+                            ))
+                        }
+                    </Select>
+                    <Button onClick={resetPositions}>Reset</Button>
                 </div>
-                {
-                    jugadoresEquipo.map((jugador, index) => (
-                        <Draggable
-                            key={index}
-                            bounds="parent"
-                            position= {{ 
-                                x: draggablePositions.find(position => position.jugadorId === jugador.id).coords.x,
-                                y: draggablePositions.find(position => position.jugadorId === jugador.id).coords.y
-                            }}
-                            onDrag={() => {
-                                setIsDragging(true);
-                            }}
-                            onStop={(e, data) => {
-                                const updatedPositions = [ ...draggablePositions ]
-                                updatedPositions.forEach(position => {
-                                    if(position.jugadorId === jugador.id) {
-                                        position.coords.x = (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : data.x;
-                                        position.coords.y = (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : data.y;
-                                    }
-                                })
-                                setDraggablePositions(updatedPositions);
-                                const { width, height } = handleElementRef(mainBoxElement);
-                                const boxW = width;
-                                const boxH = height;
-                                const dw = handleElementRef(jugadoresCanchaElement).width / 4;
-                                dispatch(updateJugador({
-                                    id: jugador.id,
-                                    jugador: { 
-                                        posX: (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : ((index - 1) * dw + data.x) / boxW,
-                                        posY: (-data.y < Math.floor(1 + (index + 1) / 4) * 85.92) ? 0 : (-data.y - (Math.floor((index + 1) / 4) * 75.92)) / boxH
-                                    }
-                                }))
-                            }}
-       
-                        >
-                            <div style={{ flex: '25%', maxWidth: handleElementRef(jugadoresCanchaElement).width / 4 }} onClick={() => handleJugadorClick(jugador)}>
-                                <JugadorAvatar
-                                    nombre={jugador.nombre}
-                                    apellido={jugador.apellido}
-                                    fotoJugador={jugador.foto}
-                                    darkMode={true}
-                                />
-                            </div>
-                        </Draggable>
-                    ))
-                }
+                <div className="jugador-cancha-draggable-container" id="avatar-list">
+                    <div id="main-box" className="main-box">
+                        <div className="background-cancha"></div>
+                    </div>
+                    {
+                        jugadoresEquipo.map((jugador, index) => (
+                            <Draggable
+                                key={index}
+                                bounds="parent"
+                                position= {{ 
+                                    x: draggablePositions.find(position => position.jugadorId === jugador.id).coords.x,
+                                    y: draggablePositions.find(position => position.jugadorId === jugador.id).coords.y
+                                }}
+                                onDrag={() => {
+                                    setIsDragging(true);
+                                }}
+                                onStop={(e, data) => {
+                                    const updatedPositions = [ ...draggablePositions ]
+                                    updatedPositions.forEach(position => {
+                                        if(position.jugadorId === jugador.id) {
+                                            position.coords.x = (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : data.x;
+                                            position.coords.y = (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : data.y;
+                                        }
+                                    })
+                                    setDraggablePositions(updatedPositions);
+                                    const { width, height } = handleElementRef(mainBoxElement);
+                                    const boxW = width;
+                                    const boxH = height;
+                                    const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+                                    dispatch(updateJugador({
+                                        id: jugador.id,
+                                        jugador: { 
+                                            posX: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : ((index - 1) * dw + data.x) / boxW,
+                                            posY: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (-data.y - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)) / boxH
+                                        }
+                                    }))
+                                }}
+        
+                            >
+                                <div style={{ flex: '24%', maxWidth: handleElementRef(jugadoresCanchaElement).width / 4 }} onClick={() => handleJugadorClick(jugador)}>
+                                    <JugadorAvatar
+                                        nombre={jugador.nombre}
+                                        apellido={jugador.apellido}
+                                        fotoJugador={jugador.foto}
+                                        darkMode={true}
+                                    />
+                                </div>
+                            </Draggable>
+                        ))
+                    }
+                </div>
             </div>
         </div>
+        
     )
 }
 

@@ -87,9 +87,14 @@ const JugadorDesarrolloTactico = () => {
                     <Tabs
                         value={tipoFundamento}
                         onChange={onTipoFundamentoChange}
+                        sx={{
+                            ".Mui-selected": {
+                                color: 'white!important',
+                            }
+                        }}
                     >
-                        <Tab sx={{mr: 5, ml: 5}} value="Defensivo" label="Fundamentos defensivos"/>
-                        <Tab sx={{mr: 5, ml: 5}} value="Ofensivo" label="Fundamentos ofensivos"/>
+                        <Tab sx={{ color: 'gray', mr: 5, ml: 5 }} value="Defensivo" label="Fundamentos defensivos"/>
+                        <Tab sx={{ color: 'gray', mr: 5, ml: 5}} value="Ofensivo" label="Fundamentos ofensivos"/>
                     </Tabs>
                 </div>
                 <TableContainer component={Paper}>
@@ -97,7 +102,7 @@ const JugadorDesarrolloTactico = () => {
                         <TableBody>
                             {selectedSesion && selectedSesion.ejercicios.filter( ejercicio => ejercicio.fundamento.tipo === tipoFundamento).map((ejercicio, index) => (
                                 <TableRow key={ejercicio.id}>
-                                    <TableCell align="left">{`${index + 1} - ${ejercicio.fundamento.nombre}`}</TableCell>
+                                    <TableCell sx={{ fontSize: 16}} align="left">{`${index + 1} - ${ejercicio.fundamento.nombre}`}</TableCell>
                                     <TableCell 
                                         align="center"
                                         width={150}
