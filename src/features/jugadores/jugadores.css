@@ -70,8 +70,9 @@ Jugadores
     width: 100%;
     min-width: 800px;
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr, repeat(5, 80.72px);
     display: grid;
-    grid-gap: 10px;
+    row-gap: 10px;
 }
 
 .main-box {

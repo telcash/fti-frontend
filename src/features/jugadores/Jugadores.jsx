@@ -50,7 +50,6 @@ const Jugadores = () => {
 
     const handleClose = (value) => {
         setOpen(false);
-        //setSelectedValue(value);
         if (value === 'Reiniciar') {
             resetPositions();
         }
@@ -63,18 +62,18 @@ const Jugadores = () => {
     , []);
 
     useEffect(() => {
+        console.log('useEffect resize')
         const handleResize = () => {
-            console.log('resize');
             const { width, height } = handleElementRef(mainBoxElement);
             const boxW = width;
             const boxH = height;
-            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+            const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
             setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
                 return {
                     jugadorId: jugador.id,
                     coords: {
-                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)
+                        x: jugador.posX === 0 ? 0 : boxW * jugador.posX - (dw/2),
+                        y: jugador.posY === 0 ? 0 : boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) - (DRAGGABLE_HEIGHT/2)
                     }
                 }
             }))
@@ -161,6 +160,7 @@ const Jugadores = () => {
     , [equiposStatus, dispatch])
 
     useEffect(() => {
+        console.log('useEffect equipos - api to ui');
         if(equipo && jugadoresCanchaElement && mainBoxElement) {
             const filteredJugadores = jugadores
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
@@ -169,13 +169,13 @@ const Jugadores = () => {
             const { width, height } = handleElementRef(mainBoxElement);
             const boxW = width;
             const boxH = height;
-            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+            const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
             setDraggablePositions(filteredJugadores.map((jugador, index) => {
                 return {
                     jugadorId: jugador.id,
                     coords: {
-                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)
+                        x: jugador.posX === 0 ? 0 : boxW * jugador.posX - (dw/2),
+                        y: jugador.posY === 0 ? 0 : boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) - (DRAGGABLE_HEIGHT/2)
                     }
                 }
             }))
@@ -227,23 +227,27 @@ const Jugadores = () => {
                                     setIsDragging(true);
                                 }}
                                 onStop={(e, data) => {
+                                    console.log('onStop')
                                     const updatedPositions = [ ...draggablePositions ]
                                     updatedPositions.forEach(position => {
                                         if(position.jugadorId === jugador.id) {
-                                            position.coords.x = (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : data.x;
-                                            position.coords.y = (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : data.y;
+                                            position.coords.x = data.x;
+                                            position.coords.y = data.y;
                                         }
                                     })
                                     setDraggablePositions(updatedPositions);
                                     const { width, height } = handleElementRef(mainBoxElement);
                                     const boxW = width;
                                     const boxH = height;
-                                    const dw = handleElementRef(jugadoresCanchaElement).width / 4;
+                                    console.log('boxWstop', boxW)
+                                    console.log('boxHstop', boxH)
+                                    const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
+                                    console.log('dwstop', dw)
                                     dispatch(updateJugador({
                                         id: jugador.id,
                                         jugador: { 
-                                            posX: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : ((index - 1) * dw + data.x) / boxW,
-                                            posY: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (-data.y - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT)) / boxH
+                                            posX: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (data.x + dw/2) / boxW,
+                                            posY: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (data.y + (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) + DRAGGABLE_HEIGHT/2) / boxH
                                         }
                                     }))
                                 }}
