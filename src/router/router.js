@@ -29,6 +29,7 @@ import JugadorDesarrolloTactico from "../features/jugadores/JugadorDesarrolloTac
 import JugadorSesion from "../features/jugadores/JugadorSesion";
 
 export const paths = {
+  home: "/",
   jugadores: "/jugadores",
   jugadorDatos: "/jugador-datos",
   estadisticasJugador: "/estadisticas-jugador",
@@ -63,6 +64,10 @@ export const paths = {
 };
 
 export const router = createBrowserRouter([
+  {
+    path: paths.home,
+    element: <Jugadores />
+  },
   {
     path: paths.jugadores,
     element: <Jugadores />
