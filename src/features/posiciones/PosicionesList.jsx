@@ -50,7 +50,7 @@ const PosicionesList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {posiciones.map((posicion) => (
+                        {posiciones && posiciones.map((posicion) => (
                             <TableRow
                                 key={posicion.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

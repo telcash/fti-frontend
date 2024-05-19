@@ -202,7 +202,7 @@ const UpdatePartidoForm = () => {
                                 onChange={onEquipoLocalChanged}
                             >
                                 {
-                                    equipos.map((equipo) => (
+                                    equipos && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -232,7 +232,7 @@ const UpdatePartidoForm = () => {
                                 onChange={onEquipoVisitanteChanged}
                             >
                                 {
-                                    equipos.map((equipo) => (
+                                    equipos && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -251,13 +251,6 @@ const UpdatePartidoForm = () => {
                             }}
                         />
                     </div>
-                    {/* <TextField
-                        id="resultado"
-                        label="Resultado"
-                        value={resultado}
-                        onChange={onResultadoChanged} 
-                        sx={{minWidth: 300}}
-                    /> */}
                     <TableContainer component={Paper}>
                         <Table sx={{minWidth: 650}} aria-label="lista jugadores">
                             <TableHead sx={{backgroundColor:'#273237'}}>
@@ -276,7 +269,7 @@ const UpdatePartidoForm = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {jugadoresToPartido.map((jtp) => (
+                                {jugadoresToPartido && jugadoresToPartido.map((jtp) => (
                                     <TableRow
                                         key={jtp.id}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

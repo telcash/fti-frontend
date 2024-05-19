@@ -20,7 +20,6 @@ export const fetchJugadorToPartidos = createAsyncThunk('jugadorToPartidos/fetchJ
 }   );
 
 export const addJugadorToPartido = createAsyncThunk('jugadorToPartidos/addJugadorToPartido', async (jugadorToPartido) => {
-    console.log('crendo jugadorToPartido')  
     try {
         const response = await axios.post(JUGADOR_TO_PARTIDO_URL, jugadorToPartido);
         return response.data;

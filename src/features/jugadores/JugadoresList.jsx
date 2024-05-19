@@ -68,7 +68,7 @@ const JugadoresList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {jugadores.map((jugador) => (
+                        {jugadores && jugadores.map((jugador) => (
                             <TableRow
                                 key={jugador.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

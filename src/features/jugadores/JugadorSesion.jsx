@@ -61,7 +61,7 @@ const JugadorSesion = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sesion.ejercicios.map((ejercicio) => (
+                        {sesion && sesion.ejercicios && sesion.ejercicios.map((ejercicio) => (
                             <TableRow
                                 key={ejercicio.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

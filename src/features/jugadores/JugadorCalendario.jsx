@@ -40,8 +40,6 @@ const JugadorCalendario = () => {
     , [sesiones, jugador]);
 
     const handleOnViewSesion = () => {
-        console.log(selectedDate);
-        console.log(sesionesJugador);
         const sesion = sesionesJugador.find(sesion => dayjs(sesion.fecha).isSame(selectedDate, 'day'));
         if (sesion) {
             dispatch(sesionSelected(sesion));

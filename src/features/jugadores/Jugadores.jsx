@@ -62,7 +62,6 @@ const Jugadores = () => {
     , []);
 
     useEffect(() => {
-        console.log('useEffect resize')
         const handleResize = () => {
             const { width, height } = handleElementRef(mainBoxElement);
             const boxW = width;
@@ -160,7 +159,6 @@ const Jugadores = () => {
     , [equiposStatus, dispatch])
 
     useEffect(() => {
-        console.log('useEffect equipos - api to ui');
         if(equipo && jugadoresCanchaElement && mainBoxElement) {
             const filteredJugadores = jugadores
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
@@ -196,7 +194,7 @@ const Jugadores = () => {
                         sx={{width: 300, mb: 2}}
                     >
                         {
-                            equipos.map((equipo, index) => (
+                            equipos && equipos.map((equipo, index) => (
                                 <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                             ))
                         }
@@ -215,7 +213,7 @@ const Jugadores = () => {
                         <div className="background-cancha"></div>
                     </div>
                     {
-                        jugadoresEquipo.map((jugador, index) => (
+                        jugadoresEquipo && jugadoresEquipo.map((jugador, index) => (
                             <Draggable
                                 key={index}
                                 bounds="parent"
@@ -227,7 +225,6 @@ const Jugadores = () => {
                                     setIsDragging(true);
                                 }}
                                 onStop={(e, data) => {
-                                    console.log('onStop')
                                     const updatedPositions = [ ...draggablePositions ]
                                     updatedPositions.forEach(position => {
                                         if(position.jugadorId === jugador.id) {
@@ -239,10 +236,7 @@ const Jugadores = () => {
                                     const { width, height } = handleElementRef(mainBoxElement);
                                     const boxW = width;
                                     const boxH = height;
-                                    console.log('boxWstop', boxW)
-                                    console.log('boxHstop', boxH)
                                     const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
-                                    console.log('dwstop', dw)
                                     dispatch(updateJugador({
                                         id: jugador.id,
                                         jugador: { 

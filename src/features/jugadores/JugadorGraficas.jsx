@@ -68,7 +68,7 @@ const JugadorGraficas = () => {
                         value={selectedSesion || ''}
                         onChange={(e) => setSelectedSesion(e.target.value)}
                     >
-                        {sesionesJugador.map((sesion, index) => (
+                        {sesionesJugador && sesionesJugador.map((sesion, index) => (
                             <MenuItem
                                 key={sesion.index}
                                 value={sesion}

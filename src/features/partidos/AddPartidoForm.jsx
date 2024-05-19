@@ -212,7 +212,6 @@ const AddPartidoForm = () => {
             setEquipoVisitante('');
             setGolesLocal(0);
             setGolesVisitante(0);
-            //setResultado('');
         }
     }
 
@@ -251,7 +250,7 @@ const AddPartidoForm = () => {
                                 onChange={onEquipoLocalChanged}
                             >
                                 {
-                                    equipos.map((equipo) => (
+                                    equipos && equipos.map((equipo) => (
                                         <MenuItem key={equipo.id} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -280,7 +279,7 @@ const AddPartidoForm = () => {
                                 onChange={onEquipoVisitanteChanged}
                             >
                                 {
-                                    equipos.map((equipo) => (
+                                    equipos && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }

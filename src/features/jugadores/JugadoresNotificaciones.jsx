@@ -10,7 +10,6 @@ const JugadoresNotificaciones = () => {
     const notificaciones = useSelector(getNotificaciones);
 
     const [notificacionesActuales, setNotificacionesActuales] = useState(notificaciones)
-    console.log(notificacionesActuales);
 
     const borrarNotificaciones = () => {
         dispatch(setNotificaciones([]));

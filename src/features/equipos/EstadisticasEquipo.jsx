@@ -115,7 +115,7 @@ const EstadisticasEquipo = () => {
                         value={equipo || ''}
                         onChange={onChangeEquipo}
                     >
-                        {equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
+                        {equipos && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
                     </Select>
                 </FormControl>
                 <FormControl sx={{ width: 300}}>
@@ -127,7 +127,7 @@ const EstadisticasEquipo = () => {
                         value={equipoRival || ''}
                         onChange={onChangeEquipoRival}
                     >
-                        {equipo && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
+                        {equipo && equipos && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
                     </Select>
                 </FormControl>
                 <FormControl sx={{ width: 300}}>
@@ -138,7 +138,6 @@ const EstadisticasEquipo = () => {
                         label="Fecha"
                         value={fecha || ''}
                         onChange={(e) => {
-                            console.log(e.target.value)
                             setFecha(e.target.value)
                         }}
                     >
@@ -166,7 +165,7 @@ const EstadisticasEquipo = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {jtpTotales.map(jtp => (
+                            {jtpTotales && jtpTotales.map(jtp => (
                                 <TableRow
                                     key={jtp.jugador.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

@@ -53,7 +53,7 @@ const FundamentosList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {fundamentos.map((fundamento) => (
+                        {fundamentos && fundamentos.map((fundamento) => (
                             <TableRow
                                 key={fundamento.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

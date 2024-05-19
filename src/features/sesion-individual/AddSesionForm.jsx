@@ -217,7 +217,7 @@ const AddSesionForm = () => {
                             label="Jugador"
                             onChange={onJugadorChanged}
                         >
-                            {jugadoresFiltered.map(jugador => (
+                            {jugadoresFiltered && jugadoresFiltered.map(jugador => (
                                 <MenuItem key={jugador.id} value={jugador.id}>
                                     {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
                                 </MenuItem>
@@ -233,7 +233,7 @@ const AddSesionForm = () => {
                             label="Jugador"
                             onChange={onEquipoChanged}
                         >
-                            {equipos.map(equipo => (
+                            {equipos && equipos.map(equipo => (
                                 <MenuItem key={equipo.id} value={equipo.id}>
                                     {equipo.nombre}
                                 </MenuItem>
@@ -254,14 +254,14 @@ const AddSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Defensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
+                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    {fundamentosDefensivos.map((fundamento, index) => (
+                    {fundamentosDefensivos && fundamentosDefensivos.map((fundamento, index) => (
                         <div className="addsesion-form-ejercicios" key={index}>
                             <div className="addsesion-form-ejercicio">
                                 <div className="addsesion-form-ejercicio-general">
@@ -358,14 +358,14 @@ const AddSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Ofensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
+                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    {fundamentosOfensivos.map((fundamento, index) => (
+                    {fundamentosOfensivos && fundamentosOfensivos.map((fundamento, index) => (
                         <div className="addsesion-form-ejercicios" key={index}>
                             <div className="addsesion-form-ejercicio">
                                 <div className="addsesion-form-ejercicio-general">
