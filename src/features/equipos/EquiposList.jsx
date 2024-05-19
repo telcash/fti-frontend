@@ -59,7 +59,7 @@ const EquiposList = () => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="center" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                    <Avatar src={imgUrl + equipo.foto}/>
+                                    <Avatar src={equipo.foto ? imgUrl + equipo.foto : ''}/>
                                 </TableCell>
                                 <TableCell align="center">{equipo.nombre}</TableCell>
                                 <TableCell align="center">{equipo.id}</TableCell>

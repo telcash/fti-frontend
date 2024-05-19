@@ -22,7 +22,7 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion, darkMode }) =>
             <Avatar
                 ref={avatarRef}
                 alt="avatar jugador"
-                src={imgUrl + fotoJugador}
+                src={fotoJugador ? imgUrl + fotoJugador : ""}
                 sx={{ width: 56, height: 56 }}
             />
             <div className={darkMode ? 'avatar-info-dark' : 'avatar-info'}>
