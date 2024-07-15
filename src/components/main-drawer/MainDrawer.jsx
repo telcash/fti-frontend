@@ -156,6 +156,7 @@ export default function MainDrawer() {
   const [open, setOpen] = useState(true);
   const [gestionOpen, setGestionOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(menuList.map((menuItem, index) => index === 0 ? true : false));
+  const [activeGestion, setActiveGestion] = useState(gestionList.map(() => false));
 
   const handleToggleDrawer = () => {
     setOpen(!open);
@@ -174,7 +175,6 @@ export default function MainDrawer() {
           <IconButton
             aria-label="open drawer"
             onClick={handleToggleDrawer}
-
             edge="start"
             sx={{
               marginRight: 2,
@@ -215,11 +215,13 @@ export default function MainDrawer() {
                         backgroundColor: activeMenu[index] ? '#007bff' : 'transparent',
                         }}
                         onClick={() => {
-                            setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
                                 setOpen(true);
                             } else {
+                              setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
+                              setGestionOpen(false);
+                              setActiveGestion(gestionList.map(() => false));
                               router.navigate(`../${item.path}`)
                             } 
                         }}
@@ -253,7 +255,13 @@ export default function MainDrawer() {
             <List component="div" disablePadding>
                 {gestionList.map((item, index) => (
                     <ListItemButton
-                        onClick={() => router.navigate(`../${item.path}`)}
+                        onClick={() => 
+                          {
+                            setActiveMenu(activeMenu.map((menuItem, i) => i === activeMenu.length - 1 ? true : false));
+                            setActiveGestion(activeGestion.map((gestionItem, i) => i === index ? true : false));
+                            router.navigate(`../${item.path}`);
+                          }
+                        }
                         disabled={!open}
                         key={index}
                         sx={{ 
@@ -266,12 +274,13 @@ export default function MainDrawer() {
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                backgroundColor: 'rgba(86, 179, 227, 0.3)',
-                                zIndex: 2,
-                            }
+                                backgroundColor: activeGestion[index] ? 'rgba(0, 123, 255, 0.3)' : 'rgba(86, 179, 227, 0.3)',
+                                zIndex: 0,
+                            },
+                            backgroundColor: activeGestion[index] ? 'rgba(0, 123, 255, 0.3)' : 'transparent',
                         }}
                     >
-                        <ListItemText primary={item.text} sx={{color: open ? 'white' : 'transparent', textTransform: 'uppercase',}} />
+                        <ListItemText primary={item.text} sx={{color: open ? 'white' : 'transparent', textTransform: 'uppercase', zIndex: 1}} />
                     </ListItemButton>
                 ))
                 }
