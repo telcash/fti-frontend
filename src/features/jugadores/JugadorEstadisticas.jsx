@@ -65,6 +65,28 @@ const JugadorEstadisticas = () => {
             <div>
                 <JugadorAvatar jugador={jugador}/>
             </div>
+            <div className="jugador-estadisticas-campos">
+                <div className="jugador-estadisticas-campo">
+                    <h3>Apodo</h3>
+                    <p>{jugador.apodo ?? '---'}</p>
+                </div>
+                <div className="jugador-estadisticas-campo">
+                    <h3>Peso</h3>
+                    <p>{jugador.peso ?? '---'}</p>
+                </div>
+                <div className="jugador-estadisticas-campo">
+                    <h3>Altura</h3>
+                    <p>{jugador.altura ?? '---'}</p>
+                </div>
+                <div className="jugador-estadisticas-campo">
+                    <h3>Teléfono</h3>
+                    <p>{jugador.telefono ?? '---'}</p>
+                </div>
+                <div className="jugador-estadisticas-campo">
+                    <h3>Nacionalidad</h3>
+                    <p>{jugador.nacionalidad ?? '---'}</p>
+                </div>
+            </div>
             <div className="stat-graphs">
                 <div className="graph">
                     <h4>Convocatorias</h4>

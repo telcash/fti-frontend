@@ -184,6 +184,22 @@ JugadorEstadisticas
     margin-bottom: 0;
 }
 
+.jugador-estadisticas-campos {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: 30px;
+    column-gap: 60px;
+}
+
+.jugador-estadisticas-campo {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .stats-labels {
     display: flex;
     flex-flow: row wrap;
