@@ -34,6 +34,10 @@ const UpdateJugadorForm = () => {
     const [posicion, setPosicion] = useState(jugador.posicion ? jugador.posicion.nombre : '');
     const [equipo, setEquipo] = useState(jugador.equipo ? jugador.equipo.nombre : '');
     const [fNac, setFNac] = useState(dayjs(jugador.fNac));
+    const [peso, setPeso] = useState('');
+    const [altura, setAltura] = useState('');
+    const [telefono, setTelefono] = useState('');
+    const [nacionalidad, setNacionalidad] = useState('')
     const [iniContrato, setIniContrato] = useState(dayjs(jugador.iniContrato));
     const [finContrato, setFinContrato] = useState(dayjs(jugador.finContrato));
     const [errors, setErrors] = useState({});
@@ -56,6 +60,10 @@ const UpdateJugadorForm = () => {
     const onPosicionChanged = e => setPosicion(e.target.value);
     const onEquipoChanged = e => setEquipo(e.target.value);
     const onFNacChanged = e => setFNac(e);
+    const onPesoChanged = e => setPeso(e.target.value);
+    const onAlturaChanged = e => setAltura(e.target.value);
+    const onTelefonoChanged = e => setTelefono(e.target.value);
+    const onNacionalidadChanged = e => setNacionalidad(e.target.value);
     const onIniContratoChanged = e => setIniContrato(e);
     const onFinContratoChanged = e => setFinContrato(e);
 
@@ -84,6 +92,10 @@ const UpdateJugadorForm = () => {
             formData.append('posicion', posicion);
             formData.append('equipo', equipo);
             formData.append('fNac', fNac);
+            formData.append('peso', peso);
+            formData.append('altura', altura);
+            formData.append('telefono', telefono);
+            formData.append('nacionalidad', nacionalidad);
             formData.append('iniContrato', iniContrato);
             formData.append('finContrato', finContrato);
             formData.append('file', selectedFile);
@@ -186,6 +198,34 @@ const UpdateJugadorForm = () => {
                             onChange={onFNacChanged}
                         />
                     </LocalizationProvider>
+                    <TextField
+                        id="peso"
+                        label="Peso"
+                        value={peso}
+                        onChange={onPesoChanged} 
+                        sx={{flex: '30%'}}
+                    />
+                    <TextField
+                        id="altura"
+                        label="Altura"
+                        value={altura}
+                        onChange={onAlturaChanged} 
+                        sx={{flex: '30%'}}
+                    />
+                    <TextField
+                        id="telefono"
+                        label="Teléfono"
+                        value={telefono}
+                        onChange={onTelefonoChanged} 
+                        sx={{flex: '30%'}}
+                    />
+                    <TextField
+                        id="nacionalidad"
+                        label="Nacionalidad"
+                        value={nacionalidad}
+                        onChange={onNacionalidadChanged} 
+                        sx={{flex: '30%'}}
+                    />
                     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                         <DatePicker 
                             label="Inicio de contrato"
