@@ -52,7 +52,7 @@ const JugadorDesarrolloTactico = () => {
             <h2>Análisis Táctico</h2>
             <div className="jugador-desarrollo-tactico-info">
                 <div className="jugador-desarrollo-tactico-info-jugador">
-                    <JugadorAvatar fotoJugador={jugador.foto} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion.nombre} />
+                    <JugadorAvatar jugador={jugador} />
                     <div className="jugador-desarrollo-tactico-info-jugador-leyendas">
                         <div className="jugador-desarrollo-tactico-info-jugador-leyendas-item">
                             <Box bgcolor="#A8D6A6" sx={{ width: 60, height: 20, borderRadius: '5%' }} />

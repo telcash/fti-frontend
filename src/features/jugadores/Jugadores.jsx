@@ -249,10 +249,8 @@ const Jugadores = () => {
                             >
                                 <div style={{ maxWidth: handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW }} onClick={() => handleJugadorClick(jugador)}>
                                     <JugadorAvatar
-                                        nombre={jugador.nombre}
-                                        apellido={jugador.apellido}
-                                        fotoJugador={jugador.foto}
-                                        darkMode={true}
+                                        jugador={jugador}
+                                        cancha={true}
                                     />
                                 </div>
                             </Draggable>

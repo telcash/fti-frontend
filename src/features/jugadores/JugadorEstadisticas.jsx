@@ -63,7 +63,7 @@ const JugadorEstadisticas = () => {
         <section className="jugador-estadisticas">
             <h2>Datos Deportivos</h2>
             <div>
-                <JugadorAvatar fotoJugador={jugador.foto ?? ''} nombre={jugador.nombre} apellido={jugador.apellido} posicion={jugador.posicion ? jugador.posicion.nombre : ''}/>
+                <JugadorAvatar jugador={jugador}/>
             </div>
             <div className="stats-labels">
                 <div className="stat-label">

@@ -96,6 +96,7 @@ Jugadores
 
 .avatar-container h5, h6 {
     margin: 0;
+    text-align: center;
 }
 
 .avatar-info {
@@ -132,6 +133,10 @@ Jugadores
 /**
 JugadorDatos
 **/
+
+.jugador-datos h2 {
+    margin-bottom: 0;
+}
 
 .jugador-datos {
     display: flex;

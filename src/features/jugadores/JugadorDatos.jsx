@@ -12,10 +12,7 @@ const JugadorDatos = () => {
         <div className="jugador-datos">
             <h2>Datos de Jugador</h2>
             <JugadorAvatar 
-                fotoJugador={jugador.foto ?? ''}
-                nombre={jugador.nombre ?? ''}
-                apellido={jugador.apellido ?? ''}
-                posicion={(jugador.posicion && jugador.posicion.nombre) ?? ''} 
+                jugador={jugador} 
             />
             <div className="jugador-datos-campos">
                 <div className="jugador-datos-campo">

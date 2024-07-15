@@ -3,9 +3,11 @@ import { Avatar, Container } from "@mui/material";
 
 const imgUrl = process.env.REACT_APP_API_STATIC_SERVER + "jugadores/";
 
-const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion, darkMode }) => {
+const JugadorAvatar = ({ jugador, cancha }) => {
 
     const avatarRef = useRef();
+
+    const imgSize = cancha ? 56 : 112;
 
     useEffect(() => {
         const avatarElement = avatarRef.current;
@@ -22,18 +24,23 @@ const JugadorAvatar = ({ fotoJugador, nombre, apellido, posicion, darkMode }) =>
             <Avatar
                 ref={avatarRef}
                 alt="avatar jugador"
-                src={fotoJugador ? imgUrl + fotoJugador : ""}
-                sx={{ width: 56, height: 56 }}
+                src={jugador.foto ? imgUrl + jugador.foto : ""}
+                sx={{ width: imgSize, height: imgSize }}
             />
-            <div className={darkMode ? 'avatar-info-dark' : 'avatar-info'}>
+            <div className={cancha ? 'avatar-info-dark' : 'avatar-info'}>
                 {
-                    (nombre && apellido) && (
-                        <h5>{`${nombre} ${apellido}`.slice(0,18)}</h5>
+                    !cancha && jugador.nombre && jugador.apellido && (
+                        <h5>{`${jugador.nombre} ${jugador.apellido}`}</h5>
                     )
                 }
                 {
-                    posicion && (
-                        <h6>{posicion}</h6>
+                    !cancha && jugador.posicion && jugador.posicion.nombre && (
+                        <h6>{jugador.posicion.nombre}</h6>
+                    )
+                }
+                {
+                    cancha && (
+                        <h5>{jugador.apodo ? jugador.apodo : '---'}</h5>
                     )
                 }
             </div>
