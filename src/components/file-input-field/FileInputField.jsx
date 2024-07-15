@@ -41,7 +41,7 @@ const FileInputField = ({onHandleFileChange, formSubmitted, prevImgUrl}) => {
                             src={previewUrl}
                             sx={{ width: 56, height: 56}}
                         />
-                        <h3>Cargar foto</h3>
+                        <h3>Cargar Foto</h3>
                         {
                             selectedFile &&
                             <h5>{selectedFile.name}</h5>
