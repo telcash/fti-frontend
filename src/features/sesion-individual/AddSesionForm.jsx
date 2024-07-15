@@ -269,7 +269,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración general"
+                                        placeholder="Valoración Táctica"
                                         type="number"
                                         onChange={(e) => handleValoracionChange(e, fundamento)}
                                         inputProps={{ 
@@ -280,7 +280,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración máxima"
+                                        placeholder="Fundamentos Totales"
                                         type="number"
                                         onChange={(e) => handleValoracionMaxChange(e, fundamento)}
                                         inputProps={{
@@ -315,7 +315,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración Táctica"
+                                        placeholder="Toma de Decisiones"
                                         type="number"
                                         onChange = {(e) => handleValoracionTacticaChange(e, fundamento)}
                                         inputProps={{
@@ -373,7 +373,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración general"
+                                        placeholder="Valoración Táctica"
                                         type="number"
                                         inputProps={{ 
                                             min: 0, 
@@ -384,7 +384,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración máxima"
+                                        placeholder="Fundamentos Totales"
                                         type="number"
                                         onChange={(e) => handleValoracionMaxChange(e, fundamento)}
                                         inputProps={{
@@ -419,7 +419,7 @@ const AddSesionForm = () => {
                                     <Input
                                         sx={{width: 200}}
                                         size="small"
-                                        placeholder="Valoración Táctica"
+                                        placeholder="Toma de Decisiones"
                                         type="number"
                                         onChange = {(e) => handleValoracionTacticaChange(e, fundamento)}
                                         inputProps={{

@@ -60,7 +60,7 @@ const SesionesList = () => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="center">{dayjs(sesion.fecha).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{`Id: ${sesion.jugador.id} - ${sesion.jugador.nombre} ${sesion.jugador.apellido}`}</TableCell>
+                                <TableCell align="center">{`${sesion.jugador.nombre} ${sesion.jugador.apellido}`}</TableCell>
                                 <TableCell align="center">
                                     {sesion.ejercicios.map(ejercicio => (
                                         <div key={ejercicio.id}>
