@@ -152,16 +152,16 @@ const EstadisticasEquipo = () => {
                             <TableRow>
                                 <TableCell align="center" sx={{color: 'white'}}></TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>Apellido</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>M. Jugados</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>P. Convocados</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>P. No Convocados</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>P. Lesionados</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Apellidos</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Min</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Conv</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>No Conv</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Les</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Goles</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Asistencias</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>T. Amarillas</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>T. Rojas</TableCell>
-                                <TableCell align="center" sx={{color: 'white'}}>Valoracion</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>TA</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>TR</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Val</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
