@@ -71,7 +71,7 @@ const PartidosList = () => {
                                 <TableCell align="center">{dayjs(partido.fecha).format('DD/MM/YYYY')}</TableCell>
                                 <TableCell align="center">{(partido.equipoLocal && partido.equipoLocal.nombre) ?? ''}</TableCell>
                                 <TableCell align="center">{(partido.equipoVisitante && partido.equipoVisitante.nombre) ?? ''}</TableCell>
-                                <TableCell align="center">{(partido.golesLocal && partido.golesVisitante) ? `${partido.golesLocal} - ${partido.golesVisitante}` : ''}</TableCell>
+                                <TableCell align="center">{`${partido.golesLocal} - ${partido.golesVisitante}`}</TableCell>
                                 <TableCell align="center">{partido.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
