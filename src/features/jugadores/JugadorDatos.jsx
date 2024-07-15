@@ -3,6 +3,9 @@ import JugadorAvatar from "./JugadorAvatar"
 import { getJugadorSelected } from "./jugadoresSlice";
 import { Button } from "@mui/material";
 import { paths, router } from "../../router/router";
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import calculateAge from '../../utils/calculateAge';
 
 const JugadorDatos = () => {
 
@@ -17,7 +20,11 @@ const JugadorDatos = () => {
             <div className="jugador-datos-campos">
                 <div className="jugador-datos-campo">
                     <h3>Fecha de Nacimiento</h3>
-                    <p>{jugador.fNac ?? ''}</p>
+                    <p>{jugador.fNac ? dayjs(jugador.fNac).format('DD/MM/YYYY') : ''}</p>
+                </div>
+                <div className="jugador-datos-campo">
+                    <h3>Edad</h3>
+                    <p>{calculateAge(jugador.fNac)}</p>
                 </div>
                 <div className="jugador-datos-campo">
                     <h3>Equipo</h3>
@@ -25,11 +32,11 @@ const JugadorDatos = () => {
                 </div>
                 <div className="jugador-datos-campo">
                     <h3>Inicio de contrato</h3>
-                    <p>{jugador.iniContrato ?? ''}</p>
+                    <p>{jugador.iniContrato ? dayjs(jugador.iniContrato).format('DD/MM/YYYY') : ''}</p>
                 </div>
                 <div className="jugador-datos-campo">
                     <h3>Finalización de contrato</h3>
-                    <p>{jugador.finContrato ?? ''}</p>
+                    <p>{jugador.finContrato ? dayjs(jugador.finContrato).format('DD/MM/YYYY') : ''}</p>
                 </div>
             </div>
             <div>

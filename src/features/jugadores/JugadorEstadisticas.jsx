@@ -65,6 +65,115 @@ const JugadorEstadisticas = () => {
             <div>
                 <JugadorAvatar jugador={jugador}/>
             </div>
+            <div className="stat-graphs">
+                <div className="graph">
+                    <h4>Convocatorias</h4>
+                    <PieChart
+                        series={[
+                            {
+                                data: [
+                                    { id: 0, value: convocado, label: 'Convocado' },
+                                    { id: 1, value: noConvocado, label: 'No Convocado' },
+                                    { id: 2, value: lesionado, label: 'Lesionado' }
+                                ],
+                                cx: 90,
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Minutos</h4>
+                    <BarChart
+                        dataset={
+                            jugadorSelectedToPartidos.map((jugador, index) => {
+                                return {
+                                    minutos: jugador.minJugados,
+                                    index: index + 1
+                                }
+                            })
+                        }
+                        xAxis={[
+                            {
+                                scaleType: 'band',
+                                dataKey: 'index',
+                            }
+                        ]}
+                        series={[
+                            {
+                                dataKey: 'minutos'
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Valoración</h4>
+                    <LineChart
+                        dataset={
+                            jugadorSelectedToPartidos.map((jugador, index) => {
+                                return {
+                                    valoracion: jugador.valoracion,
+                                    index: index + 1
+                                }
+                            })
+                        }
+                        xAxis={[
+                            {
+                                dataKey: 'index'
+                            }
+                        ]}
+                        series={[
+                            {
+                                dataKey: 'valoracion'
+                            }
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>Tarjetas</h4>
+                    <BarChart
+                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
+                            return {
+                                amarilla: jugador.tarjetasAmarillas,
+                                roja: jugador.tarjetasRojas,
+                                index: index + 1
+                            }
+                        })}
+                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
+                        series={[
+                            { dataKey: 'amarilla', label: 'Amarillas', color: '#ffc107'},
+                            { dataKey: 'roja', label: 'Rojas', color: '#dc3545'}
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+                <div className="graph">
+                    <h4>G/A</h4>
+                    <BarChart
+                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
+                            return {
+                                goles: jugador.goles,
+                                asistencias: jugador.asistencias,
+                                index: index + 1
+                            }
+                        })}
+                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
+                        yAxis={[{ tickMinStep: 1}]}
+                        series={[
+                            { dataKey: 'goles', label: 'Goles', color: '#007bff'},
+                            { dataKey: 'asistencias', label: 'Asistencias', color: '#273237'}
+                        ]}
+                        width={GRAPH_WIDTH}
+                        height={GRAPH_HEIGHT}
+                    />
+                </div>
+            </div>
             <div className="stats-labels">
                 <div className="stat-label">
                     <h3>{minutos}</h3>
@@ -99,103 +208,8 @@ const JugadorEstadisticas = () => {
                     <h4>Tarjetas Rojas</h4>
                 </div>
                 <div className="stat-label">
-                    <h3>{valoracion}</h3>
+                    <h3>{valoracion.toFixed(1)}</h3>
                     <h4>Valoracion</h4>
-                </div>
-            </div>
-            <div className="stat-graphs">
-                <div className="graph">
-                    <h4>Convocatorias</h4>
-                    <PieChart
-                        series={[
-                            {
-                                data: [
-                                    { id: 0, value: convocado, label: 'Convocado' },
-                                    { id: 1, value: noConvocado, label: 'No Convocado' },
-                                    { id: 2, value: lesionado, label: 'Lesionado' }
-                                ],
-                                cx: 90,
-                            }
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT}
-                    />
-                </div>
-                <div className="graph">
-                    <h4>Minutos</h4>
-                    <BarChart
-                        dataset={
-                            jugadorSelectedToPartidos.map((jugador, index) => {
-                                return {
-                                    minutos: jugador.minJugados,
-                                    index: index
-                                }
-                            })
-                        }
-                        xAxis={[
-                            {
-                                scaleType: 'band',
-                                dataKey: 'index',
-                            }
-                        ]}
-                        series={[
-                            {
-                                dataKey: 'minutos'
-                            }
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT}
-                    />
-                </div>
-                <div className="graph">
-                    <h4>Valoración</h4>
-                    <LineChart
-                        series={[
-                            {
-                                data: jugadorSelectedToPartidos.map(jugador => jugador.valoracion)
-                            }
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT}
-                    />
-                </div>
-                <div className="graph">
-                    <h4>Tarjetas</h4>
-                    <BarChart
-                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
-                            return {
-                                amarilla: jugador.tarjetasAmarillas,
-                                roja: jugador.tarjetasRojas,
-                                index: index
-                            }
-                        })}
-                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
-                        series={[
-                            { dataKey: 'amarilla', label: 'Amarillas', color: '#ffc107'},
-                            { dataKey: 'roja', label: 'Rojas', color: '#dc3545'}
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT}
-                    />
-                </div>
-                <div className="graph">
-                    <h4>G/A</h4>
-                    <BarChart
-                        dataset={jugadorSelectedToPartidos.map((jugador, index) => {
-                            return {
-                                goles: jugador.goles,
-                                asistencias: jugador.asistencias,
-                                index: index
-                            }
-                        })}
-                        xAxis={[{ scaleType: 'band', dataKey: 'index' }]}
-                        series={[
-                            { dataKey: 'goles', label: 'Goles', color: '#007bff'},
-                            { dataKey: 'asistencias', label: 'Asistencias', color: '#273237'}
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT}
-                    />
                 </div>
             </div>
             <div>
