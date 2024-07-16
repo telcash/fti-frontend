@@ -1,8 +1,10 @@
-import { Avatar, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Avatar, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, FormLabel } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "./equiposSlice";
 import { useEffect, useState } from "react";
-import { fetchPartidos, getPartidosStatus, selectAllPartidos } from "../partidos/partidosSlice";
+import { fetchPartidos, getPartidosStatus, partidoSelected, selectAllPartidos } from "../partidos/partidosSlice";
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import './equipos.css';
 
 const EstadisticasEquipo = () => {
@@ -16,9 +18,9 @@ const EstadisticasEquipo = () => {
     const partidosStatus = useSelector(getPartidosStatus);
 
     const [equipo, setEquipo] = useState();
-    const [equipoRival, setEquipoRival] = useState();
     const [fecha, setFecha] = useState();
     const [partidosFiltered, setPartidosFiltered] = useState([]);
+    const [partidosSelected, setPartidosSelected] = useState([]);
     const [jtpTotales, setJtpTotales] = useState([]);    
 
     useEffect(() => {
@@ -38,9 +40,8 @@ const EstadisticasEquipo = () => {
     useEffect(() => {
         if(partidosFiltered.length > 0) {
             const jtpTotales = [];
-            partidosFiltered.forEach(partido => {
+            partidosFiltered.filter((p, i) => partidosSelected[i]).forEach(partido => {
                 partido.jugadorToPartidos.forEach(jtp => {
-                    if(!fecha || (partido.fecha === fecha)) {
                         const jtpEncontrado = jtpTotales.find(j => j.jugador.id === jtp.jugador.id);
                         if(jtpEncontrado) {
                             jtpEncontrado.minJugados += jtp.minJugados;
@@ -66,7 +67,6 @@ const EstadisticasEquipo = () => {
                                 valoracion: jtp.valoracion
                             });
                         }
-                    }
                 })
             })
             setJtpTotales(jtpTotales);
@@ -75,31 +75,35 @@ const EstadisticasEquipo = () => {
         
         }
     }
-    , [fecha, partidosFiltered]);
+    , [partidosFiltered, partidosSelected]);
 
     const onChangeEquipo = (e) => {
         const selectedEquipo = e.target.value;
         let partidosFiltered = [];
-        if(!equipoRival || (selectedEquipo.id !== equipoRival.id)) {
-            setEquipo(selectedEquipo);
-        }
-        if(!equipoRival) {
-            partidosFiltered = partidos.filter(partido => (partido.equipoLocal.id === selectedEquipo.id) || (partido.equipoVisitante.id === selectedEquipo.id));
-            setPartidosFiltered(partidosFiltered);
-        } else {
-            partidosFiltered = partidos.filter(partido => ((partido.equipoLocal.id === selectedEquipo.id) && (partido.equipoVisitante.id === equipoRival.id)) || ((partido.equipoVisitante.id === selectedEquipo.id) && (partido.equipoLocal.id === equipoRival.id)));
-            setPartidosFiltered(partidosFiltered);
-        }
+        let partidosSelected = [];
+        setEquipo(selectedEquipo);
+        partidosFiltered = partidos.filter(partido => (partido.equipoLocal.id === selectedEquipo.id) || (partido.equipoVisitante.id === selectedEquipo.id));
+        partidosFiltered.forEach(p => partidosSelected.push(true));
+        setPartidosFiltered(partidosFiltered);
+        setPartidosSelected(partidosSelected);
+        setFecha('');
     }
 
-    const onChangeEquipoRival = (e) => {
-        const selectedEquipoRival = e.target.value;
-        let partidosFiltered = [];
-        if(equipo && (selectedEquipoRival.id !== equipo.id)) {
-            setEquipoRival(selectedEquipoRival);
-            partidosFiltered = partidos.filter(partido => ((partido.equipoLocal.id === equipo.id) && (partido.equipoVisitante.id === selectedEquipoRival.id)) || ((partido.equipoVisitante.id === equipo.id) && (partido.equipoLocal.id === selectedEquipoRival.id)));
-            setPartidosFiltered(partidosFiltered);
-        }
+    const onChangeFecha = (e) => {
+        let newFecha = e.target.value;
+        let pSel = [];
+        partidosFiltered.forEach((p, i) => {
+            !newFecha ? pSel[i] = true : (p.fecha === newFecha ? pSel[i] = true : pSel[i] = false);
+        });
+        setPartidosSelected(pSel);
+        setFecha(newFecha);
+    }
+
+    const handlePartidosSelected = (index) => {
+        let pSel = [];
+        partidosSelected.forEach((p, i) => pSel[i] = i === index ? !partidosSelected[i] : partidosSelected[i]);
+        setPartidosSelected(pSel);
+        setFecha('');
     }
 
     return (
@@ -114,22 +118,22 @@ const EstadisticasEquipo = () => {
                         label="Equipo"
                         value={equipo || ''}
                         onChange={onChangeEquipo}
+                        displayEmpty
                     >
+                        <MenuItem value="" sx={{ height: 36 }}></MenuItem>
                         {equipos && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ width: 300}}>
-                    <InputLabel id="equipo-rival-label">Equipo rival</InputLabel>
-                    <Select
-                        labelId="equipo-rival-label"
-                        id="equipo-rival"
-                        label="Equipo rival"
-                        value={equipoRival || ''}
-                        onChange={onChangeEquipoRival}
-                    >
-                        {equipo && equipos && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
-                    </Select>
-                </FormControl>
+                <FormGroup sx={{ width: 300, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
+                    {
+                        partidosFiltered.length === 0 && <p>Seleccionar Jornada</p>
+                    }
+                    {
+                        partidosFiltered && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((p, i) => 
+                            <FormControlLabel control={<Checkbox checked={partidosSelected[i]} onChange={() => handlePartidosSelected(i)}/>} label={`J${i+1} ${dayjs(p.fecha).format('DD/MM/YY')}`} />
+                        )
+                    }
+                </FormGroup>
                 <FormControl sx={{ width: 300}}>
                     <InputLabel id="fecha-label">Fecha</InputLabel>
                     <Select
@@ -137,11 +141,13 @@ const EstadisticasEquipo = () => {
                         id="fecha"
                         label="Fecha"
                         value={fecha || ''}
+                        displayEmpty
                         onChange={(e) => {
-                            setFecha(e.target.value)
+                            onChangeFecha(e);
                         }}
                     >
-                        {(equipo && equipoRival) && partidosFiltered.map(p => <MenuItem key={p.id} value={p.fecha}>{p.fecha}</MenuItem>)}
+                        <MenuItem value="" sx={{ height: 36 }}></MenuItem>
+                        {equipo && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map(p => <MenuItem key={p.id} value={p.fecha}>{dayjs(p.fecha).format('DD/MM/YYYY')}</MenuItem>)}
                     </Select>
                 </FormControl>
             </div>
