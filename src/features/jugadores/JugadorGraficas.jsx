@@ -55,12 +55,11 @@ const JugadorGraficas = () => {
                         onChange={(e) => setTipoGrafica(e.target.value)}
                     >
                         <MenuItem value="barras">Diagrama de barras</MenuItem>
-                        {/* <MenuItem value="lineal">Gráfica lineal</MenuItem> */}
                         <MenuItem value="circular">Gráfica circular</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl sx={{ width: 300}}>
-                    <InputLabel id="sesiones-numero-label">Sesión</InputLabel>
+                    <InputLabel id="sesiones-numero-label">Jornada</InputLabel>
                     <Select
                         labelId="sesiones-numero-label"
                         id="sesiones-numero"
@@ -112,23 +111,20 @@ const JugadorGraficas = () => {
                     <BarChart
                         dataset={selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.tipo === fundamento).map(ejercicio => {
                             return {
-                                valorIdeal: ejercicio.valoracionMaxima,
-                                valorObtenido: ejercicio.valoracion,
+                                totales: ejercicio.valoracionMaxima,
+                                aciertos: ejercicio.valoracion,
                                 fundamento: ejercicio.fundamento.nombre,
                             }
                         })}
                         xAxis={[{ scaleType: 'band', dataKey: 'fundamento' }]}
                         series={[
-                            { dataKey: 'valorIdeal', label: 'Valor Ideal'},
-                            { dataKey: 'valorObtenido', label: 'Valor Obtenido'}
+                            { dataKey: 'totales', label: 'Totales'},
+                            { dataKey: 'aciertos', label: 'Aciertos'}
                         ]}
                         width={GRAPH_WIDTH}
                         height={GRAPH_HEIGHT}
                     />
                 }
-                {/* {tipoGrafica === 'lineal' && selectedSesion && fundamento &&
-                    <h3>Gráfica lineal</h3>
-                } */}
                 {tipoGrafica === 'circular' && selectedSesion && fundamento &&
                     <PieChart
                         series={[
@@ -137,12 +133,12 @@ const JugadorGraficas = () => {
                                     {
                                         id: 0,
                                         value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
-                                        label: `${fundamento} (A favor)`
+                                        label: `${fundamento} (Aciertos)`
                                     },
                                     {
                                         id: 1,
                                         value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
-                                        label: `${fundamento} (En contra)`
+                                        label: `${fundamento} (Errores)`
                                     }
                                 ],
                                 cx: 200,
