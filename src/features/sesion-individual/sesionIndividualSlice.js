@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const SESION_URL = process.env.REACT_APP_API_URL + "sesion-individual";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchSesiones = createAsyncThunk('sesiones/fetchSesiones', async () => {
     try {
-        const response = await axios.get(SESION_URL);
+        const response = await axiosInstance.get(SESION_URL);
         return response.data;
     } catch (err) {
         return err.message;
@@ -21,7 +21,7 @@ export const fetchSesiones = createAsyncThunk('sesiones/fetchSesiones', async ()
 
 export const fetchSesionById = createAsyncThunk('sesiones/fetchSesionById', async (id) => {
     try {
-        const response = await axios.get(`${SESION_URL}/${id}`);
+        const response = await axiosInstance.get(`${SESION_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const fetchSesionById = createAsyncThunk('sesiones/fetchSesionById', asyn
 
 export const addSesion = createAsyncThunk('sesiones/addSesion', async (sesion) => {
     try {
-        const response = await axios.post(SESION_URL, sesion);
+        const response = await axiosInstance.post(SESION_URL, sesion);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const addSesion = createAsyncThunk('sesiones/addSesion', async (sesion) =
 
 export const updateSesion = createAsyncThunk('sesiones/updateSesion', async (arg) => {
     try {
-        const response = await axios.patch(`${SESION_URL}/${arg.id}`, arg.sesion);
+        const response = await axiosInstance.patch(`${SESION_URL}/${arg.id}`, arg.sesion);
         return response.data;
     } catch (err) {
         return err.message;
@@ -48,7 +48,7 @@ export const updateSesion = createAsyncThunk('sesiones/updateSesion', async (arg
 
 export const deleteSesion = createAsyncThunk('sesiones/deleteSesion', async (id) => {
     try {
-        const response = await axios.delete(`${SESION_URL}/${id}`);
+        const response = await axiosInstance.delete(`${SESION_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -79,7 +79,7 @@ const sesionesSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addSesion.fulfilled, (state, action) => {
-                state.sesiones.push(action.payload);
+                action.payload ?? state.sesiones.push(action.payload);
             })
             .addCase(updateSesion.fulfilled, (state, action) => {
                 state.sesiones.splice(state.sesiones.findIndex(sesion => sesion.id === state.sesionSelected.id), 1, action.payload);

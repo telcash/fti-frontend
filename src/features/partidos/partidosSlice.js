@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const PARTIDO_URL = process.env.REACT_APP_API_URL + "partido";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchPartidos = createAsyncThunk('partidos/fetchPartidos', async () => {
     try {
-        const response = await axios.get(PARTIDO_URL);
+        const response = await axiosInstance.get(PARTIDO_URL);
         return response.data;
     } catch (err) {
         return err.message;
@@ -21,7 +21,7 @@ export const fetchPartidos = createAsyncThunk('partidos/fetchPartidos', async ()
 
 export const fetchPartidoById = createAsyncThunk('partidos/fetchPartidoById', async (id) => {
     try {
-        const response = await axios.get(`${PARTIDO_URL}/${id}`);
+        const response = await axiosInstance.get(`${PARTIDO_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const fetchPartidoById = createAsyncThunk('partidos/fetchPartidoById', as
 
 export const addPartido = createAsyncThunk('partidos/addPartido', async (partido) => {
     try {
-        const response = await axios.post(PARTIDO_URL, partido);
+        const response = await axiosInstance.post(PARTIDO_URL, partido);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const addPartido = createAsyncThunk('partidos/addPartido', async (partido
 
 export const updatePartido = createAsyncThunk('partidos/updatePartido', async (arg) => {
     try {
-        const response = await axios.patch(`${PARTIDO_URL}/${arg.id}`, arg.partido);
+        const response = await axiosInstance.patch(`${PARTIDO_URL}/${arg.id}`, arg.partido);
         return response.data;
     } catch (err) {
         return err.message;
@@ -48,7 +48,7 @@ export const updatePartido = createAsyncThunk('partidos/updatePartido', async (a
 
 export const deletePartido = createAsyncThunk('partidoss/deletePartido', async (id) => {
     try {
-        const response = await axios.delete(`${PARTIDO_URL}/${id}`);
+        const response = await axiosInstance.delete(`${PARTIDO_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -79,7 +79,7 @@ const partidosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addPartido.fulfilled, (state, action) => {
-                state.partidos.push(action.payload);
+                action.payload ?? state.partidos.push(action.payload);
             })
             .addCase(updatePartido.fulfilled, (state, action) => {
                 state.partidos.splice(state.partidos.findIndex(partido => partido.id === state.partidoSelected.id), 1, action.payload);
@@ -90,6 +90,7 @@ const partidosSlice = createSlice({
                 }
                 state.partidoSelected = 0;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

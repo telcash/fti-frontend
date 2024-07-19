@@ -27,9 +27,11 @@ import JugadorGraficas from "../features/jugadores/JugadorGraficas";
 import EstadisticasEquipo from "../features/equipos/EstadisticasEquipo";
 import JugadorDesarrolloTactico from "../features/jugadores/JugadorDesarrolloTactico";
 import JugadorSesion from "../features/jugadores/JugadorSesion";
+import Login from "../components/login/Login";
 
 export const paths = {
   home: "/",
+  login: "/login",
   jugadores: "/jugadores",
   jugadorDatos: "/jugador-datos",
   estadisticasJugador: "/estadisticas-jugador",
@@ -67,6 +69,10 @@ export const router = createBrowserRouter([
   {
     path: paths.home,
     element: <Jugadores />
+  },
+  {
+    path: paths.login,
+    element: <Login />
   },
   {
     path: paths.jugadores,

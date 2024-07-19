@@ -53,7 +53,7 @@ const EquiposList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {equipos && equipos.map((equipo) => (
+                        {equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                             <TableRow
                                 key={equipo.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

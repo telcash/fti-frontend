@@ -213,7 +213,7 @@ const UpdateSesionForm = () => {
                             label="Jugador"
                             onChange={onJugadorChanged}
                         >
-                            {jugadores && jugadores.map(jugador => (
+                            {jugadores && Array.isArray(jugadores) && jugadores.map(jugador => (
                                 <MenuItem key={jugador.id} value={jugador.id}>
                                     {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
                                 </MenuItem>
@@ -234,7 +234,7 @@ const UpdateSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Defensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
+                            {fundamentos && Array.isArray(fundamentos) && fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>
@@ -349,7 +349,7 @@ const UpdateSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Ofensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
+                            {fundamentos && Array.isArray(fundamentos) && fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>

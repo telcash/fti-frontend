@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const FUNDAMENTOS_URL = process.env.REACT_APP_API_URL + "fundamento";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchFundamentos = createAsyncThunk('fundamentos/fetchFundamentos', async () => {
     try {
-        const response = await axios.get(FUNDAMENTOS_URL);
+        const response = await axiosInstance.get(FUNDAMENTOS_URL);
         return response.data;
     } catch (err) {
         return err.message
@@ -21,7 +21,7 @@ export const fetchFundamentos = createAsyncThunk('fundamentos/fetchFundamentos',
 
 export const addFundamento = createAsyncThunk('fundamentos/addFundamento', async (fundamento) => {
     try {
-        const response = await axios.post(FUNDAMENTOS_URL, fundamento);
+        const response = await axiosInstance.post(FUNDAMENTOS_URL, fundamento);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const addFundamento = createAsyncThunk('fundamentos/addFundamento', async
 
 export const updateFundamento = createAsyncThunk('fundamentos/updateFundamento', async (arg) => {
     try {
-        const response = await axios.patch(`${FUNDAMENTOS_URL}/${arg.id}`, arg.fundamento);
+        const response = await axiosInstance.patch(`${FUNDAMENTOS_URL}/${arg.id}`, arg.fundamento);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const updateFundamento = createAsyncThunk('fundamentos/updateFundamento',
 
 export const deleteFundamento = createAsyncThunk('fundamentos/deleteFundamento', async (id) => {
     try {
-        const response = await axios.delete(`${FUNDAMENTOS_URL}/${id}`);
+        const response = await axiosInstance.delete(`${FUNDAMENTOS_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -70,7 +70,7 @@ const fundamentosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addFundamento.fulfilled, (state, action) => {
-                state.fundamentos.push(action.payload);
+                action.payload ?? state.fundamentos.push(action.payload);
             })
             .addCase(updateFundamento.fulfilled, (state, action) => {
                 state.fundamentos.splice(state.fundamentos.findIndex(fundamento => fundamento.id === state.fundamentoSelected.id), 1, action.payload);
@@ -81,6 +81,7 @@ const fundamentosSlice = createSlice({
                 }
                 state.fundamentoSelected = null;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
         }        
 })
 

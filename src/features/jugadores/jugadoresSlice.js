@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const JUGADOR_URL = process.env.REACT_APP_API_URL + "jugador";
 
@@ -13,7 +13,7 @@ const initialState = {
 
 export const fetchJugadores = createAsyncThunk('jugadores/fetchJugadores', async () => {
     try {
-        const response = await axios.get(JUGADOR_URL);
+        const response = await axiosInstance.get(JUGADOR_URL);
         return response.data;
     } catch (err) {
         return err.message;
@@ -22,7 +22,7 @@ export const fetchJugadores = createAsyncThunk('jugadores/fetchJugadores', async
 
 export const fetchJugadorById = createAsyncThunk('jugadores/fetchJugadorById', async (id) => {
     try {
-        const response = await axios.get(`${JUGADOR_URL}/${id}`);
+        const response = await axiosInstance.get(`${JUGADOR_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -31,7 +31,7 @@ export const fetchJugadorById = createAsyncThunk('jugadores/fetchJugadorById', a
 
 export const addJugador = createAsyncThunk('jugadores/addJugador', async (jugador) => {
     try {
-        const response = await axios.post(JUGADOR_URL, jugador);
+        const response = await axiosInstance.post(JUGADOR_URL, jugador);
         return response.data;
     } catch (err) {
         return err.message;
@@ -40,7 +40,7 @@ export const addJugador = createAsyncThunk('jugadores/addJugador', async (jugado
 
 export const updateJugador = createAsyncThunk('jugadores/updateJugador', async (arg) => {
     try {
-        const response = await axios.patch(`${JUGADOR_URL}/${arg.id}`, arg.jugador);
+        const response = await axiosInstance.patch(`${JUGADOR_URL}/${arg.id}`, arg.jugador);
         return response.data;
     } catch (err) {
         return err.message;
@@ -49,7 +49,7 @@ export const updateJugador = createAsyncThunk('jugadores/updateJugador', async (
 
 export const deleteJugador = createAsyncThunk('jugadores/deleteJugador', async (id) => {
     try {
-        const response = await axios.delete(`${JUGADOR_URL}/${id}`);
+        const response = await axiosInstance.delete(`${JUGADOR_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -80,7 +80,7 @@ const jugadoresSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addJugador.fulfilled, (state, action) => {
-                state.jugadores.push(action.payload);
+                action.payload ?? state.jugadores.push(action.payload);
             })
             .addCase(updateJugador.fulfilled, (state, action) => {
                 state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === action.payload.id), 1, action.payload);
@@ -91,6 +91,7 @@ const jugadoresSlice = createSlice({
                 }
                 state.jugadorSelected = 0;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

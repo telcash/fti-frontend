@@ -54,7 +54,7 @@ const SesionesList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sesiones && sesiones.map((sesion) => (
+                        {sesiones && Array.isArray(sesiones) && sesiones.map((sesion) => (
                             <TableRow
                                 key={sesion.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,8 +21,11 @@ import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
 import { toggleDrawer } from './mainDrawerSlice';
 import { useDispatch } from 'react-redux';
+import { clearPersistedData, persistor, store } from '../../app/store';
+import axiosInstance from '../../axiosConfig';
 
 const drawerWidth = window.innerWidth / 4.32;
+const USERS_URL = process.env.REACT_APP_API_URL + "users";
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -167,6 +171,16 @@ export default function MainDrawer() {
     setGestionOpen(!gestionOpen);
   }
 
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post(`${USERS_URL}/logout`);
+      router.navigate(paths.login, {replace: true});
+    } catch (err) {
+      return err.message;
+    }
+    
+  }
+
   return (
     <Box sx={{ display: 'flex'}}>
       <CssBaseline />
@@ -184,9 +198,13 @@ export default function MainDrawer() {
                 <img src="assets/menu.png" alt="menu" />
             </div>
           </IconButton>
-            <div className="logo">
-                <img src="assets/logo.png" alt="logo" />
-            </div>
+          <div className="logo">
+              <img src="assets/logo.png" alt="logo" />
+          </div>
+          <div className='sesion-buttons'>
+            {/* <Button onClick={() => router.navigate(paths.login, {replace: true})}>INICIAR SESIÓN</Button> */}
+            <Button onClick={handleLogout}>CERRAR SESIÓN</Button>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

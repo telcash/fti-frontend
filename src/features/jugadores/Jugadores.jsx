@@ -194,7 +194,7 @@ const Jugadores = () => {
                         sx={{width: 300, mb: 2}}
                     >
                         {
-                            equipos && equipos.map((equipo, index) => (
+                            equipos && Array.isArray(equipos) && equipos.map((equipo, index) => (
                                 <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                             ))
                         }

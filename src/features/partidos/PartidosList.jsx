@@ -63,7 +63,7 @@ const PartidosList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {partidosSorted && partidosSorted.map((partido) => (
+                        {partidosSorted && Array.isArray(partidosSorted) && partidosSorted.map((partido) => (
                             <TableRow
                                 key={partido.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

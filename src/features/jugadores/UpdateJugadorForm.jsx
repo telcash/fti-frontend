@@ -169,7 +169,7 @@ const UpdateJugadorForm = () => {
                             onChange={onPosicionChanged}
                         >
                         {
-                            posiciones && posiciones.map((posicion) => (
+                            posiciones && Array.isArray(posiciones) && posiciones.map((posicion) => (
                                 <MenuItem value={posicion.nombre}>{posicion.nombre}</MenuItem>
                             ))
                         }
@@ -185,7 +185,7 @@ const UpdateJugadorForm = () => {
                             onChange={onEquipoChanged}
                         >
                         {
-                            equipos && equipos.map((equipo) => (
+                            equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                                 <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                             ))
                         }

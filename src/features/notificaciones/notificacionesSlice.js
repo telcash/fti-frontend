@@ -55,6 +55,7 @@ const notificacionesSlice = createSlice({
             .addCase(updateNotificationLastDate.fulfilled, (state, action) => {
                 state.lastDate = action.payload;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

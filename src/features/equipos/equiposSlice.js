@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from '../../axiosConfig';
 
 const EQUIPO_URL = process.env.REACT_APP_API_URL + "equipo";
 
@@ -14,7 +14,7 @@ const initialState = {
 
 export const fetchEquipos = createAsyncThunk('equipos/fetchEquipos', async () => {
     try {
-        const response = await axios.get(EQUIPO_URL);
+        const response = await axiosInstance.get(EQUIPO_URL);
         return response.data;
     } catch (err) {
         return err.message;
@@ -23,7 +23,7 @@ export const fetchEquipos = createAsyncThunk('equipos/fetchEquipos', async () =>
 
 export const addEquipo = createAsyncThunk('equipos/addEquipo', async (equipo) => {
     try {
-        const response = await axios.post(EQUIPO_URL, equipo);
+        const response = await axiosInstance.post(EQUIPO_URL, equipo);
         return response.data;
     } catch (err) {
         return err.message;
@@ -32,7 +32,7 @@ export const addEquipo = createAsyncThunk('equipos/addEquipo', async (equipo) =>
 
 export const updateEquipo = createAsyncThunk('equipos/updateEquipo', async (arg) => {
     try {
-        const response = await axios.patch(`${EQUIPO_URL}/${arg.id}`, arg.equipo);
+        const response = await axiosInstance.patch(`${EQUIPO_URL}/${arg.id}`, arg.equipo);
         return response.data;
     } catch (err) {
         return err.message;
@@ -41,7 +41,7 @@ export const updateEquipo = createAsyncThunk('equipos/updateEquipo', async (arg)
 
 export const deleteEquipo = createAsyncThunk('equipos/deleteJugador', async (id) => {
     try {
-        const response = await axios.delete(`${EQUIPO_URL}/${id}`);
+        const response = await axiosInstance.delete(`${EQUIPO_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -82,7 +82,7 @@ const equiposSlice = createSlice({
             state.error = action.error.message;
         })
         .addCase(addEquipo.fulfilled, (state, action) => {
-            state.equipos.push(action.payload);
+            action.payload ?? state.equipos.push(action.payload);
         })
         .addCase(updateEquipo.fulfilled, (state, action) => {
             state.equipos.splice(state.equipos.findIndex(equipo => equipo.id === state.equipoSelected.id), 1, action.payload);
@@ -93,6 +93,7 @@ const equiposSlice = createSlice({
             }
             state.equipoSelected = null;
         })
+        .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

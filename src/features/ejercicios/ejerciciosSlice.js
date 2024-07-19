@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const EJERCICIOS_URL = process.env.REACT_APP_API_URL + "ejercicio";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchEjercicios = createAsyncThunk('ejercicios/fetchEjercicios', async () => {
     try {
-        const response = await axios.get(EJERCICIOS_URL);
+        const response = await axiosInstance.get(EJERCICIOS_URL);
         return response.data;
     } catch (err) {
         return err.message;
@@ -21,7 +21,7 @@ export const fetchEjercicios = createAsyncThunk('ejercicios/fetchEjercicios', as
 
 export const fetchEjercicioById = createAsyncThunk('ejercicios/fetchEjercicioById', async (id) => { 
     try {
-        const response = await axios.get(`${EJERCICIOS_URL}/${id}`);
+        const response = await axiosInstance.get(`${EJERCICIOS_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const fetchEjercicioById = createAsyncThunk('ejercicios/fetchEjercicioByI
 
 export const addEjercicio = createAsyncThunk('ejercicios/addEjercicio', async (ejercicio) => {
     try {
-        const response = await axios.post(EJERCICIOS_URL, ejercicio);
+        const response = await axiosInstance.post(EJERCICIOS_URL, ejercicio);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const addEjercicio = createAsyncThunk('ejercicios/addEjercicio', async (e
 
 export const updateEjercicio = createAsyncThunk('ejercicios/updateEjercicio', async (arg) => {  
     try {
-        const response = await axios.patch(`${EJERCICIOS_URL}/${arg.id}`, arg.ejercicio);
+        const response = await axiosInstance.patch(`${EJERCICIOS_URL}/${arg.id}`, arg.ejercicio);
         return response.data;
     } catch (err) {
         return err.message;
@@ -48,7 +48,7 @@ export const updateEjercicio = createAsyncThunk('ejercicios/updateEjercicio', as
 
 export const deleteEjercicio = createAsyncThunk('ejercicios/deleteEjercicio', async (id) => {
     try {
-        const response = await axios.delete(`${EJERCICIOS_URL}/${id}`);
+        const response = await axiosInstance.delete(`${EJERCICIOS_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -77,7 +77,7 @@ const ejerciciosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addEjercicio.fulfilled, (state, action) => {
-                state.ejercicios.push(action.payload);
+                action.payload ?? state.ejercicios.push(action.payload);
             })
             .addCase(updateEjercicio.fulfilled, (state, action) => {
                 state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === action.payload.id), 1, action.payload);
@@ -86,7 +86,8 @@ const ejerciciosSlice = createSlice({
                 if (action.payload.affected === 1) {
                     state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === action.payload.id), 1);
                 }
-            });
+            })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

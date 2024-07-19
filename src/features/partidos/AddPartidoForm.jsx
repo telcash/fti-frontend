@@ -250,7 +250,7 @@ const AddPartidoForm = () => {
                                 onChange={onEquipoLocalChanged}
                             >
                                 {
-                                    equipos && equipos.map((equipo) => (
+                                    equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                                         <MenuItem key={equipo.id} value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -279,7 +279,7 @@ const AddPartidoForm = () => {
                                 onChange={onEquipoVisitanteChanged}
                             >
                                 {
-                                    equipos && equipos.map((equipo) => (
+                                    equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }

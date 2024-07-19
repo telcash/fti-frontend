@@ -79,6 +79,12 @@ const mainDrawerPersistConfig = {
     whitelist: ['drawerOpen']
 }
 
+export const clearPersistedData = () => {
+    return {
+      type: 'CLEAR_PERSISTED_DATA'
+    };
+  };
+
 const rootReducer = combineReducers({
     jugadores: persistReducer(jugadoresPersistConfig, jugadoresReducer),
     equipos: persistReducer(equiposPersistConfig, equiposReducer),

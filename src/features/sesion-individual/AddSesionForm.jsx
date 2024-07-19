@@ -217,7 +217,7 @@ const AddSesionForm = () => {
                             label="Jugador"
                             onChange={onJugadorChanged}
                         >
-                            {jugadoresFiltered && jugadoresFiltered.map(jugador => (
+                            {jugadoresFiltered && Array.isArray(jugadoresFiltered) && jugadoresFiltered.map(jugador => (
                                 <MenuItem key={jugador.id} value={jugador.id}>
                                     {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
                                 </MenuItem>
@@ -233,7 +233,7 @@ const AddSesionForm = () => {
                             label="Jugador"
                             onChange={onEquipoChanged}
                         >
-                            {equipos && equipos.map(equipo => (
+                            {equipos && Array.isArray(equipos) && equipos.map(equipo => (
                                 <MenuItem key={equipo.id} value={equipo.id}>
                                     {equipo.nombre}
                                 </MenuItem>
@@ -254,7 +254,7 @@ const AddSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Defensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
+                            {fundamentos && Array.isArray(fundamentos) && fundamentos.filter(fundamento => fundamento.tipo === 'Defensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>
@@ -358,7 +358,7 @@ const AddSesionForm = () => {
                             input={<OutlinedInput label="Fundamento Ofensivo" />}
                             MenuProps={MenuProps}
                         >
-                            {fundamentos && fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
+                            {fundamentos && Array.isArray(fundamentos) && fundamentos.filter(fundamento => fundamento.tipo === 'Ofensivo').map((fundamento) => (
                                 <MenuItem key={fundamento.id} value={fundamento.nombre}>
                                     {fundamento.nombre}
                                 </MenuItem>

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const JUGADOR_TO_PARTIDO_URL = process.env.REACT_APP_API_URL + "jugador-to-partido";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchJugadorToPartidos = createAsyncThunk('jugadorToPartidos/fetchJugadorToPartidos', async () => {
     try {
-        const response = await axios.get(JUGADOR_TO_PARTIDO_URL);
+        const response = await axiosInstance.get(JUGADOR_TO_PARTIDO_URL);
         return response.data;
     } catch (err) {
         return err.message
@@ -21,7 +21,7 @@ export const fetchJugadorToPartidos = createAsyncThunk('jugadorToPartidos/fetchJ
 
 export const addJugadorToPartido = createAsyncThunk('jugadorToPartidos/addJugadorToPartido', async (jugadorToPartido) => {
     try {
-        const response = await axios.post(JUGADOR_TO_PARTIDO_URL, jugadorToPartido);
+        const response = await axiosInstance.post(JUGADOR_TO_PARTIDO_URL, jugadorToPartido);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const addJugadorToPartido = createAsyncThunk('jugadorToPartidos/addJugado
 
 export const updateJugadorToPartido = createAsyncThunk('jugadorToPartidos/updateJugadorToPartido', async (arg) => {
     try {
-        const response = await axios.patch(`${JUGADOR_TO_PARTIDO_URL}/${arg.id}`, arg.jugadorToPartido);
+        const response = await axiosInstance.patch(`${JUGADOR_TO_PARTIDO_URL}/${arg.id}`, arg.jugadorToPartido);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const updateJugadorToPartido = createAsyncThunk('jugadorToPartidos/update
 
 export const deleteJugadorToPartido = createAsyncThunk('jugadorToPartidos/deleteJugadorToPartido', async (id) => {  
     try {
-        const response = await axios.delete(`${JUGADOR_TO_PARTIDO_URL}/${id}`);
+        const response = await axiosInstance.delete(`${JUGADOR_TO_PARTIDO_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -70,7 +70,7 @@ const jugadorToPartidoSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addJugadorToPartido.fulfilled, (state, action) => {
-                state.jugadorToPartidos.push(action.payload);
+                action.payload ?? state.jugadorToPartidos.push(action.payload);
             })
             .addCase(updateJugadorToPartido.fulfilled, (state, action) => {
                 state.jugadorToPartidos.splice(state.jugadorToPartidos.findIndex(jugadorToPartido => jugadorToPartido.jugadorToPartidoId === action.payload.jugadorToPartidoId), 1, action.payload);
@@ -80,6 +80,7 @@ const jugadorToPartidoSlice = createSlice({
                     state.jugadorToPartidos = state.jugadorToPartidos.splice(state.jugadorToPartidos.findIndex(jugadorToPartido => jugadorToPartido.id === state.jugadorToPartidoSelected.id), 1);
                 }
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 });
 

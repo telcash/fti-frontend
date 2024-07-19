@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const POSICIONES_URL = process.env.REACT_APP_API_URL + "posicion";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchPosiciones = createAsyncThunk('posiciones/fetchPosiciones', async () => {
     try {
-        const response = await axios.get(POSICIONES_URL);
+        const response = await axiosInstance.get(POSICIONES_URL);
         return response.data;
     } catch (err) {
         return err.message
@@ -21,7 +21,7 @@ export const fetchPosiciones = createAsyncThunk('posiciones/fetchPosiciones', as
 
 export const addPosicion = createAsyncThunk('posiciones/addPosicion', async (posicion) => {
     try {
-        const response = await axios.post(POSICIONES_URL, posicion);
+        const response = await axiosInstance.post(POSICIONES_URL, posicion);
         return response.data;
     } catch (err) {
         return err.message;
@@ -30,7 +30,7 @@ export const addPosicion = createAsyncThunk('posiciones/addPosicion', async (pos
 
 export const updatePosicion = createAsyncThunk('posiciones/updatePosicion', async (arg) => {
     try {
-        const response = await axios.patch(`${POSICIONES_URL}/${arg.id}`, arg.posicion);
+        const response = await axiosInstance.patch(`${POSICIONES_URL}/${arg.id}`, arg.posicion);
         return response.data;
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ export const updatePosicion = createAsyncThunk('posiciones/updatePosicion', asyn
 
 export const deletePosicion = createAsyncThunk('posiciones/deletePosicion', async (id) => {
     try {
-        const response = await axios.delete(`${POSICIONES_URL}/${id}`);
+        const response = await axiosInstance.delete(`${POSICIONES_URL}/${id}`);
         return response.data;
     } catch (err) {
         return err.message;
@@ -70,7 +70,7 @@ const posicionesSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addPosicion.fulfilled, (state, action) => {
-                state.posiciones.push(action.payload);
+                action.payload ?? state.posiciones.push(action.payload);
             })
             .addCase(updatePosicion.fulfilled, (state, action) => {
                 state.posiciones.splice(state.posiciones.findIndex(posicion => posicion.id === state.posicionSelected.id), 1, action.payload);

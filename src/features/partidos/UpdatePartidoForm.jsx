@@ -202,7 +202,7 @@ const UpdatePartidoForm = () => {
                                 onChange={onEquipoLocalChanged}
                             >
                                 {
-                                    equipos && equipos.map((equipo) => (
+                                    equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -232,7 +232,7 @@ const UpdatePartidoForm = () => {
                                 onChange={onEquipoVisitanteChanged}
                             >
                                 {
-                                    equipos && equipos.map((equipo) => (
+                                    equipos && Array.isArray(equipos) && equipos.map((equipo) => (
                                         <MenuItem value={equipo.nombre}>{equipo.nombre}</MenuItem>
                                     ))
                                 }
@@ -269,7 +269,7 @@ const UpdatePartidoForm = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {jugadoresToPartido && jugadoresToPartido.map((jtp) => (
+                                {jugadoresToPartido && Array.isArray(jugadoresToPartido) && jugadoresToPartido.map((jtp) => (
                                     <TableRow
                                         key={jtp.id}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

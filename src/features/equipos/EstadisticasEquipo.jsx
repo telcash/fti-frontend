@@ -121,7 +121,7 @@ const EstadisticasEquipo = () => {
                         displayEmpty
                     >
                         <MenuItem value="" sx={{ height: 36 }}></MenuItem>
-                        {equipos && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
+                        {equipos && Array.isArray(equipos) && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
                     </Select>
                 </FormControl>
                 <FormGroup sx={{ width: 300, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>

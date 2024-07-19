@@ -100,7 +100,7 @@ const JugadorDesarrolloTactico = () => {
                 <TableContainer component={Paper}>
                     <Table sx={{minWidth: 650}}>
                         <TableBody>
-                            {selectedSesion && selectedSesion.ejercicios.filter( ejercicio => ejercicio.fundamento.tipo === tipoFundamento).map((ejercicio, index) => (
+                            {selectedSesion && Array.isArray(selectedSesion.ejercicios) && selectedSesion.ejercicios.filter( ejercicio => ejercicio.fundamento.tipo === tipoFundamento).map((ejercicio, index) => (
                                 <TableRow key={ejercicio.id}>
                                     <TableCell sx={{ fontSize: 16}} align="left">{`${index + 1} - ${ejercicio.fundamento.nombre}`}</TableCell>
                                     <TableCell 
