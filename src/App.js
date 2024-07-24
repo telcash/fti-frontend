@@ -8,7 +8,7 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const eventSource = new EventSource('http://localhost:3000/api/notificacion/sse');
+  const eventSource = new EventSource(process.env.REACT_APP_API_STATIC_SERVER + 'notificacion/sse');
 
   eventSource.onmessage = ({data}) => {
     dispatch(updateNotificationLastDate({fecha: new Date()}));

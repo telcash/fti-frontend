@@ -46,12 +46,12 @@ const JugadorSesion = () => {
                         <TableRow>
                             <TableCell align="center" sx={{color: 'white'}}>Fundamento</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Tipo</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Valor inicial</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Física</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Táctica</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Física</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Toma de Decisiones</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Técnica</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Psicológica</TableCell>
-                            <TableCell align="center" sx={{color: 'white'}}>Valor final</TableCell>
+                            <TableCell align="center" sx={{color: 'white'}}>Fundamentos Totales</TableCell>
                             <TableCell align="center" sx={{color: 'white'}}>Observaciones</TableCell>
                         </TableRow>
                     </TableHead>
