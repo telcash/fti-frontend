@@ -83,25 +83,6 @@ const Jugadores = () => {
         return () => window.removeEventListener('resize', handleResize);
     },);
 
-    /* useEffect(() => {
-        console.log('useEffect toggle');
-        if(mainBoxElement && jugadoresCanchaElement && jugadoresEquipo.length > 0) {
-            const { width, height } = handleElementRef(mainBoxElement);
-            const boxW = width;
-            const boxH = height;
-            const dw = handleElementRef(jugadoresCanchaElement).width / 4;
-            setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
-                return {
-                    jugadorId: jugador.id,
-                    coords: {
-                        x: jugador.posX === 0 ? 0 : (boxW * jugador.posX) - ((index - 1) * dw),
-                        y: jugador.posY === 0 ? 0 : -boxH * jugador.posY - (Math.floor((index + 1) / 4) * 85.92)
-                    }
-                }
-            }))
-        }
-    }, [isDrawerOpen, jugadoresCanchaElement, jugadoresEquipo, mainBoxElement]); */
-
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
         dispatch(selectEquipoCancha(equipos.find(equipo => equipo.nombre === e.target.value)));
@@ -178,6 +159,9 @@ const Jugadores = () => {
                 }
             }))
         }
+        if (!equipo) {
+            setJugadoresEquipo([]);
+        }
     }   , [equipo, jugadores, jugadoresCanchaElement, mainBoxElement]);
 
     return (
@@ -193,6 +177,7 @@ const Jugadores = () => {
                         onChange={onEquipoChanged}
                         sx={{width: 300, mb: 2}}
                     >
+                        <MenuItem value="" sx={{ height: 36 }}></MenuItem>
                         {
                             equipos && Array.isArray(equipos) && equipos.map((equipo, index) => (
                                 <MenuItem key={index} value={equipo.nombre}>{equipo.nombre}</MenuItem>
