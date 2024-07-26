@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,8 +19,8 @@ import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
-import { toggleDrawer } from './mainDrawerSlice';
-import { useDispatch } from 'react-redux';
+import { getUserSession, setUserSession, toggleDrawer } from './mainDrawerSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '../../axiosConfig';
 
 const drawerWidth = window.innerWidth / 4.32;
@@ -155,11 +155,18 @@ const gestionList = [
 export default function MainDrawer() {
 
   const dispatch = useDispatch();
+  const userSession = useSelector(getUserSession)
 
   const [open, setOpen] = useState(true);
   const [gestionOpen, setGestionOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(menuList.map((menuItem, index) => index === 0 ? true : false));
   const [activeGestion, setActiveGestion] = useState(gestionList.map(() => false));
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    console.log(userSession);
+    setSession(userSession);
+  }, [userSession])
 
   const handleToggleDrawer = () => {
     setOpen(!open);
@@ -172,6 +179,7 @@ export default function MainDrawer() {
 
   const handleLogout = async () => {
     setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    dispatch(setUserSession(false));
     try {
       await axiosInstance.post(`${USERS_URL}/logout`);
       router.navigate(paths.login, {replace: true});
@@ -179,6 +187,11 @@ export default function MainDrawer() {
       return err.message;
     }
     
+  }
+
+  const handleLogin = () => {
+    setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    router.navigate(paths.login, {replace: true});
   }
 
   return (
@@ -202,15 +215,18 @@ export default function MainDrawer() {
               <img src="assets/logo.png" alt="logo" />
           </div>
           <div className='sesion-buttons'>
-            {/* <Button onClick={() => router.navigate(paths.login, {replace: true})}>INICIAR SESIÓN</Button> */}
-            <Button onClick={handleLogout}>CERRAR SESIÓN</Button>
+            {
+              !session && <Button onClick={handleLogin}>INICIAR SESIÓN</Button>}
+            {
+              session && <Button onClick={handleLogout}>CERRAR SESIÓN</Button>
+            }
           </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader />
         <List >
-          {menuList.map((item, index) => (
+          {session && menuList.map((item, index) => (
             <div className='list' key={index}>
                 <ListItem disablePadding sx={{ display: 'block' }}>
                     <ListItemButton

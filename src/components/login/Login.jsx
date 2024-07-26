@@ -4,10 +4,13 @@ import axios from "axios";
 import { paths, router } from "../../router/router";
 import './login.css';
 import { clearPersistedData, persistor, store } from "../../app/store";
+import { useDispatch } from "react-redux";
+import { setUserSession } from "../main-drawer/mainDrawerSlice";
 
 const USERS_URL = process.env.REACT_APP_API_URL + "users";
 
 const Login = () => {
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorStatus, setErrorStatus] = useState(false);
@@ -35,6 +38,7 @@ const Login = () => {
                 withCredentials: true,
             });
             if (response.status === 201) {
+                dispatch(setUserSession(true));
                 router.navigate(paths.jugadores, {replace: true});
             }
         }

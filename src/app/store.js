@@ -76,7 +76,7 @@ const notificacionesPersistConfig = {
 const mainDrawerPersistConfig = {
     key: 'mainDrawer',
     storage,
-    whitelist: ['drawerOpen']
+    whitelist: ['drawerOpen', 'userSession']
 }
 
 export const clearPersistedData = () => {
