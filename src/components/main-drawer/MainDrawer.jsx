@@ -21,7 +21,6 @@ import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
 import { toggleDrawer } from './mainDrawerSlice';
 import { useDispatch } from 'react-redux';
-import { clearPersistedData, persistor, store } from '../../app/store';
 import axiosInstance from '../../axiosConfig';
 
 const drawerWidth = window.innerWidth / 4.32;
@@ -172,6 +171,7 @@ export default function MainDrawer() {
   }
 
   const handleLogout = async () => {
+    setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
     try {
       await axiosInstance.post(`${USERS_URL}/logout`);
       router.navigate(paths.login, {replace: true});
