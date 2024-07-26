@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import JugadorAvatar from "./JugadorAvatar";
 import { getJugadorSelected } from "./jugadoresSlice";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select } from "@mui/material";
 import { paths, router } from "../../router/router";
 import { fetchSesiones, getSesionesStatus, selectAllSesiones } from "../sesion-individual/sesionIndividualSlice";
 import { useEffect, useState } from "react";
@@ -21,6 +21,8 @@ const JugadorGraficas = () => {
     const sesionesStatus = useSelector(getSesionesStatus);
 
     const [sesionesJugador, setSesionesJugador] = useState([]);
+    const [sesionesSelected, setSesionesSelected] = useState([]);
+    const [ejTotales, setEjTotales] = useState([]);
     const [tipoGrafica, setTipoGrafica] = useState();
     const [fundamento, setFundamento] = useState('');
     const [selectedSesion, setSelectedSesion] = useState();
@@ -33,12 +35,51 @@ const JugadorGraficas = () => {
     , [dispatch, sesionesStatus]);
 
     useEffect(() => {
+        let sJug = [];
+        let sSel = [];
         if (sesiones.length > 0) {
-            setSesionesJugador(sesiones.filter(s => s.jugador.id === jugador.id).sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()));
+            sJug = sesiones.filter(s => s.jugador.id === jugador.id).sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf());
+            setSesionesJugador(sJug);
         }
+        sJug.forEach(s => sSel.push(false));
+        setSesionesSelected(sSel);
     }
     , [sesiones, jugador]);
 
+    useEffect(() => {
+        const ejerciciosTotales = [];
+        if (sesionesJugador.length > 0) {
+            sesionesJugador.filter((s, i) => sesionesSelected[i]).forEach(sesion => {
+                sesion.ejercicios.forEach(ej => {
+                    const ejercicioEncontrado = ejerciciosTotales.find(e => e.fundamentoId === ej.fundamentoId);
+                    if (ejercicioEncontrado) {
+                        ejercicioEncontrado.valoracionMaxima += ej.valoracionMaxima;
+                        ejercicioEncontrado.valoracion += ej.valoracion;
+                    } else {
+                        ejerciciosTotales.push({
+                            fundamentoNombre: ej.fundamento.nombre,
+                            fundamentoTipo: ej.fundamento.tipo,
+                            valoracionMaxima: ej.valoracionMaxima,
+                            valoracion: ej.valoracion,
+                        })
+                    }
+                })
+            })
+        } 
+        setEjTotales(ejerciciosTotales);
+    }, [sesionesJugador, sesionesSelected])
+
+    const handleSesionesSelected = (index) => {
+        let sSel = [];
+        sesionesSelected.forEach((s, i) => sSel[i] = i === index ? !sesionesSelected[i] : sesionesSelected[i]);
+        setSesionesSelected(sSel);
+    }
+
+    const resetSesionesSelected = () => {
+        let sSel = [];
+        sesionesJugador.forEach(() => sSel.push(false));
+        setSesionesSelected(sSel);
+    }
 
     return (
         <section className="jugador-graficas">
@@ -52,13 +93,27 @@ const JugadorGraficas = () => {
                         id="tipo-graficas"
                         label="Tipo de Gráfica"
                         value={tipoGrafica || ''}
-                        onChange={(e) => setTipoGrafica(e.target.value)}
+                        onChange={(e) => {
+                            setTipoGrafica(e.target.value);
+                            setFundamento('');
+                            resetSesionesSelected();
+                        }}
                     >
                         <MenuItem value="barras">Diagrama de barras</MenuItem>
                         <MenuItem value="circular">Gráfica circular</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl sx={{ width: 300}}>
+                <FormGroup sx={{ width: 300, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
+                    {
+                        sesionesJugador.length === 0 && <p>Seleccionar Jornada</p>
+                    }
+                    {
+                        sesionesJugador && sesionesJugador.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((s, i) => 
+                            <FormControlLabel control={<Checkbox checked={sesionesSelected[i]} onChange={() => handleSesionesSelected(i)}/>} label={`J${i+1} ${dayjs(s.fecha).format('DD/MM/YY')}`} />
+                        )
+                    }
+                </FormGroup>
+               {/*  <FormControl sx={{ width: 300}}>
                     <InputLabel id="sesiones-numero-label">Jornada</InputLabel>
                     <Select
                         labelId="sesiones-numero-label"
@@ -77,7 +132,7 @@ const JugadorGraficas = () => {
                             </MenuItem>
                         ))}
                     </Select>
-                </FormControl>
+                </FormControl> */}
                 <FormControl sx={{ width: 300}}>
                     <InputLabel id="fundamento-label">Fundamento</InputLabel>
                     <Select
@@ -94,12 +149,12 @@ const JugadorGraficas = () => {
                             <MenuItem value="Ofensivo">Ofensivo</MenuItem>
                         }
                         {tipoGrafica === 'circular' &&
-                            selectedSesion && selectedSesion.ejercicios.map(ejercicio => (
+                            ejTotales && ejTotales.map((ejercicio, index) => (
                                 <MenuItem
-                                    key={ejercicio.fundamento.id}
-                                    value={ejercicio.fundamento.nombre}
+                                    key={index}
+                                    value={ejercicio.fundamentoNombre}
                                 >
-                                    {ejercicio.fundamento.nombre}
+                                    {ejercicio.fundamentoNombre}
                                 </MenuItem>
                             ))
                         }
@@ -107,13 +162,13 @@ const JugadorGraficas = () => {
                 </FormControl>
             </div>
             <div className="jugador-graficas-grafica">
-                {tipoGrafica === 'barras' && selectedSesion && fundamento &&
+                {tipoGrafica === 'barras' && sesionesSelected && fundamento &&
                     <BarChart
-                        dataset={selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.tipo === fundamento).map(ejercicio => {
+                        dataset={ejTotales.filter(ejercicio => ejercicio.fundamentoTipo === fundamento).map(ejercicio => {
                             return {
                                 totales: ejercicio.valoracionMaxima,
                                 aciertos: ejercicio.valoracion,
-                                fundamento: ejercicio.fundamento.nombre,
+                                fundamento: ejercicio.fundamentoNombre,
                             }
                         })}
                         xAxis={[{ scaleType: 'band', dataKey: 'fundamento' }]}
@@ -125,19 +180,19 @@ const JugadorGraficas = () => {
                         height={GRAPH_HEIGHT}
                     />
                 }
-                {tipoGrafica === 'circular' && selectedSesion && fundamento &&
+                {tipoGrafica === 'circular' && sesionesSelected && fundamento &&
                     <PieChart
                         series={[
                             {
                                 data: [
                                     {
                                         id: 0,
-                                        value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                        value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
                                         label: `${fundamento} (Aciertos)`
                                     },
                                     {
                                         id: 1,
-                                        value: selectedSesion.ejercicios.filter(ejercicio => ejercicio.fundamento.nombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                        value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
                                         label: `${fundamento} (Errores)`
                                     }
                                 ],
