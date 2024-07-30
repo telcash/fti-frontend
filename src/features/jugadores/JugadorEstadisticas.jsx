@@ -61,9 +61,11 @@ const JugadorEstadisticas = () => {
 
     return (
         <section className="jugador-estadisticas">
-            <h2>Datos Deportivos</h2>
             <div>
-                <JugadorAvatar jugador={jugador}/>
+                <h2>Datos Deportivos</h2>
+                <div>
+                    <JugadorAvatar jugador={jugador}/>
+                </div>
             </div>
             <div className="jugador-estadisticas-campos">
                 <div className="jugador-estadisticas-campo">

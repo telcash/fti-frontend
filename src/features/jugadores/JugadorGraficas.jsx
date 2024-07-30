@@ -83,8 +83,12 @@ const JugadorGraficas = () => {
 
     return (
         <section className="jugador-graficas">
-            <h2>Gráficas</h2>
-            <JugadorAvatar jugador={jugador} />
+            <div>
+                <h2>Gráficas</h2>
+                <div>
+                    <JugadorAvatar jugador={jugador} />
+                </div>
+            </div>
             <div className="jugador-graficas-filtros">
                 <FormControl sx={{ width: 300}}>
                     <InputLabel id="tipo-graficas-label">Tipo de Gráfica</InputLabel>

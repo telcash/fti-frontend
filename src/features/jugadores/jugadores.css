@@ -136,6 +136,7 @@ JugadorDatos
 
 .jugador-datos h2 {
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .jugador-datos {
@@ -181,7 +182,8 @@ JugadorEstadisticas
 }
 
 .jugador-estadisticas h2 {
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .jugador-estadisticas-campos {
@@ -300,7 +302,8 @@ JugadorEstadisticas
 }
 
 .jugador-graficas h2 {
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .jugador-graficas-filtros {
@@ -420,6 +423,11 @@ JugadorEstadisticas
     justify-content: center;
     align-items: center;
     gap: 30px;
+}
+
+.jugador-sesion h2{
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .addsesion {

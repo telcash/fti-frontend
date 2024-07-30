@@ -37,8 +37,10 @@ const JugadorSesion = () => {
 
     return (
         <section className="jugador-sesion">
-            <h2>Sesión de Jugador</h2>
-            <JugadorAvatar jugador={jugador}/>
+            <div>
+                <h2>Sesión de Jugador</h2>
+                <JugadorAvatar jugador={jugador}/>
+            </div>
             <h4>Fecha: {dayjs(sesion.fecha).format('DD/MM/YYYY')}</h4>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="lista sesiones">
