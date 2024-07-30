@@ -135,7 +135,7 @@ JugadorDatos
 **/
 
 .jugador-datos h2 {
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .jugador-datos {

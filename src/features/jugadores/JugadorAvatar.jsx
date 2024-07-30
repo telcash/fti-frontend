@@ -7,7 +7,7 @@ const JugadorAvatar = ({ jugador, cancha }) => {
 
     const avatarRef = useRef();
 
-    const imgSize = cancha ? 56 : 112;
+    const imgSize = cancha ? 56 : 138;
 
     useEffect(() => {
         const avatarElement = avatarRef.current;

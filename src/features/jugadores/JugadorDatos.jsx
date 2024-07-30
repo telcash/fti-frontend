@@ -13,10 +13,12 @@ const JugadorDatos = () => {
 
     return (
         <div className="jugador-datos">
-            <h2>Datos de Jugador</h2>
-            <JugadorAvatar 
-                jugador={jugador} 
-            />
+            <div>
+                <h2>Datos de Jugador</h2>
+                <JugadorAvatar 
+                    jugador={jugador} 
+                />
+            </div>
             <div className="jugador-datos-campos">
                 <div className="jugador-datos-campo">
                     <h3>Fecha de Nacimiento</h3>

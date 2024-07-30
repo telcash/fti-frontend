@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquipoCancha, getEquiposStatus, selectAllEquipos, selectEquipoCancha } from "../equipos/equiposSlice";
-import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores, updateJugador } from "./jugadoresSlice";
+import { fetchJugadores, getJugadoresStatus, jugadorSelected, selectAllJugadores, updateJugador, updateJugadorPosition } from "./jugadoresSlice";
 import JugadorAvatar from "./JugadorAvatar";
 import { paths, router } from '../../router/router';
 import './jugadores.css';
@@ -99,7 +99,7 @@ const Jugadores = () => {
             }
         }))
         draggablePositions.forEach(position =>
-            dispatch(updateJugador({
+            dispatch(updateJugadorPosition({
                 id: position.jugadorId,
                 jugador: { 
                     posX: 0,
@@ -222,9 +222,9 @@ const Jugadores = () => {
                                     const boxW = width;
                                     const boxH = height;
                                     const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
-                                    dispatch(updateJugador({
+                                    dispatch(updateJugadorPosition({
                                         id: jugador.id,
-                                        jugador: { 
+                                        jugador: {
                                             posX: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (data.x + dw/2) / boxW,
                                             posY: (-data.y < Math.floor(1 + (index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) ? 0 : (data.y + (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) + DRAGGABLE_HEIGHT/2) / boxH
                                         }

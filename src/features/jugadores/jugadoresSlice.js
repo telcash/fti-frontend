@@ -47,6 +47,15 @@ export const updateJugador = createAsyncThunk('jugadores/updateJugador', async (
     }
 })
 
+export const updateJugadorPosition = createAsyncThunk('jugadores/updateJugadorPosition', async (arg) => {
+    try {
+        const response = await axiosInstance.patch(`${JUGADOR_URL}/position/${arg.id}`, arg.jugador);
+        return response.data;
+    } catch (err) {
+        return err.message;
+    }
+})
+
 export const deleteJugador = createAsyncThunk('jugadores/deleteJugador', async (id) => {
     try {
         const response = await axiosInstance.delete(`${JUGADOR_URL}/${id}`);
@@ -85,6 +94,9 @@ const jugadoresSlice = createSlice({
                 }
             })
             .addCase(updateJugador.fulfilled, (state, action) => {
+                state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === action.payload.id), 1, action.payload);
+            })
+            .addCase(updateJugadorPosition.fulfilled, (state, action) => {
                 state.jugadores.splice(state.jugadores.findIndex(jugador => jugador.id === action.payload.id), 1, action.payload);
             })
             .addCase(deleteJugador.fulfilled, (state, action) => {
