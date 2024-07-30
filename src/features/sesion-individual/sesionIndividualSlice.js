@@ -79,7 +79,9 @@ const sesionesSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addSesion.fulfilled, (state, action) => {
-                action.payload ?? state.sesiones.push(action.payload);
+                if (action.payload) {
+                    state.sesiones = [...state.sesiones, action.payload];
+                }
             })
             .addCase(updateSesion.fulfilled, (state, action) => {
                 state.sesiones.splice(state.sesiones.findIndex(sesion => sesion.id === state.sesionSelected.id), 1, action.payload);

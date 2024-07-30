@@ -79,7 +79,9 @@ const videosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addVideo.fulfilled, (state, action) => {
-                console.log(action.payload);
+                if (action.payload) {
+                    state.videos = [...state.videos, action.payload];
+                }
                 action.payload ?? state.videos.push(action.payload);
             })
             .addCase(updateVideo.fulfilled, (state, action) => {

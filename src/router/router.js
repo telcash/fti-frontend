@@ -29,6 +29,7 @@ import JugadorDesarrolloTactico from "../features/jugadores/JugadorDesarrolloTac
 import JugadorSesion from "../features/jugadores/JugadorSesion";
 import Login from "../components/login/Login";
 import AddVideoForm from "../features/videos-jugador/AddVideoForm";
+import UpdateVideoForm from "../features/videos-jugador/UpdateVideoForm";
 
 export const paths = {
   home: "/",
@@ -64,7 +65,8 @@ export const paths = {
   gestionSesionesIndividuales: "/gestion-sesionesindividuales",
   agregarSesionIndividual: "/agregar-sesionindividual",
   actualizarSesionIndividual: "/actualizar-sesionindividual",
-  agregarVideo: "/agregar-video"
+  agregarVideo: "/agregar-video",
+  actualizarVideo: "/actualizar-video"
 };
 
 export const router = createBrowserRouter([
@@ -167,6 +169,10 @@ export const router = createBrowserRouter([
   {
     path: paths.agregarVideo,
     element: <AddVideoForm />
+  },
+  {
+    path: paths.actualizarVideo,
+    element: <UpdateVideoForm />
   },
   {
     path: paths.gestionPosiciones,

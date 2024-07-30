@@ -70,7 +70,9 @@ const posicionesSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addPosicion.fulfilled, (state, action) => {
-                action.payload ?? state.posiciones.push(action.payload);
+                if (action.payload) {
+                    state.posiciones = [...state.posiciones, action.payload];
+                }
             })
             .addCase(updatePosicion.fulfilled, (state, action) => {
                 state.posiciones.splice(state.posiciones.findIndex(posicion => posicion.id === state.posicionSelected.id), 1, action.payload);

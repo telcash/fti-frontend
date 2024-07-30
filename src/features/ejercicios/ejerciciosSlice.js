@@ -77,7 +77,9 @@ const ejerciciosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addEjercicio.fulfilled, (state, action) => {
-                action.payload ?? state.ejercicios.push(action.payload);
+                if (action.payload) {
+                    state.ejercicios = [...state.ejercicios, action.payload];
+                }
             })
             .addCase(updateEjercicio.fulfilled, (state, action) => {
                 state.ejercicios.splice(state.ejercicios.findIndex(ejercicio => ejercicio.id === action.payload.id), 1, action.payload);

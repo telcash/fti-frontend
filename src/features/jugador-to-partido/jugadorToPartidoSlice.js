@@ -70,7 +70,9 @@ const jugadorToPartidoSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addJugadorToPartido.fulfilled, (state, action) => {
-                action.payload ?? state.jugadorToPartidos.push(action.payload);
+                if (action.payload) {
+                    state.jugadorToPartidos = [...state.jugadorToPartidos, action.payload];
+                }
             })
             .addCase(updateJugadorToPartido.fulfilled, (state, action) => {
                 state.jugadorToPartidos.splice(state.jugadorToPartidos.findIndex(jugadorToPartido => jugadorToPartido.jugadorToPartidoId === action.payload.jugadorToPartidoId), 1, action.payload);

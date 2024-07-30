@@ -79,7 +79,9 @@ const partidosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addPartido.fulfilled, (state, action) => {
-                action.payload ?? state.partidos.push(action.payload);
+                if (action.payload) {
+                    state.partidos = [...state.partidos, action.payload];
+                }
             })
             .addCase(updatePartido.fulfilled, (state, action) => {
                 state.partidos.splice(state.partidos.findIndex(partido => partido.id === state.partidoSelected.id), 1, action.payload);

@@ -1,0 +1,31 @@
+.addvideo {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.addvideo-form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.addvideo-form-fields {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.addvideo-form-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px
+}

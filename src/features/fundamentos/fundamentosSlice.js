@@ -70,7 +70,9 @@ const fundamentosSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addFundamento.fulfilled, (state, action) => {
-                action.payload ?? state.fundamentos.push(action.payload);
+                if (action.payload) {
+                    state.fundamentos = [...state.fundamentos, action.payload];
+                }
             })
             .addCase(updateFundamento.fulfilled, (state, action) => {
                 state.fundamentos.splice(state.fundamentos.findIndex(fundamento => fundamento.id === state.fundamentoSelected.id), 1, action.payload);

@@ -12,6 +12,7 @@ import { paths, router } from "../../router/router";
 import { deleteVideo, fetchVideos, getVideoSelected, getVideosStatus, selectAllVideos, videoSelected } from "../videos-jugador/videosJugadorSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import PlayIcon from '@mui/icons-material/PlayArrow';
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const JugadorDesarrolloTactico = () => {
@@ -179,8 +180,14 @@ const JugadorDesarrolloTactico = () => {
                                         <TableCell align="center">
                                             <div className="action-buttons">
                                                 <IconButton
+                                                    onClick={() => window.open(video.url, '_blank')}
+                                                >
+                                                    <PlayIcon color="primary" />
+                                                </IconButton>
+                                                <IconButton
                                                     onClick={() => {
                                                         dispatch(videoSelected(video));
+                                                        router.navigate(paths.actualizarVideo, {replace: true});
                                                     }}
                                                 >
                                                     <EditIcon color="primary" />
@@ -207,7 +214,7 @@ const JugadorDesarrolloTactico = () => {
                 </TableContainer>
             </div>
             <div>
-                <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={() => router.navigate(paths.desarrolloTacticoIndividual, {replace: true})}>Regresar</Button>
+                <Button sx={{backgroundColor: '#007bff', marginTop: 5}} variant="contained" onClick={() => router.navigate(paths.desarrolloTacticoIndividual, {replace: true})}>Regresar</Button>
             </div>
         </section>
     )
