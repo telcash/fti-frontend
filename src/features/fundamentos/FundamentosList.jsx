@@ -78,7 +78,7 @@ const FundamentosList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar fundamento"
-                                    contentText={`¿Deseas eliminar el fundamento ${fundamento.nombre} de tipo ${fundamento.tipo}?`}
+                                    contentText={`¿Deseas eliminar el fundamento ${fundamento ? fundamento.nombre : ''} de tipo ${fundamento ? fundamento.tipo: ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

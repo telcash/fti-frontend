@@ -80,7 +80,7 @@ const EquiposList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar equipo"
-                                    contentText={`¿Deseas eliminar al equipo ${equipo.nombre}?`}
+                                    contentText={`¿Deseas eliminar al equipo ${equipo ? equipo.nombre: ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

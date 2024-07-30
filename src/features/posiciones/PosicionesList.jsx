@@ -74,7 +74,7 @@ const PosicionesList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar posición"
-                                    contentText={`¿Deseas eliminar la posición ${posicion.nombre}?`}
+                                    contentText={`¿Deseas eliminar la posición ${posicion ? posicion.nombre : ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

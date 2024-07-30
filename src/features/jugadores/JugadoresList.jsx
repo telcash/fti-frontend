@@ -101,7 +101,7 @@ const JugadoresList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar Jugador"
-                                    contentText={`¿Deseas eliminar al jugador ${jugador.nombre}?`}
+                                    contentText={`¿Deseas eliminar al jugador ${jugador ? jugador.nombre: ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

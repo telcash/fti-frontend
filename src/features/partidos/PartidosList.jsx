@@ -90,7 +90,7 @@ const PartidosList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar Partido"
-                                    contentText={`¿Deseas eliminar el partido de Id ${partido.id}?`}
+                                    contentText={`¿Deseas eliminar el partido de Id ${partido ? partido.id : ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

@@ -18,6 +18,7 @@ const SesionesList = () => {
     const error = useSelector(getSesionesError);
 
     const [open, setOpen] = useState(false);
+    const [sesionesSorted, setSesionesSorted] = useState([]);
 
     const handleClickOpen =(sesion) => {
         dispatch(sesionSelected(sesion));
@@ -30,6 +31,13 @@ const SesionesList = () => {
             dispatch(deleteSesion(sesion.id));
         }
     }
+
+    useEffect(() => {
+        if(sesiones) {
+            const mutableSesiones = [...sesiones];
+            setSesionesSorted(mutableSesiones.sort((a, b) => dayjs(b.fecha).valueOf() - dayjs(a.fecha).valueOf()));
+        }
+    }, [sesiones])
 
     useEffect(() => {
         if(sesionesStatus === 'idle') {
@@ -54,7 +62,7 @@ const SesionesList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sesiones && Array.isArray(sesiones) && sesiones.sort((a, b) => dayjs(b.fecha).valueOf() - dayjs(a.fecha).valueOf()).map((s) => (
+                        {sesionesSorted && Array.isArray(sesionesSorted) && sesionesSorted.map((s) => (
                             <TableRow
                                 key={s.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -85,7 +93,7 @@ const SesionesList = () => {
                                 </TableCell>
                                 <SimpleDialog 
                                     title="Eliminar Sesion"
-                                    contentText={`¿Deseas eliminar la sesión de Id ${sesion.id}?`}
+                                    contentText={`¿Deseas eliminar la sesión de Id ${sesion ? sesion.id : ''}?`}
                                     open={open}
                                     onClose={handleClose}
                                 />

@@ -143,7 +143,7 @@ const AddSesionForm = () => {
     }, [equiposStatus, dispatch])
 
     useEffect(() => {
-        setJugadoresFiltered(jugadores.filter(jugador => jugador.equipo.id === equipoId));
+        setJugadoresFiltered(jugadores.filter(jugador => jugador.equipo && jugador.equipo.id === equipoId));
     }, [equipoId, jugadores])
 
     const onSaveSesionClicked = () => {
@@ -209,22 +209,6 @@ const AddSesionForm = () => {
                         />
                     </LocalizationProvider>
                     <FormControl sx={{ width: 300}}>
-                        <InputLabel id="jugador-label">Jugador</InputLabel>
-                        <Select
-                            labelId="jugador-label"
-                            id="jugador"
-                            value={jugadorId}
-                            label="Jugador"
-                            onChange={onJugadorChanged}
-                        >
-                            {jugadoresFiltered && Array.isArray(jugadoresFiltered) && jugadoresFiltered.map(jugador => (
-                                <MenuItem key={jugador.id} value={jugador.id}>
-                                    {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl sx={{ width: 300}}>
                         <InputLabel id="equipo-label">Equipo</InputLabel>
                         <Select
                             labelId="equipo-label"
@@ -236,6 +220,22 @@ const AddSesionForm = () => {
                             {equipos && Array.isArray(equipos) && equipos.map(equipo => (
                                 <MenuItem key={equipo.id} value={equipo.id}>
                                     {equipo.nombre}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ width: 300}}>
+                        <InputLabel id="jugador-label">Jugador</InputLabel>
+                        <Select
+                            labelId="jugador-label"
+                            id="jugador"
+                            value={jugadorId}
+                            label="Jugador"
+                            onChange={onJugadorChanged}
+                        >
+                            {jugadoresFiltered && Array.isArray(jugadoresFiltered) && jugadoresFiltered.map(jugador => (
+                                <MenuItem key={jugador.id} value={jugador.id}>
+                                    {`Id: ${jugador.id} - ${jugador.nombre} ${jugador.apellido}`}
                                 </MenuItem>
                             ))}
                         </Select>

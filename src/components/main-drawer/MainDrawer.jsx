@@ -178,6 +178,7 @@ export default function MainDrawer() {
 
   const handleLogout = async () => {
     setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    setGestionOpen(false);
     dispatch(setUserSession(false));
     try {
       await axiosInstance.post(`${USERS_URL}/logout`);
@@ -286,7 +287,7 @@ export default function MainDrawer() {
           ))}
           <Collapse in={gestionOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-                {gestionList.map((item, index) => (
+                {session && gestionList.map((item, index) => (
                     <ListItemButton
                         onClick={() => 
                           {
