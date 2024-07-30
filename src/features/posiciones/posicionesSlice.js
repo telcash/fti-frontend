@@ -81,6 +81,7 @@ const posicionesSlice = createSlice({
                 }
                 state.posicionSelected = null;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 

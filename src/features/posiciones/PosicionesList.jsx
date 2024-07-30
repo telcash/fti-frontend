@@ -50,24 +50,24 @@ const PosicionesList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {posiciones && Array.isArray(posiciones) && posiciones.map((posicion) => (
+                        {posiciones && Array.isArray(posiciones) && posiciones.map((pos) => (
                             <TableRow
-                                key={posicion.id}
+                                key={pos.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">{posicion.nombre}</TableCell>
-                                <TableCell align="center">{posicion.id}</TableCell>
+                                <TableCell align="center">{pos.nombre}</TableCell>
+                                <TableCell align="center">{pos.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(posicionSelected(posicion));
+                                                dispatch(posicionSelected(pos));
                                                 router.navigate(paths.actualizarPosicion, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(posicion)}>
+                                        <IconButton onClick={() => handleClickOpen(pos)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

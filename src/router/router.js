@@ -28,6 +28,7 @@ import EstadisticasEquipo from "../features/equipos/EstadisticasEquipo";
 import JugadorDesarrolloTactico from "../features/jugadores/JugadorDesarrolloTactico";
 import JugadorSesion from "../features/jugadores/JugadorSesion";
 import Login from "../components/login/Login";
+import AddVideoForm from "../features/videos-jugador/AddVideoForm";
 
 export const paths = {
   home: "/",
@@ -62,7 +63,8 @@ export const paths = {
   actualizarPartido: "/actualizar-partido",
   gestionSesionesIndividuales: "/gestion-sesionesindividuales",
   agregarSesionIndividual: "/agregar-sesionindividual",
-  actualizarSesionIndividual: "/actualizar-sesionindividual"
+  actualizarSesionIndividual: "/actualizar-sesionindividual",
+  agregarVideo: "/agregar-video"
 };
 
 export const router = createBrowserRouter([
@@ -161,6 +163,10 @@ export const router = createBrowserRouter([
   {
     path: paths.actualizarFundamento,
     element: <UpdateFundamentoForm />
+  },
+  {
+    path: paths.agregarVideo,
+    element: <AddVideoForm />
   },
   {
     path: paths.gestionPosiciones,

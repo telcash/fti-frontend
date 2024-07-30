@@ -80,6 +80,7 @@ const AddJugadorForm = () => {
             return;
         }
         try {
+            console.log('saving jugador');
             const formData = new FormData();
             formData.append('nombre', nombre);
             formData.append('apellido', apellido);

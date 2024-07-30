@@ -54,15 +54,15 @@ const SesionesList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sesiones && Array.isArray(sesiones) && sesiones.sort((a, b) => dayjs(b.fecha).valueOf() - dayjs(a.fecha).valueOf()).map((sesion) => (
+                        {sesiones && Array.isArray(sesiones) && sesiones.sort((a, b) => dayjs(b.fecha).valueOf() - dayjs(a.fecha).valueOf()).map((s) => (
                             <TableRow
-                                key={sesion.id}
+                                key={s.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">{dayjs(sesion.fecha).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{`${sesion.jugador.nombre} ${sesion.jugador.apellido}`}</TableCell>
+                                <TableCell align="center">{dayjs(s.fecha).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{`${s.jugador.nombre} ${s.jugador.apellido}`}</TableCell>
                                 <TableCell align="center">
-                                    {sesion.ejercicios.map(ejercicio => (
+                                    {s.ejercicios.map(ejercicio => (
                                         <div key={ejercicio.id}>
                                             {`${ejercicio.fundamento.tipo.slice(0, 3)} - ${ejercicio.fundamento.nombre} : ${ejercicio.valoracion}/${ejercicio.valoracionMaxima}`}
                                         </div>
@@ -72,13 +72,13 @@ const SesionesList = () => {
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(sesionSelected(sesion));
+                                                dispatch(sesionSelected(s));
                                                 router.navigate(paths.actualizarSesionIndividual, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(sesion)}>
+                                        <IconButton onClick={() => handleClickOpen(s)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

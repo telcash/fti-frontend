@@ -9,6 +9,7 @@ import ejerciciosReducer from '../features/ejercicios/ejerciciosSlice';
 import jugadorToPartidosReducer from '../features/jugador-to-partido/jugadorToPartidoSlice';
 import notificacionesReducer from '../features/notificaciones/notificacionesSlice';
 import mainDrawerReducer from '../components/main-drawer/mainDrawerSlice';
+import videosReducer from '../features/videos-jugador/videosJugadorSlice';
 
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER
@@ -55,6 +56,12 @@ const sesionesPersistConfig = {
     whitelist: ['sesiones']
 }
 
+const videosPersistConfig = {
+    key: 'videos',
+    storage,
+    whitelist: ['videos']
+}
+
 const ejerciciosPersistConfig = {
     key: 'ejercicios',
     storage,
@@ -92,6 +99,7 @@ const rootReducer = combineReducers({
     fundamentos: persistReducer(fundamentosPersistConfig, fundamentosReducer),
     partidos: persistReducer(partidosPersistConfig, partidosReducer),
     sesiones: persistReducer(sesionesPersistConfig, sesionesReducer),
+    videos: persistReducer(videosPersistConfig, videosReducer),
     ejercicios: persistReducer(ejerciciosPersistConfig, ejerciciosReducer),
     jugadorToPartidos: persistReducer(jugadorToPartidosPersistConfig, jugadorToPartidosReducer),
     notificaciones: persistReducer(notificacionesPersistConfig, notificacionesReducer),

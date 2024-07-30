@@ -53,27 +53,27 @@ const EquiposList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {equipos && Array.isArray(equipos) && equipos.map((equipo) => (
+                        {equipos && Array.isArray(equipos) && equipos.map((e) => (
                             <TableRow
-                                key={equipo.id}
+                                key={e.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="center" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                    <Avatar src={equipo.foto ? imgUrl + equipo.foto : ''}/>
+                                    <Avatar src={e.foto ? imgUrl + e.foto : ''}/>
                                 </TableCell>
-                                <TableCell align="center">{equipo.nombre}</TableCell>
-                                <TableCell align="center">{equipo.id}</TableCell>
+                                <TableCell align="center">{e.nombre}</TableCell>
+                                <TableCell align="center">{e.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(equipoSelected(equipo));
+                                                dispatch(equipoSelected(e));
                                                 router.navigate(paths.actualizarEquipo, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(equipo)}>
+                                        <IconButton onClick={() => handleClickOpen(e)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

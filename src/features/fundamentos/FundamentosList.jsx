@@ -53,25 +53,25 @@ const FundamentosList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {fundamentos && Array.isArray(fundamentos) && fundamentos.map((fundamento) => (
+                        {fundamentos && Array.isArray(fundamentos) && fundamentos.map((f) => (
                             <TableRow
-                                key={fundamento.id}
+                                key={f.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">{fundamento.nombre}</TableCell>
-                                <TableCell align="center">{fundamento.tipo}</TableCell>
-                                <TableCell align="center">{fundamento.id}</TableCell>
+                                <TableCell align="center">{f.nombre}</TableCell>
+                                <TableCell align="center">{f.tipo}</TableCell>
+                                <TableCell align="center">{f.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(fundamentoSelected(fundamento));
+                                                dispatch(fundamentoSelected(f));
                                                 router.navigate(paths.actualizarFundamento, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(fundamento)}>
+                                        <IconButton onClick={() => handleClickOpen(f)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

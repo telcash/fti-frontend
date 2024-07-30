@@ -7,20 +7,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSesiones, getSesionesStatus, selectAllSesiones } from "../sesion-individual/sesionIndividualSlice";
 import { getJugadorSelected } from "./jugadoresSlice";
 import { useEffect, useState } from "react";
-import { Box, Button, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs } from "@mui/material";
+import { Box, Button, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs } from "@mui/material";
 import { paths, router } from "../../router/router";
-
+import { deleteVideo, fetchVideos, getVideoSelected, getVideosStatus, selectAllVideos, videoSelected } from "../videos-jugador/videosJugadorSlice";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const JugadorDesarrolloTactico = () => {
 
     const dispatch = useDispatch();
 
     const jugador = useSelector(getJugadorSelected);
+    const video = useSelector(getVideoSelected);
 
     const sesiones = useSelector(selectAllSesiones);
+    const videos = useSelector(selectAllVideos);
     const sesionesStatus = useSelector(getSesionesStatus);
+    const videosStatus = useSelector(getVideosStatus);
+
+    const [open, setOpen] = useState(false);
 
     const [sesionesJugador, setSesionesJugador] = useState([]);
+    const [videosJugador, setVideosJugador] = useState([]);
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [selectedSesion, setSelectedSesion] = useState();
     const [tipoFundamento, setTipoFundamento] = useState('');
@@ -41,11 +50,35 @@ const JugadorDesarrolloTactico = () => {
     , [sesionesStatus, dispatch]);
 
     useEffect(() => {
+        if(videosStatus === 'idle') {
+            dispatch(fetchVideos());
+        }
+    }, [videosStatus, dispatch]);
+
+    useEffect(() => {
         if (sesiones.length > 0) {
             setSesionesJugador(sesiones.filter(s => s.jugador.id === jugador.id));
         }
     }
     , [sesiones, jugador]);
+
+    useEffect(() => {
+        if (videos.length > 0) {
+            setVideosJugador(videos.filter(v => v.jugador.id === jugador.id));
+        }
+    }, [jugador, videos])
+
+    const handleClickOpen = (video) => {
+        dispatch(videoSelected(video));
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+        if(value === 'Eliminar') {
+            dispatch(deleteVideo(video.id))
+        }
+    }
 
     return (
         <section className="jugador-desarrollo-tactico">
@@ -122,6 +155,55 @@ const JugadorDesarrolloTactico = () => {
                         </TableBody>
                     </Table>
 
+                </TableContainer>
+                <h2>Videos</h2>
+                <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={() => router.navigate(paths.agregarVideo, {replace: true})}>Añadir video</Button>
+                <TableContainer component={Paper}>
+                    <Table sx={{minWidth: 400}}>
+                        <TableHead sx={{backgroundColor: '#273237'}}>
+                            <TableRow>
+                                <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>URL</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>Acción</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {videosJugador.length === 0 &&
+                                <TableCell align="center" colSpan={3}>El jugador no tiene videos</TableCell> 
+                            }
+                            {
+                                videosJugador && Array.isArray(videosJugador) && videosJugador.map((video) => (
+                                    <TableRow key={video.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell align="center">{video.nombre}</TableCell>
+                                        <TableCell align="center">{video.url}</TableCell>
+                                        <TableCell align="center">
+                                            <div className="action-buttons">
+                                                <IconButton
+                                                    onClick={() => {
+                                                        dispatch(videoSelected(video));
+                                                    }}
+                                                >
+                                                    <EditIcon color="primary" />
+                                                </IconButton>
+                                                <IconButton onClick={() => {
+                                                    dispatch(videoSelected(video));
+                                                    handleClickOpen(video);
+                                                }}>
+                                                    <DeleteIcon color="primary" />
+                                                </IconButton>
+                                            </div>
+                                        </TableCell>
+                                        <SimpleDialog 
+                                            title="Eliminar Video"
+                                            contentText={`¿Deseas eliminar el video ${video.nombre} del jugador ${jugador.nombre}?`}
+                                            open={open}
+                                            onClose={handleClose}
+                                        />
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
                 </TableContainer>
             </div>
             <div>

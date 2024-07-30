@@ -68,33 +68,33 @@ const JugadoresList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {jugadores && Array.isArray(jugadores) && jugadores.map((jugador) => (
+                        {jugadores && Array.isArray(jugadores) && jugadores.map((j) => (
                             <TableRow
-                                key={jugador.id}
+                                key={j.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="center" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                    <Avatar src={jugador.foto ? imgUrl + jugador.foto : ''} />
+                                    <Avatar src={j.foto ? imgUrl + j.foto : ''} />
                                 </TableCell>
-                                <TableCell align="center">{jugador.nombre}</TableCell>
-                                <TableCell align="center">{jugador.apellido}</TableCell>
-                                <TableCell align="center">{jugador.apodo}</TableCell>
-                                <TableCell align="center">{calculateAge(jugador.fNac)}</TableCell>
-                                <TableCell align="center">{jugador.posicion ? jugador.posicion.nombre : ''}</TableCell>
-                                <TableCell align="center">{dayjs(jugador.iniContrato).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{dayjs(jugador.finContrato).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{jugador.id}</TableCell>
+                                <TableCell align="center">{j.nombre}</TableCell>
+                                <TableCell align="center">{j.apellido}</TableCell>
+                                <TableCell align="center">{j.apodo}</TableCell>
+                                <TableCell align="center">{calculateAge(j.fNac)}</TableCell>
+                                <TableCell align="center">{j.posicion ? j.posicion.nombre : ''}</TableCell>
+                                <TableCell align="center">{dayjs(j.iniContrato).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{dayjs(j.finContrato).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{j.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(jugadorSelected(jugador));
+                                                dispatch(jugadorSelected(j));
                                                 router.navigate(paths.actualizarJugador, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(jugador)}>
+                                        <IconButton onClick={() => handleClickOpen(j)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

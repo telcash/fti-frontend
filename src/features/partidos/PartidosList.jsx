@@ -63,27 +63,27 @@ const PartidosList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {partidosSorted && Array.isArray(partidosSorted) && partidosSorted.map((partido) => (
+                        {partidosSorted && Array.isArray(partidosSorted) && partidosSorted.map((p) => (
                             <TableRow
-                                key={partido.id}
+                                key={p.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell align="center">{dayjs(partido.fecha).format('DD/MM/YYYY')}</TableCell>
-                                <TableCell align="center">{(partido.equipoLocal && partido.equipoLocal.nombre) ?? ''}</TableCell>
-                                <TableCell align="center">{(partido.equipoVisitante && partido.equipoVisitante.nombre) ?? ''}</TableCell>
-                                <TableCell align="center">{`${partido.golesLocal} - ${partido.golesVisitante}`}</TableCell>
-                                <TableCell align="center">{partido.id}</TableCell>
+                                <TableCell align="center">{dayjs(p.fecha).format('DD/MM/YYYY')}</TableCell>
+                                <TableCell align="center">{(p.equipoLocal && p.equipoLocal.nombre) ?? ''}</TableCell>
+                                <TableCell align="center">{(p.equipoVisitante && p.equipoVisitante.nombre) ?? ''}</TableCell>
+                                <TableCell align="center">{`${p.golesLocal} - ${p.golesVisitante}`}</TableCell>
+                                <TableCell align="center">{p.id}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-buttons">
                                         <IconButton
                                             onClick={() => {
-                                                dispatch(partidoSelected(partido));
+                                                dispatch(partidoSelected(p));
                                                 router.navigate(paths.actualizarPartido, {replace: true});
                                             }}
                                         >
                                             <EditIcon color="primary"/>
                                         </IconButton>
-                                        <IconButton onClick={() => handleClickOpen(partido)}>
+                                        <IconButton onClick={() => handleClickOpen(p)}>
                                             <DeleteIcon color="primary"/>
                                         </IconButton>
                                     </div>

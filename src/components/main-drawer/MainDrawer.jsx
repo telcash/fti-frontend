@@ -164,7 +164,6 @@ export default function MainDrawer() {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    console.log(userSession);
     setSession(userSession);
   }, [userSession])
 

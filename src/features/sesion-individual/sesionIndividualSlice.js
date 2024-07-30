@@ -90,6 +90,7 @@ const sesionesSlice = createSlice({
                 }
                 state.sesionSelected = 0;
             })
+            .addCase('CLEAR_PERSISTED_DATA', () => initialState)
     }
 })
 
