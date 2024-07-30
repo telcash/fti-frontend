@@ -49,7 +49,7 @@ const JugadorCalendario = () => {
 
     return (
         <section className="jugador-calendario">
-            <h2>Calendario</h2>
+            <h2>Conceptos Generales</h2>
             <div className="jugador-calendario-calendario">
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
                     <DateCalendar

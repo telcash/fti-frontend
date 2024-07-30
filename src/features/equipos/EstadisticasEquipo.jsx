@@ -45,6 +45,9 @@ const EstadisticasEquipo = () => {
                         const jtpEncontrado = jtpTotales.find(j => j.jugador.id === jtp.jugador.id);
                         if(jtpEncontrado) {
                             jtpEncontrado.minJugados += jtp.minJugados;
+                            jtpEncontrado.partidosJugados += jtp.minJugados > 0 ? 1 : 0;
+                            jtpEncontrado.partidosTitular += jtp.titular ? 1 : 0;
+                            jtpEncontrado.partidosSuplente = jtpEncontrado.partidosJugados - jtpEncontrado.partidosTitular;
                             jtpEncontrado.partidosConvocado += jtp.convocado ? 1 : 0;
                             jtpEncontrado.partidosNoConvocado += jtp.convocado ? 0 : 1;
                             jtpEncontrado.partidosLesionado += jtp.lesionado ? 1 : 0;
@@ -52,11 +55,14 @@ const EstadisticasEquipo = () => {
                             jtpEncontrado.asistencias += jtp.asistencias;
                             jtpEncontrado.tarjetasAmarillas += jtp.tarjetasAmarillas;
                             jtpEncontrado.tarjetasRojas += jtp.tarjetasRojas;
-                            jtpEncontrado.valoracion += jtp.valoracion;
+                            jtpEncontrado.valoracion = jtp.minJugados > 0 ? (jtpEncontrado.valoracion * (jtpEncontrado.partidosJugados - 1) + jtp.valoracion)/jtpEncontrado.partidosJugados : jtpEncontrado.valoracion;
                         } else {
                             jtpTotales.push({
                                 jugador: jtp.jugador,
                                 minJugados: jtp.minJugados,
+                                partidosJugados: jtp.minJugados > 0 ? 1 : 0,
+                                partidosTitular: jtp.titular ? 1 : 0,
+                                partidosSuplente: jtp.titular ? 0 : 1,
                                 partidosConvocado: jtp.convocado ? 1 : 0,
                                 partidosNoConvocado: jtp.convocado ? 0 : 1,
                                 partidosLesionado: jtp.lesionado ? 1 : 0,
@@ -160,6 +166,9 @@ const EstadisticasEquipo = () => {
                                 <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Apellidos</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Min</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>PJ</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>PT</TableCell>
+                                <TableCell align="center" sx={{color: 'white'}}>PS</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Conv</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>No Conv</TableCell>
                                 <TableCell align="center" sx={{color: 'white'}}>Les</TableCell>
@@ -182,6 +191,9 @@ const EstadisticasEquipo = () => {
                                     <TableCell align="center">{jtp.jugador.nombre}</TableCell>
                                     <TableCell align="center">{jtp.jugador.apellido}</TableCell>
                                     <TableCell align="center">{jtp.minJugados}</TableCell>
+                                    <TableCell align="center">{jtp.partidosJugados}</TableCell>
+                                    <TableCell align="center">{jtp.partidosTitular}</TableCell>
+                                    <TableCell align="center">{jtp.partidosSuplente}</TableCell>
                                     <TableCell align="center">{jtp.partidosConvocado}</TableCell>
                                     <TableCell align="center">{jtp.partidosNoConvocado}</TableCell>
                                     <TableCell align="center">{jtp.partidosLesionado}</TableCell>
@@ -189,7 +201,7 @@ const EstadisticasEquipo = () => {
                                     <TableCell align="center">{jtp.asistencias}</TableCell>
                                     <TableCell align="center">{jtp.tarjetasAmarillas}</TableCell>
                                     <TableCell align="center">{jtp.tarjetasRojas}</TableCell>
-                                    <TableCell align="center">{jtp.valoracion}</TableCell>
+                                    <TableCell align="center">{jtp.valoracion.toFixed(1)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

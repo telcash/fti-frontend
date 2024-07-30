@@ -111,7 +111,7 @@ const menuList = [
     },
     {
         icon: <CalendarMonth />,
-        text: 'Calendario',
+        text: 'Conceptos Generales',
         path: paths.calendario,
     },
     {

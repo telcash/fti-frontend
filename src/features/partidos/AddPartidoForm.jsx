@@ -49,6 +49,7 @@ const AddPartidoForm = () => {
                         convocado: true,
                         lesionado: false,
                         minJugados: 0,
+                        titular: false,
                         goles: 0,
                         asistencias: 0,
                         tarjetasAmarillas: 0,
@@ -76,6 +77,16 @@ const AddPartidoForm = () => {
         const updatedJtp = jugadoresToPartido.map(jtp => {
             if(jtp.jugadorId === id) {
                 return {...jtp, lesionado: e.target.value === 'Si' ? true : false}
+            }
+            return jtp;
+        });
+        setJugadoresToPartido(updatedJtp)
+    }
+
+    const onTitularChanged = (e, id) => {
+        const updatedJtp = jugadoresToPartido.map(jtp => {
+            if(jtp.jugadorId === id) {
+                return {...jtp, titular: e.target.value === 'Si' ? true : false}
             }
             return jtp;
         });
@@ -190,6 +201,7 @@ const AddPartidoForm = () => {
                                 convocado: jtp.convocado,
                                 lesionado: jtp.lesionado,
                                 minJugados: jtp.minJugados,
+                                titular: jtp.titular,
                                 goles: jtp.goles,
                                 asistencias: jtp.asistencias,
                                 tarjetasAmarillas: jtp.tarjetasAmarillas,
@@ -307,14 +319,15 @@ const AddPartidoForm = () => {
                                     <TableCell align="center" sx={{color: 'white'}}>Imagen</TableCell>
                                     <TableCell align="center" sx={{color: 'white'}}>Nombre</TableCell>
                                     <TableCell align="center" sx={{color: 'white'}}>Apellido</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Convocado</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Lesionado</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Min Jugados</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Conv</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Les</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Min</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>PT</TableCell>
                                     <TableCell align="center" sx={{color: 'white'}}>Goles</TableCell>
                                     <TableCell align="center" sx={{color: 'white'}}>Asistencias</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Tarjetas Amarillas</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Tarjetas Rojas</TableCell>
-                                    <TableCell align="center" sx={{color: 'white'}}>Valoración</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>TA</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>TR</TableCell>
+                                    <TableCell align="center" sx={{color: 'white'}}>Val</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -366,6 +379,20 @@ const AddPartidoForm = () => {
                                                 onChange={(e) => onMinJugadosChanged(e, jugador.id)}
                                             >
                                             </Input>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <FormControl sx={{minWidth: 100}}>
+                                                <Select
+                                                    labelId="titular-label"
+                                                    id="titular"
+                                                    label="PT"
+                                                    defaultValue={'No'}
+                                                    onChange={(e) => onTitularChanged(e, jugador.id)}
+                                                >
+                                                    <MenuItem value="Si">Si</MenuItem>
+                                                    <MenuItem value="No">No</MenuItem>
+                                                </Select>
+                                            </FormControl>
                                         </TableCell>
                                         <TableCell align="center">
                                             <Input
@@ -427,11 +454,6 @@ const AddPartidoForm = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                
-
-
-
-
                 <div className="addpartido-form-buttons">
                     <Button sx={{backgroundColor: '#007bff'}} variant="contained" onClick={onSavePartidoClicked}>Salvar</Button>
                     <Button sx={{backgroundColor: '#273237'}} variant="contained" onClick={() => router.navigate(paths.gestionPartidos, {replace: true})}>Cancelar</Button>
