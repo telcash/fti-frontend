@@ -30,6 +30,7 @@ import JugadorSesion from "../features/jugadores/JugadorSesion";
 import Login from "../components/login/Login";
 import AddVideoForm from "../features/videos-jugador/AddVideoForm";
 import UpdateVideoForm from "../features/videos-jugador/UpdateVideoForm";
+import ActualizarPassword from "../components/actualizar-password/ActualizarPassword";
 
 export const paths = {
   home: "/",
@@ -66,7 +67,8 @@ export const paths = {
   agregarSesionIndividual: "/agregar-sesionindividual",
   actualizarSesionIndividual: "/actualizar-sesionindividual",
   agregarVideo: "/agregar-video",
-  actualizarVideo: "/actualizar-video"
+  actualizarVideo: "/actualizar-video",
+  actualizarPassword: "/actualizar-password",
 };
 
 export const router = createBrowserRouter([
@@ -77,6 +79,10 @@ export const router = createBrowserRouter([
   {
     path: paths.login,
     element: <Login />
+  },
+  {
+    path: paths.actualizarPassword,
+    element: <ActualizarPassword />
   },
   {
     path: paths.jugadores,

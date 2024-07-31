@@ -150,6 +150,10 @@ const gestionList = [
     text: 'Sesiones Individuales',
     path: paths.gestionSesionesIndividuales
   },
+  {
+    text: 'Actualizar contraseña',
+    path: paths.actualizarPassword
+  }
 ]
 
 export default function MainDrawer() {
