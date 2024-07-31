@@ -19,6 +19,7 @@ const JugadorGraficas = () => {
     const jugador = useSelector(getJugadorSelected);
     const sesiones = useSelector(selectAllSesiones);
     const sesionesStatus = useSelector(getSesionesStatus);
+    const [jornadasOpen, setJornadasOpen] = useState(false);
 
     const [sesionesJugador, setSesionesJugador] = useState([]);
     const [sesionesSelected, setSesionesSelected] = useState([]);
@@ -90,7 +91,7 @@ const JugadorGraficas = () => {
                 </div>
             </div>
             <div className="jugador-graficas-filtros">
-                <FormControl sx={{ width: 300}}>
+                {!jornadasOpen && <FormControl sx={{ width: 300}}>
                     <InputLabel id="tipo-graficas-label">Tipo de Gráfica</InputLabel>
                     <Select
                         labelId="tipo-graficas-label"
@@ -106,38 +107,50 @@ const JugadorGraficas = () => {
                         <MenuItem value="barras">Diagrama de barras</MenuItem>
                         <MenuItem value="circular">Gráfica circular</MenuItem>
                     </Select>
-                </FormControl>
-                <FormGroup sx={{ width: 300, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
-                    {
-                        sesionesJugador.length === 0 && <p>Seleccionar Jornada</p>
-                    }
-                    {
-                        sesionesJugador && sesionesJugador.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((s, i) => 
-                            <FormControlLabel control={<Checkbox checked={sesionesSelected[i]} onChange={() => handleSesionesSelected(i)}/>} label={`J${i+1} ${dayjs(s.fecha).format('DD/MM/YY')}`} />
-                        )
-                    }
-                </FormGroup>
-               {/*  <FormControl sx={{ width: 300}}>
-                    <InputLabel id="sesiones-numero-label">Jornada</InputLabel>
-                    <Select
-                        labelId="sesiones-numero-label"
-                        id="sesiones-numero"
-                        label="Sesión"
-                        value={selectedSesion || ''}
-                        onChange={(e) => setSelectedSesion(e.target.value)}
+                </FormControl>}
+                { jornadasOpen &&
+                    <FormGroup sx={{ minHeight: 56, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
+                        {
+                            sesionesJugador && sesionesJugador.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((s, i) => 
+                                <FormControlLabel control={<Checkbox checked={sesionesSelected[i]} onChange={() => handleSesionesSelected(i)}/>} label={`J${i+1} ${dayjs(s.fecha).format('DD/MM/YY')}`} />
+                            )
+                        }
+                        <Button sx={{color: 'red'}} onClick={() => setJornadasOpen(false)}>X</Button>
+                    </FormGroup>
+                }
+                {   !jornadasOpen &&
+                    <Button 
+                    variant="outlined"
+                    sx={{ 
+                        width: 300,
+                        height: 56,
+                        borderColor: 'rgba(0, 0, 0, 0.25)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'rgba(0, 0, 0, 0.6)',
+                        textTransform: 'none',
+                        fontFeatureSettings: 'normal',
+                        fontFamily: 'Roboto!important',
+                        fontWeight: '400!important',
+                        letterSpacing: 0.15,
+                        lineHeight: 23,
+                        textSizeAdjust: '100%',
+                        fontSize: '16px!important'
+                    }}
+                    onClick={() => {
+                        if (sesionesJugador && sesionesJugador.length > 0) {
+                            setJornadasOpen(true)
+                        }
+                    }}
                     >
-                        {sesionesJugador && Array.isArray(sesionesJugador) && sesionesJugador.map((sesion, index) => (
-                            <MenuItem
-                                key={sesion.index}
-                                value={sesion}
-                                onChange={(e) => setSelectedSesion(e.target.value)}
-                            >
-                                {index + 1}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl> */}
-                <FormControl sx={{ width: 300}}>
+                        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <p style={{ margin: 0, flex: 3, textAlign: 'left'}}>Jornadas</p>
+                            <div style={{flex: 1, textAlign: 'right', lineHeight: '56px', fontSize: '8px'}}>▼</div>
+                        </div>
+                    </Button>
+                }
+                {!jornadasOpen && <FormControl sx={{ width: 300}}>
                     <InputLabel id="fundamento-label">Fundamento</InputLabel>
                     <Select
                         labelId="fundamento-label"
@@ -163,7 +176,7 @@ const JugadorGraficas = () => {
                             ))
                         }
                     </Select>
-                </FormControl>
+                </FormControl>}
             </div>
             <div className="jugador-graficas-grafica">
                 {tipoGrafica === 'barras' && sesionesSelected && fundamento &&

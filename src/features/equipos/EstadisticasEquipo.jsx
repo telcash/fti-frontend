@@ -1,4 +1,4 @@
-import { Avatar, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, FormLabel } from "@mui/material";
+import { Avatar, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, FormLabel, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipos, getEquiposStatus, selectAllEquipos } from "./equiposSlice";
 import { useEffect, useState } from "react";
@@ -21,7 +21,8 @@ const EstadisticasEquipo = () => {
     const [fecha, setFecha] = useState();
     const [partidosFiltered, setPartidosFiltered] = useState([]);
     const [partidosSelected, setPartidosSelected] = useState([]);
-    const [jtpTotales, setJtpTotales] = useState([]);    
+    const [jtpTotales, setJtpTotales] = useState([]);
+    const [jornadasOpen, setJornadasOpen] = useState(false);
 
     useEffect(() => {
         if(equiposStatus === 'idle') {
@@ -116,7 +117,7 @@ const EstadisticasEquipo = () => {
         <section className="estadisticas-equipo">
             <h2>Estadísticas de equipo</h2>
             <div className="estadisticas-equipo-filtros">
-                <FormControl sx={{ width: 300}}>
+                {!jornadasOpen && <FormControl sx={{ width: 300}}>
                     <InputLabel id="equipo-label">Equipo</InputLabel>
                     <Select
                         labelId="equipo-label"
@@ -129,33 +130,67 @@ const EstadisticasEquipo = () => {
                         <MenuItem value="" sx={{ height: 36 }}></MenuItem>
                         {equipos && Array.isArray(equipos) && equipos.map(e => <MenuItem key={e.id} value={e}>{e.nombre}</MenuItem>)}
                     </Select>
-                </FormControl>
-                <FormGroup sx={{ width: 300, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
-                    {
-                        partidosFiltered.length === 0 && <p>Seleccionar Jornada</p>
-                    }
-                    {
-                        partidosFiltered && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((p, i) => 
-                            <FormControlLabel control={<Checkbox checked={partidosSelected[i]} onChange={() => handlePartidosSelected(i)}/>} label={`J${i+1} ${dayjs(p.fecha).format('DD/MM/YY')}`} />
-                        )
-                    }
-                </FormGroup>
-                <FormControl sx={{ width: 300}}>
-                    <InputLabel id="fecha-label">Fecha</InputLabel>
-                    <Select
-                        labelId="fecha-label"
-                        id="fecha"
-                        label="Fecha"
-                        value={fecha || ''}
-                        displayEmpty
-                        onChange={(e) => {
-                            onChangeFecha(e);
-                        }}
+                </FormControl>}
+                {   jornadasOpen &&
+                    <FormGroup sx={{minHeight: 56, paddingLeft: 1, display: 'flex', flexDirection: 'row', columnGap: 2, borderWidth: 1, borderColor: 'lightgray', borderStyle: 'solid', borderRadius: 1}}>
+                        {
+                            partidosFiltered && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map((p, i) => 
+                                <FormControlLabel control={<Checkbox checked={partidosSelected[i]} onChange={() => handlePartidosSelected(i)}/>} label={`J${i+1} ${dayjs(p.fecha).format('DD/MM/YY')}`} />
+                            )
+                        }
+                        <Button sx={{color: 'red'}} onClick={() => setJornadasOpen(false)}>X</Button>
+                    </FormGroup>
+                }
+                {   !jornadasOpen &&
+                    <Button 
+                    variant="outlined"
+                    sx={{ 
+                        width: 300,
+                        height: 56,
+                        borderColor: 'rgba(0, 0, 0, 0.25)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'rgba(0, 0, 0, 0.6)',
+                        textTransform: 'none',
+                        fontFeatureSettings: 'normal',
+                        fontFamily: 'Roboto!important',
+                        fontWeight: '400!important',
+                        letterSpacing: 0.15,
+                        lineHeight: 23,
+                        textSizeAdjust: '100%',
+                        fontSize: '16px!important'
+                    }}
+                    onClick={() => {
+                        if (equipo && partidosFiltered.length > 0) {
+                            setJornadasOpen(true)
+                        }
+                    }}
                     >
-                        <MenuItem value="" sx={{ height: 36 }}></MenuItem>
-                        {equipo && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map(p => <MenuItem key={p.id} value={p.fecha}>{dayjs(p.fecha).format('DD/MM/YYYY')}</MenuItem>)}
-                    </Select>
-                </FormControl>
+                        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <p style={{ margin: 0, flex: 3, textAlign: 'left'}}>Jornadas</p>
+                            <div style={{flex: 1, textAlign: 'right', lineHeight: '56px', fontSize: '8px'}}>▼</div>
+                        </div>
+                    </Button>
+                }
+                {!jornadasOpen && 
+                    <FormControl sx={{ width: 300}}>
+                        <InputLabel id="fecha-label">Fecha</InputLabel>
+                        <Select
+                            labelId="fecha-label"
+                            id="fecha"
+                            label="Fecha"
+                            value={fecha || ''}
+                            displayEmpty
+                            onChange={(e) => {
+                                onChangeFecha(e);
+                            }}
+                        >
+                            <MenuItem value="" sx={{ height: 36 }}></MenuItem>
+                            {equipo && partidosFiltered.sort((a, b) => dayjs(a.fecha).valueOf() - dayjs(b.fecha).valueOf()).map(p => <MenuItem key={p.id} value={p.fecha}>{dayjs(p.fecha).format('DD/MM/YYYY')}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                }
             </div>
             {jtpTotales.length > 0 && (
                 <TableContainer component={Paper}>
