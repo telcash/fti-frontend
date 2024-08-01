@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import JugadorAvatar from "./JugadorAvatar";
 import { getJugadorSelected } from "./jugadoresSlice";
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { paths, router } from "../../router/router";
 import { fetchSesiones, getSesionesStatus, selectAllSesiones } from "../sesion-individual/sesionIndividualSlice";
 import { useEffect, useState } from "react";
@@ -198,27 +198,30 @@ const JugadorGraficas = () => {
                     />
                 }
                 {tipoGrafica === 'circular' && sesionesSelected && fundamento &&
-                    <PieChart
-                        series={[
-                            {
-                                data: [
-                                    {
-                                        id: 0,
-                                        value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
-                                        label: `${fundamento} (Aciertos)`
-                                    },
-                                    {
-                                        id: 1,
-                                        value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
-                                        label: `${fundamento} (Errores)`
-                                    }
-                                ],
-                                cx: 200,
-                            }
-                        ]}
-                        width={GRAPH_WIDTH}
-                        height={GRAPH_HEIGHT} 
-                    />
+                    <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                        <h2>{fundamento}</h2>
+                        <PieChart
+                            series={[
+                                {
+                                    data: [
+                                        {
+                                            id: 0,
+                                            value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                            label: `Aciertos`
+                                        },
+                                        {
+                                            id: 1,
+                                            value: ejTotales.filter(ejercicio => ejercicio.fundamentoNombre === fundamento).map(ejercicio => ejercicio.valoracionMaxima - ejercicio.valoracion).reduce((acc, val) => acc + val, 0),
+                                            label: `Errores`
+                                        }
+                                    ],
+                                    cx: 300,
+                                }
+                            ]}
+                            width={GRAPH_WIDTH}
+                            height={GRAPH_HEIGHT}
+                        />
+                    </Box>
                 }
             </div>
             <div>
