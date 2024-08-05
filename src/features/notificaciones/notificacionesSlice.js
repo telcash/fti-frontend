@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import axiosInstance from "../../axiosConfig";
 
 const NOTIFICACIONES_URL = process.env.REACT_APP_API_URL + "notificacion";
 
@@ -10,7 +11,7 @@ const initialState = {
 
 export const fetchNotificaciones = createAsyncThunk('notificaciones/fetchNotificaciones', async () => {
     try {
-        const response = await axios.get(NOTIFICACIONES_URL + '/all');
+        const response = await axiosInstance.get(NOTIFICACIONES_URL + '/all');
         return response.data;
     } catch (err) {
         return err.message;
@@ -19,7 +20,7 @@ export const fetchNotificaciones = createAsyncThunk('notificaciones/fetchNotific
 
 export const fetchNotificationLastDate = createAsyncThunk('notificaciones/fetchNotificationLastDate', async () => {
     try {
-        const response = await axios.get(NOTIFICACIONES_URL);
+        const response = await axiosInstance.get(NOTIFICACIONES_URL);
         return response.data[0].fecha;
     } catch (err) {
         return err.message;
@@ -29,7 +30,7 @@ export const fetchNotificationLastDate = createAsyncThunk('notificaciones/fetchN
 
 export const updateNotificationLastDate = createAsyncThunk('notificaciones/updateNotificaciones', async (notification) => {
     try {
-        const response = await axios.patch(`${NOTIFICACIONES_URL}/1`, notification);
+        const response = await axiosInstance.patch(`${NOTIFICACIONES_URL}/1`, notification);
         return response.data[0].fecha;
     } catch (err) {
         return err.message;

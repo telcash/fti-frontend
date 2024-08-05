@@ -58,7 +58,6 @@ const Jugadores = () => {
     };
 
     const handleResize = () => {
-        console.log('handling resize');
         if (!mainBoxElement || !jugadoresCanchaElement) return;
 
         const { width: boxW, height: boxH } = handleElementRef(mainBoxElement);
@@ -81,32 +80,12 @@ const Jugadores = () => {
     , []);
 
     useEffect(() => {
-        console.log('effect resize');
-        /* const handleResize = () => {
-            console.log('handle resize');
-            const { width, height } = handleElementRef(mainBoxElement);
-            const boxW = width;
-            const boxH = height;
-            const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
-            setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
-                return {
-                    jugadorId: jugador.id,
-                    coords: {
-                        x: jugador.posX === 0 ? 0 : boxW * jugador.posX - (dw/2),
-                        y: jugador.posY === 0 ? 0 : boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) - (DRAGGABLE_HEIGHT/2)
-                    }
-                }
-            }))
-        } */
-
         window.addEventListener('resize', handleResize);
-
         return () => window.removeEventListener('resize', handleResize);
     }, [mainBoxElement, jugadoresCanchaElement, jugadoresEquipo]);
 
 
     useEffect(() => {
-        console.log('effect drawer');
         if (!firstLoad) {
             window.location.reload();
         } else {
@@ -171,7 +150,6 @@ const Jugadores = () => {
     , [equiposStatus, dispatch])
 
     useEffect(() => {
-        console.log('effect mainbox');
         if(equipo && jugadoresCanchaElement && mainBoxElement) {
             const filteredJugadores = jugadores
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
