@@ -172,7 +172,6 @@ export default function MainDrawer() {
   }, [userSession])
 
   const handleToggleDrawer = () => {
-    //setOpen(!open);
     dispatch(toggleDrawer());
   };
 
@@ -255,7 +254,7 @@ export default function MainDrawer() {
                         onClick={() => {
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
-                                dispatch(toggleDrawer());
+                                //dispatch(toggleDrawer());
                             } else {
                               setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
                               setGestionOpen(false);
