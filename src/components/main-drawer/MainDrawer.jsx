@@ -19,7 +19,7 @@ import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
-import { getUserSession, setUserSession, toggleDrawer } from './mainDrawerSlice';
+import { getDrawerOpen, getUserSession, setUserSession, toggleDrawer } from './mainDrawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '../../axiosConfig';
 
@@ -159,9 +159,9 @@ const gestionList = [
 export default function MainDrawer() {
 
   const dispatch = useDispatch();
-  const userSession = useSelector(getUserSession)
+  const userSession = useSelector(getUserSession);
 
-  const [open, setOpen] = useState(true);
+  const open = useSelector(getDrawerOpen);
   const [gestionOpen, setGestionOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(menuList.map((menuItem, index) => index === 0 ? true : false));
   const [activeGestion, setActiveGestion] = useState(gestionList.map(() => false));
@@ -172,7 +172,7 @@ export default function MainDrawer() {
   }, [userSession])
 
   const handleToggleDrawer = () => {
-    setOpen(!open);
+    //setOpen(!open);
     dispatch(toggleDrawer());
   };
 
@@ -255,7 +255,7 @@ export default function MainDrawer() {
                         onClick={() => {
                             if (item.text === 'Gestión y Creación') {
                                 handleGestionClick();
-                                setOpen(true);
+                                dispatch(toggleDrawer());
                             } else {
                               setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
                               setGestionOpen(false);

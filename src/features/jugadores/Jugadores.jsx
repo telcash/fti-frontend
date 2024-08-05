@@ -20,6 +20,7 @@ const Jugadores = () => {
 
     const isDrawerOpen = useSelector(getDrawerOpen);
     // const [drawerOpen, setDrawerOpen] = useState(isDrawerOpen);
+    const [firstLoad, setFirstLoad] = useState(true);
 
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
@@ -56,6 +57,23 @@ const Jugadores = () => {
         }
     };
 
+    const handleResize = () => {
+        console.log('handling resize');
+        if (!mainBoxElement || !jugadoresCanchaElement) return;
+
+        const { width: boxW, height: boxH } = handleElementRef(mainBoxElement);
+        const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
+        setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
+            return {
+                jugadorId: jugador.id,
+                coords: {
+                    x: jugador.posX === 0 ? 0 : boxW * jugador.posX - (dw / 2),
+                    y: jugador.posY === 0 ? 0 : boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) - (DRAGGABLE_HEIGHT / 2)
+                }
+            }
+        }));
+    };
+
     useEffect(() => {
         setMainBoxElement(document.getElementById('main-box'));
         setJugadoresCanchaElement(document.getElementById('jugadores-cancha-box'));
@@ -63,7 +81,9 @@ const Jugadores = () => {
     , []);
 
     useEffect(() => {
-        const handleResize = () => {
+        console.log('effect resize');
+        /* const handleResize = () => {
+            console.log('handle resize');
             const { width, height } = handleElementRef(mainBoxElement);
             const boxW = width;
             const boxH = height;
@@ -77,32 +97,22 @@ const Jugadores = () => {
                     }
                 }
             }))
-        }
+        } */
 
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    }, );
+    }, [mainBoxElement, jugadoresCanchaElement, jugadoresEquipo]);
 
-    /* useEffect(() => {
-        if (isDrawerOpen !== drawerOpen) {
-            console.log('resizing drawer');
-            const { width, height } = handleElementRef(mainBoxElement);
-            const boxW = width;
-            const boxH = height;
-            const dw = handleElementRef(jugadoresCanchaElement).width / DRAGGABLE_BY_ROW;
-            setDraggablePositions(jugadoresEquipo.map((jugador, index) => {
-                return {
-                    jugadorId: jugador.id,
-                    coords: {
-                        x: jugador.posX === 0 ? 0 : boxW * jugador.posX - (dw/2),
-                        y: jugador.posY === 0 ? 0 : boxH * jugador.posY - (Math.floor((index + 1) / DRAGGABLE_BY_ROW) * DRAGGABLE_HEIGHT) - (DRAGGABLE_HEIGHT/2)
-                    }
-                }
-            }))
-            setDrawerOpen(isDrawerOpen);
+
+    useEffect(() => {
+        console.log('effect drawer');
+        if (!firstLoad) {
+            window.location.reload();
+        } else {
+            setFirstLoad(false);
         }
-    },[isDrawerOpen]) */
+    }, [isDrawerOpen]);
 
     const onEquipoChanged = e => {
         setEquipo(e.target.value);
@@ -161,7 +171,7 @@ const Jugadores = () => {
     , [equiposStatus, dispatch])
 
     useEffect(() => {
-        console.log('mainbox');
+        console.log('effect mainbox');
         if(equipo && jugadoresCanchaElement && mainBoxElement) {
             const filteredJugadores = jugadores
                 .filter(jugador => jugador.equipo && jugador.equipo.nombre === equipo)
