@@ -201,6 +201,7 @@ const JugadorGraficas = () => {
                     <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                         <h2>{fundamento}</h2>
                         <PieChart
+                            colors={['#56b3e3', '#ffa800']}
                             series={[
                                 {
                                     data: [

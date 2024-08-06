@@ -8,7 +8,7 @@ import { paths, router } from '../../router/router';
 import './jugadores.css';
 import Draggable from "react-draggable";
 import { useLocation } from "react-router-dom";
-import { getDrawerOpen } from "../../components/main-drawer/mainDrawerSlice";
+import { getActiveMenuIndex, getDrawerOpen, setActiveMenuIndex } from "../../components/main-drawer/mainDrawerSlice";
 import SimpleDialog from "../../components/simple-dialog/SimpleDialog";
 
 const DRAGGABLE_HEIGHT = 80.72;
@@ -21,6 +21,7 @@ const Jugadores = () => {
     const isDrawerOpen = useSelector(getDrawerOpen);
     // const [drawerOpen, setDrawerOpen] = useState(isDrawerOpen);
     const [firstLoad, setFirstLoad] = useState(true);
+    const activeMenuIndex = useSelector(getActiveMenuIndex);
 
     const jugadores = useSelector(selectAllJugadores);
     const jugadoresStatus = useSelector(getJugadoresStatus);
@@ -88,6 +89,7 @@ const Jugadores = () => {
     useEffect(() => {
         if (!firstLoad) {
             window.location.reload();
+            //dispatch(setActiveMenuIndex(activeMenuIndex));
         } else {
             setFirstLoad(false);
         }

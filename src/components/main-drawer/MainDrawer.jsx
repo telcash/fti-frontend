@@ -19,7 +19,7 @@ import { Collapse } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import {paths, router} from '../../router/router';
 import { MaterialSymbolsBidLandscape, MaterialSymbolsClockLoader90, MaterialSymbolsFinance, MaterialSymbolsLightFinanceMode } from '../material-symbols/MaterialSymbols';
-import { getDrawerOpen, getUserSession, setUserSession, toggleDrawer } from './mainDrawerSlice';
+import { getActiveMenuIndex, getDrawerOpen, getUserSession, setActiveMenuIndex, setUserSession, toggleDrawer } from './mainDrawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '../../axiosConfig';
 
@@ -160,6 +160,7 @@ export default function MainDrawer() {
 
   const dispatch = useDispatch();
   const userSession = useSelector(getUserSession);
+  const activeMenuIndex = useSelector(getActiveMenuIndex);
 
   const open = useSelector(getDrawerOpen);
   const [gestionOpen, setGestionOpen] = useState(false);
@@ -180,7 +181,8 @@ export default function MainDrawer() {
   }
 
   const handleLogout = async () => {
-    setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    //setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    dispatch(setActiveMenuIndex(0));
     setGestionOpen(false);
     dispatch(setUserSession(false));
     try {
@@ -193,9 +195,14 @@ export default function MainDrawer() {
   }
 
   const handleLogin = () => {
-    setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    //setActiveMenu(activeMenu.map((menuItem, i) => i === 0 ? true : false));
+    dispatch(setActiveMenuIndex(0));
     router.navigate(paths.login, {replace: true});
   }
+
+  useEffect(() => {
+    setActiveMenu(activeMenu.map((menuItem, i) => i === activeMenuIndex ? true : false));
+  }, [activeMenuIndex]);
 
   return (
     <Box sx={{ display: 'flex'}}>
@@ -256,7 +263,8 @@ export default function MainDrawer() {
                                 handleGestionClick();
                                 //dispatch(toggleDrawer());
                             } else {
-                              setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
+                              //setActiveMenu(activeMenu.map((menuItem, i) => i === index ? true : false));
+                              dispatch(setActiveMenuIndex(index));
                               setGestionOpen(false);
                               setActiveGestion(gestionList.map(() => false));
                               router.navigate(`../${item.path}`)
@@ -294,7 +302,7 @@ export default function MainDrawer() {
                     <ListItemButton
                         onClick={() => 
                           {
-                            setActiveMenu(activeMenu.map((menuItem, i) => i === activeMenu.length - 1 ? true : false));
+                            dispatch(setActiveMenuIndex(activeMenu.length - 1));
                             setActiveGestion(activeGestion.map((gestionItem, i) => i === index ? true : false));
                             router.navigate(`../${item.path}`);
                           }
