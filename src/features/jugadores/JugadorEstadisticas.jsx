@@ -233,7 +233,7 @@ const JugadorEstadisticas = () => {
                 </div>
                 <div className="stat-label">
                     <h3>{valoracion.toFixed(1)}</h3>
-                    <h4>Valoracion</h4>
+                    <h4>Valoración</h4>
                 </div>
             </div>
             <div>
