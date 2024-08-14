@@ -145,7 +145,7 @@ const JugadorGraficas = () => {
                     }}
                     >
                         <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <p style={{ margin: 0, flex: 3, textAlign: 'left'}}>Jornadas</p>
+                            <p style={{ margin: 0, flex: 3, textAlign: 'left'}}>{sesionesJugador.length > 0 ? 'Jornadas' : 'No existen jornadas'}</p>
                             <div style={{flex: 1, textAlign: 'right', lineHeight: '56px', fontSize: '8px'}}>▼</div>
                         </div>
                     </Button>
