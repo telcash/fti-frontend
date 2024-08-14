@@ -39,7 +39,7 @@ const FileInputField = ({onHandleFileChange, formSubmitted, prevImgUrl}) => {
                     <div className="file-input-field-content">
                         <Avatar 
                             src={previewUrl}
-                            sx={{ width: 56, height: 56}}
+                            sx={{ width: 138, height: 138}}
                         />
                         <h3>Cargar Foto</h3>
                         {
