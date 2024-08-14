@@ -86,6 +86,7 @@ const videosSlice = createSlice({
             })
             .addCase(updateVideo.fulfilled, (state, action) => {
                 state.videos.splice(state.videos.findIndex(video => video.id === state.videoSelected.id), 1, action.payload);
+                state.videos = [...state.videos];
             })
             .addCase(deleteVideo.fulfilled, (state, action) => {
                 if (action.payload.affected === 1) {

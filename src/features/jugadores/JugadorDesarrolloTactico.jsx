@@ -64,9 +64,7 @@ const JugadorDesarrolloTactico = () => {
     , [sesiones, jugador]);
 
     useEffect(() => {
-        if (videos.length > 0) {
-            setVideosJugador(videos.filter(v => v.jugador.id === jugador.id));
-        }
+        setVideosJugador(videos.filter(v => v.jugador.id === jugador.id));
     }, [jugador, videos])
 
     const handleClickOpen = (video) => {
@@ -77,7 +75,7 @@ const JugadorDesarrolloTactico = () => {
     const handleClose = (value) => {
         setOpen(false);
         if(value === 'Eliminar') {
-            dispatch(deleteVideo(video.id))
+            dispatch(deleteVideo(video.id));
         }
     }
 
