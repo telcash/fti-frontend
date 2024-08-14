@@ -184,7 +184,7 @@ const UpdatePartidoForm = () => {
     useEffect(() => {
         dispatch(fetchJugadorToPartidos())
             .then((response) => {
-                setJugadoresToPartido(response.payload.filter(jtp => jtp.partido.id === partido.id));
+                setJugadoresToPartido(response.payload.filter(jtp => jtp.partido.id === partido.id).sort((a, b) => a.jugador.id - b.jugador.id));
             })
     }, [dispatch, partido.id])
 

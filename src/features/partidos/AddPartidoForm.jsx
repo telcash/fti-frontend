@@ -154,9 +154,9 @@ const AddPartidoForm = () => {
     }
 
     useEffect(() => {
-        const jugadoresVisitantes = jugadores.filter(jugador => jugador.equipo && jugador.equipo.nombre === equipoVisitante);
-        const jugadoresLocales = jugadores.filter(jugador => jugador.equipo && jugador.equipo.nombre === equipoLocal);
-        const jugadoresTotales = jugadoresVisitantes.concat(jugadoresLocales);
+        const jugadoresVisitantes = jugadores.filter(jugador => jugador.equipo && jugador.equipo.nombre === equipoVisitante).sort((a, b) => a.id - b.id);
+        const jugadoresLocales = jugadores.filter(jugador => jugador.equipo && jugador.equipo.nombre === equipoLocal).sort((a, b) => a.id - b.id);
+        const jugadoresTotales = jugadoresLocales.concat(jugadoresVisitantes);
         setJugadoresEnEquipos(jugadoresTotales);
     }, [equipoLocal, equipoVisitante, jugadores]);
 

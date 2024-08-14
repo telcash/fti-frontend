@@ -42,39 +42,41 @@ const EstadisticasEquipo = () => {
         if(partidosFiltered.length > 0) {
             const jtpTotales = [];
             partidosFiltered.filter((p, i) => partidosSelected[i]).forEach(partido => {
-                partido.jugadorToPartidos.forEach(jtp => {
-                        const jtpEncontrado = jtpTotales.find(j => j.jugador.id === jtp.jugador.id);
-                        if(jtpEncontrado) {
-                            jtpEncontrado.minJugados += jtp.minJugados;
-                            jtpEncontrado.partidosJugados += jtp.minJugados > 0 ? 1 : 0;
-                            jtpEncontrado.partidosTitular += jtp.titular ? 1 : 0;
-                            jtpEncontrado.partidosSuplente = jtpEncontrado.partidosJugados - jtpEncontrado.partidosTitular;
-                            jtpEncontrado.partidosConvocado += jtp.convocado ? 1 : 0;
-                            jtpEncontrado.partidosNoConvocado += jtp.convocado ? 0 : 1;
-                            jtpEncontrado.partidosLesionado += jtp.lesionado ? 1 : 0;
-                            jtpEncontrado.goles += jtp.goles;
-                            jtpEncontrado.asistencias += jtp.asistencias;
-                            jtpEncontrado.tarjetasAmarillas += jtp.tarjetasAmarillas;
-                            jtpEncontrado.tarjetasRojas += jtp.tarjetasRojas;
-                            jtpEncontrado.valoracion = jtp.minJugados > 0 ? (jtpEncontrado.valoracion * (jtpEncontrado.partidosJugados - 1) + jtp.valoracion)/jtpEncontrado.partidosJugados : jtpEncontrado.valoracion;
-                        } else {
-                            jtpTotales.push({
-                                jugador: jtp.jugador,
-                                minJugados: jtp.minJugados,
-                                partidosJugados: jtp.minJugados > 0 ? 1 : 0,
-                                partidosTitular: jtp.titular ? 1 : 0,
-                                partidosSuplente: jtp.titular ? 0 : 1,
-                                partidosConvocado: jtp.convocado ? 1 : 0,
-                                partidosNoConvocado: jtp.convocado ? 0 : 1,
-                                partidosLesionado: jtp.lesionado ? 1 : 0,
-                                goles: jtp.goles,
-                                asistencias: jtp.asistencias,
-                                tarjetasAmarillas: jtp.tarjetasAmarillas,
-                                tarjetasRojas: jtp.tarjetasRojas,
-                                valoracion: jtp.valoracion
-                            });
-                        }
-                })
+                if (partido.jugadorToPartidos) {
+                    partido.jugadorToPartidos.forEach(jtp => {
+                            const jtpEncontrado = jtpTotales.find(j => j.jugador.id === jtp.jugador.id);
+                            if(jtpEncontrado) {
+                                jtpEncontrado.minJugados += jtp.minJugados;
+                                jtpEncontrado.partidosJugados += jtp.minJugados > 0 ? 1 : 0;
+                                jtpEncontrado.partidosTitular += jtp.titular ? 1 : 0;
+                                jtpEncontrado.partidosSuplente = jtpEncontrado.partidosJugados - jtpEncontrado.partidosTitular;
+                                jtpEncontrado.partidosConvocado += jtp.convocado ? 1 : 0;
+                                jtpEncontrado.partidosNoConvocado += jtp.convocado ? 0 : 1;
+                                jtpEncontrado.partidosLesionado += jtp.lesionado ? 1 : 0;
+                                jtpEncontrado.goles += jtp.goles;
+                                jtpEncontrado.asistencias += jtp.asistencias;
+                                jtpEncontrado.tarjetasAmarillas += jtp.tarjetasAmarillas;
+                                jtpEncontrado.tarjetasRojas += jtp.tarjetasRojas;
+                                jtpEncontrado.valoracion = jtp.minJugados > 0 ? (jtpEncontrado.valoracion * (jtpEncontrado.partidosJugados - 1) + jtp.valoracion)/jtpEncontrado.partidosJugados : jtpEncontrado.valoracion;
+                            } else {
+                                jtpTotales.push({
+                                    jugador: jtp.jugador,
+                                    minJugados: jtp.minJugados,
+                                    partidosJugados: jtp.minJugados > 0 ? 1 : 0,
+                                    partidosTitular: jtp.titular ? 1 : 0,
+                                    partidosSuplente: jtp.titular ? 0 : 1,
+                                    partidosConvocado: jtp.convocado ? 1 : 0,
+                                    partidosNoConvocado: jtp.convocado ? 0 : 1,
+                                    partidosLesionado: jtp.lesionado ? 1 : 0,
+                                    goles: jtp.goles,
+                                    asistencias: jtp.asistencias,
+                                    tarjetasAmarillas: jtp.tarjetasAmarillas,
+                                    tarjetasRojas: jtp.tarjetasRojas,
+                                    valoracion: jtp.valoracion
+                                });
+                            }
+                    })
+                }
             })
             setJtpTotales(jtpTotales);
         } else {
