@@ -54,7 +54,10 @@ const JugadorEstadisticas = () => {
             setAsistencias(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.asistencias, 0));
             setTarjetasAmarillas(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.tarjetasAmarillas, 0));
             setTarjetasRojas(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.tarjetasRojas, 0));
-            setValoracion(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.valoracion, 0) / jugadorSelectedToPartidos.length);
+            const partidosJugados = jugadorSelectedToPartidos.filter( jtp => jtp.minJugados > 0);
+            const val = partidosJugados.length > 0 ? partidosJugados.reduce((acc, jtp) => acc + jtp.valoracion, 0) / partidosJugados.length : 0;
+            setValoracion(val);
+            //setValoracion(jugadorSelectedToPartidos.reduce((acc, jtp) => acc + jtp.valoracion, 0) / jugadorSelectedToPartidos.length);
         }
     }
     , [jugadorSelectedToPartidos]);
